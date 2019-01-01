@@ -6,8 +6,8 @@
 // Initialize all systems
 int sysInit();
 // Run render cycle
-int sysRun();
+void sysRun();
 // Release all resources
-int sysShutdown();
+void sysShutdown();
 
 #endif

@@ -8,6 +8,6 @@ int logInit();
 // Make log
 int log(const char* text);
 // Close log file
-int logShutdown();
+void logShutdown();
 
 #endif

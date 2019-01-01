@@ -7,6 +7,6 @@
 // Initialize all kernels
 int clCreateAllKernels();
 // Release all resources connected with kernels
-int clShutdownAllKernels();
+void clShutdownAllKernels();
 
 #endif

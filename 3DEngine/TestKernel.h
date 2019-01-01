@@ -5,6 +5,6 @@
 
 int clCreateTestKernel();
 int clExecuteTestKernel(int* x, int* y, int* r);
-int clShutdownTestKernel();
+void clShutdownTestKernel();
 
 #endif

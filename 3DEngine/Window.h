@@ -12,7 +12,7 @@ int winSwapBuffers();
 // Render buffer to screen
 int winRender();
 // Close window and release all resources
-int winShutdown();
+void winShutdown();
 
 
 #endif

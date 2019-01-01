@@ -21,6 +21,6 @@ int clReadInBuffer(void* buffer);
 int clFinish();
 
 // Shutdown and delete all components of device
-int clShutdown();
+void clShutdown();
 
 #endif
