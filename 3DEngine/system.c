@@ -1,8 +1,15 @@
+#include "LogManager.h"
+
 int sysInit()
 {
-	int result = 1;
+	int result;
 
-	return result;
+	result = logInit();
+	if (!result)
+		return 0;
+	log("log init");
+
+	return 1;
 }
 
 void sysRun()
@@ -11,11 +18,10 @@ void sysRun()
 
 	while(result)
 	{
-		
 	}
 }
 
 void sysShutdown()
 {
-	
+	logShutdown();
 }

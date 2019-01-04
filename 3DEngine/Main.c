@@ -1,5 +1,6 @@
 #include "System.h"
 
+
 int main()
 {
 	int result;
