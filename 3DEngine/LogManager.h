@@ -7,6 +7,7 @@
 int logInit();
 // Make log
 int log(const char* text);
+int logNum(double number);
 // Close log file
 void logShutdown();
 

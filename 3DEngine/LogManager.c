@@ -93,6 +93,18 @@ int log(const char* text)
 
 }
 
+int logNum(double number)
+{
+	char numStr[64];
+	int result;
+
+	result = sprintf_s(numStr, 64, "%.10f", number);
+	if (!result)
+		return 0;
+
+	return log(numStr);
+}
+
 void logShutdown()
 {
 	fclose(file);

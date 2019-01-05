@@ -1,4 +1,5 @@
 #include "LogManager.h"
+#include "Settings.h"
 
 int sysInit()
 {
@@ -9,6 +10,11 @@ int sysInit()
 		return 0;
 	log("log init");
 
+	result = setsInit("Settings.txt");
+	if (!result)
+		return 0;
+	log("set init");
+
 	return 1;
 }
 
@@ -18,6 +24,7 @@ void sysRun()
 
 	while(result)
 	{
+
 	}
 }
 

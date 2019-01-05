@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="LogManager.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Settings.c" />
     <ClCompile Include="system.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

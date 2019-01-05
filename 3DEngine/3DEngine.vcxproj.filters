@@ -59,5 +59,8 @@
     <ClCompile Include="LogManager.c">
       <Filter>Файлы исходного кода\Services</Filter>
     </ClCompile>
+    <ClCompile Include="Settings.c">
+      <Filter>Файлы исходного кода\Services</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
