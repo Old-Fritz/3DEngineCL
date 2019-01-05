@@ -139,11 +139,11 @@ int clSwapBuffers()
 	return  1;
 }
 
-int clReadInBuffer(void* buffer, size_t size)
+int clReadInBuffer(void* buffer)
 {
 	cl_int result;
 	// write to output
-	result = clEnqueueReadBuffer(queue, backBuffer, CL_NON_BLOCKING, 0, size, buffer, 0, NULL, NULL);
+	result = clEnqueueReadBuffer(queue, backBuffer, CL_NON_BLOCKING, 0, outBufferSize, buffer, 0, NULL, NULL);
 	if (result != CL_SUCCESS)
 	{
 		logs("can't read OpenCL out buffer");

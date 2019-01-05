@@ -31,6 +31,9 @@
     <Filter Include="Файлы исходного кода\Graphic\Kernels">
       <UniqueIdentifier>{95c7267c-91ea-45ba-8649-7ac3146a0aa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\kernels">
+      <UniqueIdentifier>{8f41196f-5423-4870-ab03-90acaa49ee81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -55,7 +58,7 @@
       <Filter>Заголовочные файлы\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Graphic.h">
-      <Filter>Заголовочные файлы\Graphic</Filter>
+      <Filter>Заголовочные файлы\Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,5 +89,10 @@
     <ClCompile Include="TestKernel.c">
       <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="testKernel.cl">
+      <Filter>Файлы ресурсов\kernels</Filter>
+    </None>
   </ItemGroup>
 </Project>

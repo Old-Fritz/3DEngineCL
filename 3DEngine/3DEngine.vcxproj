@@ -166,6 +166,11 @@
     <ClCompile Include="TestKernel.c" />
     <ClCompile Include="Window.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="testKernel.cl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

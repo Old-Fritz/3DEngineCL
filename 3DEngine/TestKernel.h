@@ -3,7 +3,7 @@
 
 /// Simple test kernel that display circle
 
-int clCreateTestKernel();
+int clCreateTestKernel(const char* filename);
 int clExecuteTestKernel(int* x, int* y, int* r);
 void clShutdownTestKernel();
 

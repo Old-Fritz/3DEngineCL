@@ -70,7 +70,7 @@ int logInit()
 
 int logs(const char* text)
 {
-	char logStr[1024] = "";
+	char logStr[130] = "";
 	char timeStr[128] = "";
 	int result;
 
@@ -78,20 +78,23 @@ int logs(const char* text)
 	if (!result)
 		return 0;
 
-	strcat_s(logStr, 1024, "\n");
-	strcat_s(logStr, 1024, timeStr);
-	strcat_s(logStr, 1024, " ");
-	strcat_s(logStr, 1024, text);
+	strcat_s(logStr, 130, "\n");
+	strcat_s(logStr, 130, timeStr);
+	strcat_s(logStr, 130, " ");
 
 
 	if (file)
+	{
 		fprintf(file, logStr);
+		fprintf(file, text);
+	}
 	else
 		return 0;
 
 	return 1;
 
 }
+
 
 int logsNum(double number)
 {
