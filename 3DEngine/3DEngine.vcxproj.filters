@@ -28,6 +28,9 @@
     <Filter Include="Файлы исходного кода\Graphic">
       <UniqueIdentifier>{fba1360c-e021-4b4c-8c81-a4120f86b449}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Graphic\Kernels">
+      <UniqueIdentifier>{95c7267c-91ea-45ba-8649-7ac3146a0aa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -73,6 +76,15 @@
     </ClCompile>
     <ClCompile Include="Window.c">
       <Filter>Файлы исходного кода\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenCL.c">
+      <Filter>Файлы исходного кода\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelManager.c">
+      <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="TestKernel.c">
+      <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

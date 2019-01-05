@@ -157,10 +157,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphic.c" />
+    <ClCompile Include="KernelManager.c" />
     <ClCompile Include="LogManager.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="OpenCL.c" />
     <ClCompile Include="Settings.c" />
     <ClCompile Include="system.c" />
+    <ClCompile Include="TestKernel.c" />
     <ClCompile Include="Window.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

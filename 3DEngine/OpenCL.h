@@ -6,7 +6,7 @@
 /// Control of graphic device
 
 // Initialize graphic context and command queue
-int clInit(int width, int height);
+int clInit(int width, int height, size_t pixelSize);
 
 // Get components of device
 cl_mem clGetOutBuffer();
@@ -18,7 +18,7 @@ int clSwapBuffers();
 // Copy data from out buffer in simple buffer
 int clReadInBuffer(void* buffer);
 // Finish all commands in queue
-int clFinish();
+int clFinishEx();
 
 // Shutdown and delete all components of device
 void clShutdown();
