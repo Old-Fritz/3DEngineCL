@@ -19,15 +19,15 @@ int setsInit(const char* filename)
 	result = fscanf_s(file, "%s%d", parName, 128, &screenWidth);
 	if (!result)
 		return 0;
-	log("screenWidth is ");
-	logNum(screenWidth);
+	logs("screenWidth is ");
+	logsNum(screenWidth);
 
 	// load screenHeight
 	result = fscanf_s(file, "%s%d", parName, 128, &screenHeight);
 	if (!result)
 		return 0;
-	log("screenHeight is ");
-	logNum(screenHeight);
+	logs("screenHeight is ");
+	logsNum(screenHeight);
 
 	return 1;
 }

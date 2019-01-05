@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Graphic.h" />
     <ClInclude Include="KernelManager.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OpenCL.h" />
@@ -155,10 +156,12 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphic.c" />
     <ClCompile Include="LogManager.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Settings.c" />
     <ClCompile Include="system.c" />
+    <ClCompile Include="Window.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

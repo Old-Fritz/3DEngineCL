@@ -1,19 +1,22 @@
 #include "LogManager.h"
 #include "Settings.h"
+#include "Graphic.h"
 
 int sysInit()
 {
 	int result;
 
-	result = logInit();
-	if (!result)
+	if(!logInit())
 		return 0;
-	log("log init");
+	logs("log init");
 
-	result = setsInit("Settings.txt");
-	if (!result)
+	if (!setsInit("Settings.txt"))
 		return 0;
-	log("set init");
+	logs("set init");
+
+	if (!grInit())
+		return 0;
+	logs("graphic init");
 
 	return 1;
 }
@@ -24,7 +27,8 @@ void sysRun()
 
 	while(result)
 	{
-
+		if (!grFrame())
+			result = 0;
 	}
 }
 

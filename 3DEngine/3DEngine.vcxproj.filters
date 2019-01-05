@@ -25,6 +25,9 @@
     <Filter Include="Файлы исходного кода\Services">
       <UniqueIdentifier>{fe983827-a6b2-41b2-9182-ee235e5b6216}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Graphic">
+      <UniqueIdentifier>{fba1360c-e021-4b4c-8c81-a4120f86b449}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -48,6 +51,9 @@
     <ClInclude Include="Window.h">
       <Filter>Заголовочные файлы\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>Заголовочные файлы\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -61,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="Settings.c">
       <Filter>Файлы исходного кода\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic.c">
+      <Filter>Файлы исходного кода\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.c">
+      <Filter>Файлы исходного кода\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

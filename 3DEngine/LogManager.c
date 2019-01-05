@@ -68,7 +68,7 @@ int logInit()
 	return 1;
 }
 
-int log(const char* text)
+int logs(const char* text)
 {
 	char logStr[1024] = "";
 	char timeStr[128] = "";
@@ -93,7 +93,7 @@ int log(const char* text)
 
 }
 
-int logNum(double number)
+int logsNum(double number)
 {
 	char numStr[64];
 	int result;
@@ -102,7 +102,7 @@ int logNum(double number)
 	if (!result)
 		return 0;
 
-	return log(numStr);
+	return logs(numStr);
 }
 
 void logShutdown()

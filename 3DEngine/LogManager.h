@@ -6,8 +6,8 @@
 // Open log file
 int logInit();
 // Make log
-int log(const char* text);
-int logNum(double number);
+int logs(const char* text);
+int logsNum(double number);
 // Close log file
 void logShutdown();
 
