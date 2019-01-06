@@ -18,6 +18,7 @@ static int createContextAndQueue()
 	cl_device_id* deviceIDs;
 	cl_uint deviceCount;
 	cl_uint maxDeviceCount = 5;
+	int i;
 
 	// get list of platforms
 	result = clGetPlatformIDs(5, NULL, &platformCount);
@@ -71,7 +72,7 @@ static int createContextAndQueue()
 
 	// release all
 	free(platformIDs);
-	for (int i = 0;i < deviceCount;i++)
+	for ( i = 0;i < deviceCount;i++)
 	{
 		result = clReleaseDevice(deviceIDs[i]);
 		if (result != CL_SUCCESS)
