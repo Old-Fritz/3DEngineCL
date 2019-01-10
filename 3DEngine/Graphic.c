@@ -11,21 +11,26 @@ static int r;
 
 int grInit()
 {
-	if (!winInit(setsGetScreenWidth(), setsGetScreenHeight()))
+	int result;
+
+	result = winInit(setsGetScreenWidth(), setsGetScreenHeight());
+	if (!result)
 	{
 		logs("cant't create window");
 		return 0;
 	}
 	logs("create window");
 
-	if(!clInit(setsGetScreenWidth(), setsGetScreenHeight(),3))
+	result = clInit(setsGetScreenWidth(), setsGetScreenHeight(), 3);
+	if (!result)
 	{
 		logs("cant't init OpenCL");
 		return 0;
 	}
 	logs("init openCL context");
 
-	if(!clCreateAllKernels())
+	result = clCreateAllKernels();
+	if (!result)
 	{
 		logs("can't create kernels");
 		return 0;
@@ -50,30 +55,39 @@ static int render()
 
 int grFrame()
 {
-	// prepare old back buffer for render
+	int result;
 	char* outBuffer;
-	if (!winGetBuffer(&outBuffer))
+
+	// prepare old back buffer for render
+	result = winGetBuffer(&outBuffer);
+	if (!result)
 		return 0;
-	if (!clReadInBuffer(outBuffer))
+	result = clReadInBuffer(outBuffer);
+	if (!result)
 		return 0;
 	// swap buffer and set new back buffer
-	if (!clSwapBuffers())
+	result = clSwapBuffers();
+	if (!result)
 		return 0;
-	if (!winSwapBuffers())
+	result = !winSwapBuffers();
+	if (!result)
 		return  0;
 
 	// render to new back buffer
-	if(!render())
+	result = render();
+	if (!result)
 	{
 		logs("can't render graphics");
 		return 0;
 	}
 
 	// show old back buffer
-	if (!winRender())
+	result = winRender();
+	if (!result)
 		return 0;
 	// finish all render job
-	if (!clFinishEx())
+	result = clFinishEx();
+	if (!result)
 		return 0;
 
 	return 1;

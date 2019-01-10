@@ -6,15 +6,18 @@ int sysInit()
 {
 	int result;
 
-	if(!logInit())
+	result = logInit();
+	if(!result)
 		return 0;
 	logs("log init");
 
-	if (!setsInit("Settings.txt"))
+	result = setsInit("Settings.txt");
+	if (!result)
 		return 0;
 	logs("set init");
 
-	if (!grInit())
+	result = grInit();
+	if (!result)
 		return 0;
 	logs("graphic init");
 
@@ -23,12 +26,14 @@ int sysInit()
 
 void sysRun()
 {
-	int result = 1;
+	int result;
+	int runProgram = 1;
 
-	while(result)
+	while(runProgram)
 	{
-		if (!grFrame())
-			result = 0;
+		result = grFrame();
+		if(!result)
+			runProgram = 0;
 	}
 }
 

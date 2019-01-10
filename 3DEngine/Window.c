@@ -39,15 +39,17 @@ static int initBuffers()
 
 int winInit(int screenWidth, int screenHeight)
 {
-	// get connecion with console window
-	HWND hwnd = GetConsoleWindow();
+	int result;
+	HWND hwnd = GetConsoleWindow();  // get connecion with console window
+
 	dc = GetDC(hwnd);
 
 	width = screenWidth;
 	height = screenHeight;
 	createBitmapInfo();
 
-	if(!initBuffers())
+	result = initBuffers();
+	if(!result)
 	{
 		logs("can't create window buffers");
 		return 0;
@@ -73,7 +75,8 @@ int winSwapBuffers()
 
 int winRender()
 {
-	if(!SetDIBitsToDevice(dc, 20, 0, width, height, 0, 0, 0, height, frontBuffer, &bitmapinfo, DIB_PAL_COLORS))
+	int result = SetDIBitsToDevice(dc, 20, 0, width, height, 0, 0, 0, height, frontBuffer, &bitmapinfo, DIB_PAL_COLORS);
+	if(!result)
 	{
 		logs("Error with setting window buffer to device");
 		return 0;
