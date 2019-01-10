@@ -7,7 +7,8 @@
 
 int clCreateAllKernels()
 {
-	if (!clCreateTestKernel("testKernel.cl"))
+	int result = clCreateTestKernel("testKernel.cl");
+	if (!result)
 		return 0;
 }
 
@@ -18,10 +19,12 @@ void clShutdownAllKernels()
 
 static int readFile(const char* filename, char** source, int* size)
 {
+	int result;
 	FILE* file;
 	*size = 0;
 
-	if (fopen_s(&file, filename, "r"))
+	result = fopen_s(&file, filename, "r");
+	if (result)
 	{
 		logs("can't open kernel file with name:");
 		logs(filename);
@@ -85,14 +88,17 @@ static char* createBuildLog(cl_program program)
 
 static const char* createSource(const char** filenames, int filesCount)
 {
-	int i, j, size;
+	int result;
+	int i, j;
 	int sourcesSize = 0;
 	char** sources = malloc(filesCount * sizeof(char*));
 	char* source;
 
 	for(i = 0;i<filesCount;i++)
 	{
-		if(!readFile(filenames[i], sources+i,&size))
+		int size;
+		result = readFile(filenames[i], sources + i, &size);
+		if (!result)
 		{
 			for(j = 0;j<i;j++)
 				free(sources[j]);
@@ -106,7 +112,8 @@ static const char* createSource(const char** filenames, int filesCount)
 
 	for(i=0;i<filesCount;i++)
 	{
-		if (strcat_s(source, sourcesSize + 1, sources[i]))
+		result = strcat_s(source, sourcesSize + 1, sources[i]);
+		if (result)
 		{
 			for(j = i;j<filesCount;j++)
 				free(sources[i]);

@@ -103,11 +103,15 @@ static int createOutBuffers()
 
 int clInit(int width, int height, size_t pixelSize)
 {
-	if (!createContextAndQueue())
+	int result;
+
+	result = createContextAndQueue();
+	if (!result)
 		return 0;
 
 	outBufferSize = width*height*pixelSize;
-	if(!createOutBuffers())
+	result = createOutBuffers();
+	if (!result)
 	{
 		logs("can't create out buffers");
 		return 0;

@@ -69,7 +69,7 @@ int grFrame()
 	result = clSwapBuffers();
 	if (!result)
 		return 0;
-	result = !winSwapBuffers();
+	result = winSwapBuffers();
 	if (!result)
 		return  0;
 

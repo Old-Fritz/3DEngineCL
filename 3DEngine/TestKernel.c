@@ -10,10 +10,12 @@ static cl_kernel kernel;
 
 int clCreateTestKernel(const char* filename)
 {
+	int result;
 	char* filenames[1];
 	filenames[0] = filename;
 
-	if (!clCreateKernelFromFiles(&kernel, "testKernel", filenames, 1))
+	result = clCreateKernelFromFiles(&kernel, "testKernel", filenames, 1);
+	if (!result)
 	{
 		logs("can't create test kernel");
 		return 0;
@@ -24,6 +26,7 @@ int clCreateTestKernel(const char* filename)
 
 int clExecuteTestKernel(int* x, int* y, int* r)
 {
+	int result;
 	size_t globalWorkSize[2];
 	cl_mem outBuffer = clGetOutBuffer();
 
@@ -32,7 +35,8 @@ int clExecuteTestKernel(int* x, int* y, int* r)
 	globalWorkSize[1] = setsGetScreenHeight();
 
 
-	if(!clExecuteKernel(kernel, clGetQueue(), globalWorkSize, 4, x, sizeof(int), y, sizeof(int), r, sizeof(int), &outBuffer, sizeof(cl_mem)))
+	result = clExecuteKernel(kernel, clGetQueue(), globalWorkSize, 4, x, sizeof(int), y, sizeof(int), r, sizeof(int), &outBuffer, sizeof(cl_mem));
+	if (!result)
 	{
 		logs("can't execute test kernel");
 		return 0;
