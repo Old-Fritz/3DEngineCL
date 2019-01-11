@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Kernel.h" />
     <ClInclude Include="KernelManager.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OpenCL.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Graphic.c" />
     <ClCompile Include="IndexBuffer.c" />
+    <ClCompile Include="Kernel.c" />
     <ClCompile Include="KernelManager.c" />
     <ClCompile Include="LogManager.c" />
     <ClCompile Include="main.c" />

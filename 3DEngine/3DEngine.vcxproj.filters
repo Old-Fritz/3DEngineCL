@@ -19,23 +19,14 @@
     <Filter Include="Заголовочные файлы\Graphic">
       <UniqueIdentifier>{7a6bd6eb-e08b-492f-b264-93a9da298c20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Graphic\Kernels">
-      <UniqueIdentifier>{455e335a-ff79-48f8-9812-17dad6f9bbbb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы исходного кода\Services">
       <UniqueIdentifier>{fe983827-a6b2-41b2-9182-ee235e5b6216}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы исходного кода\Graphic">
       <UniqueIdentifier>{fba1360c-e021-4b4c-8c81-a4120f86b449}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Graphic\Kernels">
-      <UniqueIdentifier>{95c7267c-91ea-45ba-8649-7ac3146a0aa4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы ресурсов\kernels">
       <UniqueIdentifier>{8f41196f-5423-4870-ab03-90acaa49ee81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\Graphic\GraphicBuffers">
-      <UniqueIdentifier>{2efbf51b-5bf0-4933-af54-f6eab7f06fb3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Заголовочные файлы\Graphic\ShaderManagment">
       <UniqueIdentifier>{67bc81e0-d6ff-46ea-b702-2a5184e383b0}</UniqueIdentifier>
@@ -45,6 +36,21 @@
     </Filter>
     <Filter Include="Заголовочные файлы\Graphic\ShaderManagment\Shaders">
       <UniqueIdentifier>{c0b66302-244a-4023-b3e7-856043344ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\KernelManagment">
+      <UniqueIdentifier>{455e335a-ff79-48f8-9812-17dad6f9bbbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\KernelManagment\Kernels">
+      <UniqueIdentifier>{b995b6a5-6415-4d4f-8231-6df643944182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Graphic\KernelManagment">
+      <UniqueIdentifier>{95c7267c-91ea-45ba-8649-7ac3146a0aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Graphic\KernelManagment\Kernels">
+      <UniqueIdentifier>{75e67a92-43ff-47aa-89bc-bd206909b514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\GraphicBuffers">
+      <UniqueIdentifier>{2efbf51b-5bf0-4933-af54-f6eab7f06fb3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы исходного кода\Graphic\GraphicBuffers">
       <UniqueIdentifier>{4fd6f9ed-9591-496c-925f-3c0e3e2a4202}</UniqueIdentifier>
@@ -61,10 +67,7 @@
       <Filter>Заголовочные файлы\Services</Filter>
     </ClInclude>
     <ClInclude Include="KernelManager.h">
-      <Filter>Заголовочные файлы\Graphic\Kernels</Filter>
-    </ClInclude>
-    <ClInclude Include="TestKernel.h">
-      <Filter>Заголовочные файлы\Graphic\Kernels</Filter>
+      <Filter>Заголовочные файлы\Graphic\KernelManagment</Filter>
     </ClInclude>
     <ClInclude Include="OpenCL.h">
       <Filter>Заголовочные файлы\Graphic</Filter>
@@ -90,6 +93,12 @@
     <ClInclude Include="SimpleShader.h">
       <Filter>Заголовочные файлы\Graphic\ShaderManagment\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="TestKernel.h">
+      <Filter>Заголовочные файлы\Graphic\KernelManagment\Kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="Kernel.h">
+      <Filter>Заголовочные файлы\Graphic\KernelManagment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -114,10 +123,7 @@
       <Filter>Файлы исходного кода\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="KernelManager.c">
-      <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
-    </ClCompile>
-    <ClCompile Include="TestKernel.c">
-      <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
+      <Filter>Файлы исходного кода\Graphic\KernelManagment</Filter>
     </ClCompile>
     <ClCompile Include="Shader.c">
       <Filter>Файлы исходного кода\Graphic\ShaderManagment</Filter>
@@ -127,6 +133,12 @@
     </ClCompile>
     <ClCompile Include="VertexBuffer.c">
       <Filter>Файлы исходного кода\Graphic\GraphicBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="TestKernel.c">
+      <Filter>Файлы исходного кода\Graphic\KernelManagment\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="Kernel.c">
+      <Filter>Файлы исходного кода\Graphic\KernelManagment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

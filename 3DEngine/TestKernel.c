@@ -2,7 +2,7 @@
 #include "OpenCL.h"
 #include "LogManager.h"
 #include "Settings.h"
-#include "KernelManager.h"
+#include "Kernel.h"
 
 static cl_kernel kernel;
 
