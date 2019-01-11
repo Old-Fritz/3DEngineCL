@@ -43,6 +43,9 @@
     <Filter Include="Файлы исходного кода\Graphic\ShaderManagment">
       <UniqueIdentifier>{2dbd8cbd-1061-4a6c-8ca2-887a081a0b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\ShaderManagment\Shaders">
+      <UniqueIdentifier>{c0b66302-244a-4023-b3e7-856043344ac1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="ShaderManager.h">
       <Filter>Заголовочные файлы\Graphic\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h">
+      <Filter>Заголовочные файлы\Graphic\ShaderManagment\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

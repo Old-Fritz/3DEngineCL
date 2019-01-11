@@ -45,12 +45,17 @@ int grInit()
 
 static int render()
 {
+	int result;
+
 	x++;
 	if (x > setsGetScreenWidth())
 		x = 0;
 
-	if (!clExecuteTestKernel(&x, &y, &r))
+	result = clExecuteTestKernel(&x, &y, &r);
+	if(!result)
 		return  0;
+
+	return 1;
 }
 
 int grFrame()

@@ -154,6 +154,7 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="TestKernel.h" />
     <ClInclude Include="VertexBuffer.h" />
