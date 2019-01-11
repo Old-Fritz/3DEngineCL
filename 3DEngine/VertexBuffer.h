@@ -3,6 +3,7 @@
 
 #include <CL/cl.h>
 
+/// Buffer in graphic devices that contains data about verticies
 
 typedef struct _grVertexBuffer
 {
@@ -11,9 +12,13 @@ typedef struct _grVertexBuffer
 	size_t vertexSize;
 } grVertexBuffer;
 
+// Create buffer
 int grCreateVertexBuffer(grVertexBuffer** buffer, int vertexCount, size_t vertexSize);
+// Release buffer
 int grShutdownVertexBuffer(grVertexBuffer* buffer);
-int grWriteVertexBuffer(grVertexBuffer* buffer, void* data);
-int grReadVertexBuffer(grVertexBuffer* buffer, void** data);
+// Write data to buffer from ptr
+int grWriteVertexBuffer(grVertexBuffer* buffer, void* ptr);
+// Read data from buffer to *ptr
+int grReadVertexBuffer(grVertexBuffer* buffer, void** ptr);
 
 #endif

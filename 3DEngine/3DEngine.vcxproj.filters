@@ -34,6 +34,15 @@
     <Filter Include="Файлы ресурсов\kernels">
       <UniqueIdentifier>{8f41196f-5423-4870-ab03-90acaa49ee81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\GraphicBuffers">
+      <UniqueIdentifier>{2efbf51b-5bf0-4933-af54-f6eab7f06fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Graphic\ShaderManagment">
+      <UniqueIdentifier>{67bc81e0-d6ff-46ea-b702-2a5184e383b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Graphic\ShaderManagment">
+      <UniqueIdentifier>{2dbd8cbd-1061-4a6c-8ca2-887a081a0b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -59,6 +68,18 @@
     </ClInclude>
     <ClInclude Include="Graphic.h">
       <Filter>Заголовочные файлы\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Заголовочные файлы\Graphic\GraphicBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Заголовочные файлы\Graphic\GraphicBuffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Заголовочные файлы\Graphic\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Заголовочные файлы\Graphic\ShaderManagment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="TestKernel.c">
       <Filter>Файлы исходного кода\Graphic\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.c">
+      <Filter>Файлы исходного кода\Graphic\ShaderManagment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
