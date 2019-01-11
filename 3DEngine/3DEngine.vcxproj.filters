@@ -132,13 +132,16 @@
     <ClInclude Include="vector4.h">
       <Filter>Заголовочные файлы\3DMath</Filter>
     </ClInclude>
-    <ClInclude Include="3DMath.h">
-      <Filter>Заголовочные файлы\3DMath</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Заголовочные файлы\3DMath</Filter>
     </ClInclude>
     <ClInclude Include="VectorTransform.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicSystem.h">
+      <Filter>Заголовочные файлы\System\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Math3D.h">
       <Filter>Заголовочные файлы\3DMath</Filter>
     </ClInclude>
   </ItemGroup>

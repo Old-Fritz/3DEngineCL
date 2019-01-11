@@ -146,8 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="3DMath.h" />
+    <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="GraphicSystem.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="KernelManager.h" />
