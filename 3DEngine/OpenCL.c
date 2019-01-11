@@ -5,11 +5,12 @@
 #define USED_DEVICE 0
 
 static cl_context context;
-static cl_command_queue queue;
+static cl_command_queue mainQueue;
+static cl_device_id deviceId;
 static cl_mem backBuffer, frontBuffer;
 static size_t outBufferSize;
 
-static int createContextAndQueue()
+static int getDeviceId()
 {
 	cl_int result;
 	cl_platform_id* platformIDs;
@@ -53,9 +54,40 @@ static int createContextAndQueue()
 		logs("can't get list of all OpenCL devices");
 		return 0;
 	}
+	// save needed device id
+	deviceId = deviceIDs[USED_DEVICE];
 
+	// free all used
+	free(platformIDs);
+	for (i = 0;i < deviceCount;i++)
+	{
+		if (i != USED_DEVICE)
+		{
+			result = clReleaseDevice(deviceIDs[i]);
+			if (result != CL_SUCCESS)
+			{
+				logs("can't release temp device");
+				return 0;
+			}
+		}
+	}
+	free(deviceIDs);
+
+	return 1;
+}
+
+static int createContextAndQueue()
+{
+	cl_int result;
+
+	result = getDeviceId();
+	if(!result)
+	{
+		logs("can't select any openCL device");
+		return 0;
+	}
 	// create context
-	context = clCreateContext(NULL, 1, &deviceIDs[USED_DEVICE], NULL, NULL, &result);
+	context = clCreateContext(NULL, 1, &deviceId, NULL, NULL, &result);
 	if (result != CL_SUCCESS)
 	{
 		logs("can't create context");
@@ -63,25 +95,12 @@ static int createContextAndQueue()
 	}
 
 	// create command queue
-	queue = clCreateCommandQueueWithProperties(context, deviceIDs[USED_DEVICE], NULL, &result);
-	if (result != CL_SUCCESS)
+	result = clCreateQueue(&mainQueue);
+	if (!result)
 	{
-		logs("can't create queue");
+		logs("can't create main queue");
 		return 0;
 	}
-
-	// release all
-	free(platformIDs);
-	for ( i = 0;i < deviceCount;i++)
-	{
-		result = clReleaseDevice(deviceIDs[i]);
-		if (result != CL_SUCCESS)
-		{
-			logs("can't release temp device");
-			return 0;
-		}
-	}
-	free(deviceIDs);
 
 	return 1;
 }
@@ -129,9 +148,24 @@ cl_context clGetContext()
 {
 	return context;
 }
-cl_command_queue clGetQueue()
+cl_command_queue clGetMainQueue()
 {
-	return queue;
+	return mainQueue;
+}
+
+int clCreateQueue(cl_command_queue* queue)
+{
+	cl_int result;
+
+	// create command queue
+	*queue = clCreateCommandQueueWithProperties(context, deviceId, NULL, &result);
+	if (result != CL_SUCCESS)
+	{
+		logs("can't create queue");
+		return 0;
+	}
+
+	return 1;
 }
 
 
@@ -139,7 +173,7 @@ int clSwapBuffers()
 {
 	cl_mem temp = backBuffer;
 	backBuffer = frontBuffer;
-	frontBuffer = backBuffer;
+	frontBuffer = temp;
 
 	return  1;
 }
@@ -148,7 +182,7 @@ int clReadInBuffer(void* buffer)
 {
 	cl_int result;
 	// write to output
-	result = clEnqueueReadBuffer(queue, backBuffer, CL_NON_BLOCKING, 0, outBufferSize, buffer, 0, NULL, NULL);
+	result = clEnqueueReadBuffer(mainQueue, backBuffer, CL_NON_BLOCKING, 0, outBufferSize, buffer, 0, NULL, NULL);
 	if (result != CL_SUCCESS)
 	{
 		logs("can't read OpenCL out buffer");
@@ -163,7 +197,7 @@ int clFinishEx()
 {
 	cl_int result;
 
-	result = clFinish(queue);
+	result = clFinish(mainQueue);
 	if (result != CL_SUCCESS)
 	{
 		logs("can't finish queue");
@@ -176,7 +210,7 @@ int clFinishEx()
 void clShutdown()
 {
 	clReleaseContext(context);
-	clReleaseCommandQueue(queue);
+	clReleaseCommandQueue(mainQueue);
 	clReleaseMemObject(backBuffer);
 	clReleaseMemObject(frontBuffer);
 }

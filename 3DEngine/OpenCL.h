@@ -11,7 +11,10 @@ int clInit(int width, int height, size_t pixelSize);
 // Get components of device
 cl_mem clGetOutBuffer();
 cl_context clGetContext();
-cl_command_queue clGetQueue();
+cl_command_queue clGetMainQueue();
+
+// Create queue for parallel work
+int clCreateQueue(cl_command_queue* queue);
 
 // Swap current out buffer
 int clSwapBuffers();
