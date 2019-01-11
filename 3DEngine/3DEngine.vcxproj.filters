@@ -46,6 +46,9 @@
     <Filter Include="Заголовочные файлы\Graphic\ShaderManagment\Shaders">
       <UniqueIdentifier>{c0b66302-244a-4023-b3e7-856043344ac1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Graphic\GraphicBuffers">
+      <UniqueIdentifier>{4fd6f9ed-9591-496c-925f-3c0e3e2a4202}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -118,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="Shader.c">
       <Filter>Файлы исходного кода\Graphic\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.c">
+      <Filter>Файлы исходного кода\Graphic\GraphicBuffers</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.c">
+      <Filter>Файлы исходного кода\Graphic\GraphicBuffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

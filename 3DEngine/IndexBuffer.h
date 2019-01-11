@@ -5,19 +5,15 @@
 
 /// Buffer in graphic devices that contains data about vertex indicies
 
-typedef struct _grIndexBuffer
-{
-	cl_mem clBuffer;
-	int indexCount;
-} grIndexBuffer;
+typedef struct _grIndexBuffer*  grIndexBuffer;
 
 // Create buffer
-int grCreateIndexBuffer(grIndexBuffer** buffer, int indexCount);
+int grCreateIndexBuffer(grIndexBuffer* buffer, int indexCount);
 // Release buffer
-int grShutdownIndexBuffer(grIndexBuffer* buffer);
+int grShutdownIndexBuffer(grIndexBuffer buffer);
 // Write data to buffer from ptr
-int grWriteIndexBuffer(grIndexBuffer* buffer, void* ptr);
+int grWriteIndexBuffer(grIndexBuffer buffer, void* ptr);
 // Read data from buffer to *ptr
-int grReadIndexxBuffer(grIndexBuffer* buffer, void** ptr);
+int grReadIndexxBuffer(grIndexBuffer buffer, void** ptr);
 
 #endif
