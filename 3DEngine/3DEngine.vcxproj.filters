@@ -76,6 +76,9 @@
     <Filter Include="Файлы исходного кода\AdditionalElements\Graphic\Shaders">
       <UniqueIdentifier>{2e5e43c2-6128-4437-bf69-eb0a918437de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\3DMath">
+      <UniqueIdentifier>{47f82c32-f9f2-4ec2-915e-f345337682f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -119,6 +122,24 @@
     </ClInclude>
     <ClInclude Include="System.h">
       <Filter>Заголовочные файлы\System</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="vector4.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMath.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorTransform.h">
+      <Filter>Заголовочные файлы\3DMath</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
