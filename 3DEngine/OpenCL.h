@@ -16,6 +16,9 @@ cl_command_queue clGetMainQueue();
 // Create queue for parallel work
 int clCreateQueue(cl_command_queue* queue);
 
+// Create buffer in device
+int clCreateRWBuffer(cl_mem* buffer, size_t size);
+
 // Swap current out buffer
 int clSwapBuffers();
 // Copy data from out buffer in simple buffer

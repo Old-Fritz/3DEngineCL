@@ -79,6 +79,21 @@
     <Filter Include="Заголовочные файлы\3DMath">
       <UniqueIdentifier>{47f82c32-f9f2-4ec2-915e-f345337682f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\AdditionalElements\Models">
+      <UniqueIdentifier>{6f106f34-5f38-4f4c-8c96-759570470ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\System\ModelManagment">
+      <UniqueIdentifier>{48b6ecf3-9b7e-4cb5-a127-0619eb679ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\System\ModelManagment">
+      <UniqueIdentifier>{34fba4b0-6aa7-45dc-885e-af40afb18579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\AdditionalElements\Renderers">
+      <UniqueIdentifier>{4228ac5d-7c35-4f67-904a-bbb14deaa2c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\AdditionalElements\Renderers">
+      <UniqueIdentifier>{8db54300-2aa1-4ceb-a199-94de3dd932a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -144,6 +159,18 @@
     <ClInclude Include="Math3D.h">
       <Filter>Заголовочные файлы\3DMath</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Заголовочные файлы\System\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleModel.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseModel.h">
+      <Filter>Заголовочные файлы\System\ModelManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="SSSMRenderer.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -184,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="system.c">
       <Filter>Файлы исходного кода\System</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseModel.c">
+      <Filter>Файлы исходного кода\System\ModelManagment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

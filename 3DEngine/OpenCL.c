@@ -107,14 +107,14 @@ static int createContextAndQueue()
 
 static int createOutBuffers()
 {
-	cl_int result;
+	int result;
 
-	backBuffer = clCreateBuffer(context, CL_MEM_READ_WRITE, outBufferSize, NULL, &result);
-	if (result != CL_SUCCESS)
+	result = clCreateRWBuffer(&backBuffer, outBufferSize);
+	if (!result)
 		return 0;
 
-	frontBuffer = clCreateBuffer(context, CL_MEM_READ_WRITE, outBufferSize, NULL, &result);
-	if (result != CL_SUCCESS)
+	result = clCreateRWBuffer(&frontBuffer, outBufferSize);
+	if (!result)
 		return 0;
 
 	return 1;
@@ -162,6 +162,20 @@ int clCreateQueue(cl_command_queue* queue)
 	if (result != CL_SUCCESS)
 	{
 		logs("can't create queue");
+		return 0;
+	}
+
+	return 1;
+}
+
+int clCreateRWBuffer(cl_mem* buffer, size_t size)
+{
+	cl_int result;
+
+	*buffer = clCreateBuffer(context, CL_MEM_READ_WRITE, size, NULL, &result);
+	if (result != CL_SUCCESS)
+	{
+		logs("can't create open cl buffer");
 		return 0;
 	}
 

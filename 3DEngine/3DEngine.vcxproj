@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseModel.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="GraphicSystem.h" />
@@ -158,7 +160,9 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="SimpleModel.h" />
     <ClInclude Include="SimpleShader.h" />
+    <ClInclude Include="SSSMRenderer.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="TestKernel.h" />
     <ClInclude Include="vector2.h" />
@@ -169,6 +173,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseModel.c" />
     <ClCompile Include="Graphic.c" />
     <ClCompile Include="IndexBuffer.c" />
     <ClCompile Include="Kernel.c" />
