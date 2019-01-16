@@ -94,6 +94,9 @@
     <Filter Include="Файлы исходного кода\AdditionalElements\Renderers">
       <UniqueIdentifier>{8db54300-2aa1-4ceb-a199-94de3dd932a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\3DMath">
+      <UniqueIdentifier>{bf7032c1-1514-4042-ba62-1b9020068f35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -214,6 +217,15 @@
     </ClCompile>
     <ClCompile Include="BaseModel.c">
       <Filter>Файлы исходного кода\System\ModelManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="vector4.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

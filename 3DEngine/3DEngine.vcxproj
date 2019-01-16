@@ -185,6 +185,9 @@
     <ClCompile Include="Shader.c" />
     <ClCompile Include="system.c" />
     <ClCompile Include="TestKernel.c" />
+    <ClCompile Include="vector2.c" />
+    <ClCompile Include="vector3.c" />
+    <ClCompile Include="vector4.c" />
     <ClCompile Include="VertexBuffer.c" />
     <ClCompile Include="Window.c" />
   </ItemGroup>
