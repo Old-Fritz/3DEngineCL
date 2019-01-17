@@ -16,6 +16,8 @@ float m3dMatrixDeterminant(const m3dMatrix* matrix);
 m3dMatrix* m3dMatrixInverse(m3dMatrix* outMatrix, const m3dMatrix* matrix);
 m3dMatrix* m3dMatrixMultiply(m3dMatrix* outMatrix, const m3dMatrix* matrix1, const m3dMatrix* matrix2);
 m3dMatrix* m3dMatrixTranspose(m3dMatrix* outMatrix, const m3dMatrix* matrix);
+m3dMatrix* m3dMatrixScale(m3dMatrix* outMatrix, const m3dMatrix* matrix, float scale);
+m3dMatrix* m3dMatrixCopy(m3dMatrix* outMatrix, const m3dMatrix* matrix);
 
 // building matricies (left-handed)
 m3dMatrix* m3dMatrixIdentity(m3dMatrix* outMatrix);
