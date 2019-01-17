@@ -30,6 +30,8 @@ m3dMatrix* m3dMatrixCopy(m3dMatrix* outMatrix, const m3dMatrix* matrix)
 	outMatrix->_42 = matrix->_42;
 	outMatrix->_43 = matrix->_43;
 	outMatrix->_44 = matrix->_44;
+
+	return outMatrix;
 }
 
 float m3dMatrixDeterminant(const m3dMatrix* matrix)
@@ -146,6 +148,50 @@ m3dMatrix* m3dMatrixScale(m3dMatrix* outMatrix, const m3dMatrix* matrix, float s
 	outMatrix->_42 = matrix->_42 * scale;
 	outMatrix->_43 = matrix->_43 * scale;
 	outMatrix->_44 = matrix->_44 * scale;
+
+	return outMatrix;
+}
+
+m3dMatrix* m3dMatrixAdd(m3dMatrix* outMatrix, const m3dMatrix* matrix1, const m3dMatrix* matrix2)
+{
+	outMatrix->_11 = matrix1->_11 + matrix2->_11;
+	outMatrix->_12 = matrix1->_12 + matrix2->_12;
+	outMatrix->_13 = matrix1->_13 + matrix2->_13;
+	outMatrix->_14 = matrix1->_14 + matrix2->_14;
+	outMatrix->_21 = matrix1->_21 + matrix2->_21;
+	outMatrix->_22 = matrix1->_22 + matrix2->_22;
+	outMatrix->_23 = matrix1->_23 + matrix2->_23;
+	outMatrix->_24 = matrix1->_24 + matrix2->_24;
+	outMatrix->_31 = matrix1->_31 + matrix2->_31;
+	outMatrix->_32 = matrix1->_32 + matrix2->_32;
+	outMatrix->_33 = matrix1->_33 + matrix2->_33;
+	outMatrix->_34 = matrix1->_34 + matrix2->_34;
+	outMatrix->_41 = matrix1->_41 + matrix2->_41;
+	outMatrix->_42 = matrix1->_42 + matrix2->_42;
+	outMatrix->_43 = matrix1->_43 + matrix2->_43;
+	outMatrix->_44 = matrix1->_44 + matrix2->_44;
+
+	return outMatrix;
+}
+
+m3dMatrix* m3dMatrixSub(m3dMatrix* outMatrix, const m3dMatrix* matrix1, const m3dMatrix* matrix2)
+{
+	outMatrix->_11 = matrix1->_11 - matrix2->_11;
+	outMatrix->_12 = matrix1->_12 - matrix2->_12;
+	outMatrix->_13 = matrix1->_13 - matrix2->_13;
+	outMatrix->_14 = matrix1->_14 - matrix2->_14;
+	outMatrix->_21 = matrix1->_21 - matrix2->_21;
+	outMatrix->_22 = matrix1->_22 - matrix2->_22;
+	outMatrix->_23 = matrix1->_23 - matrix2->_23;
+	outMatrix->_24 = matrix1->_24 - matrix2->_24;
+	outMatrix->_31 = matrix1->_31 - matrix2->_31;
+	outMatrix->_32 = matrix1->_32 - matrix2->_32;
+	outMatrix->_33 = matrix1->_33 - matrix2->_33;
+	outMatrix->_34 = matrix1->_34 - matrix2->_34;
+	outMatrix->_41 = matrix1->_41 - matrix2->_41;
+	outMatrix->_42 = matrix1->_42 - matrix2->_42;
+	outMatrix->_43 = matrix1->_43 - matrix2->_43;
+	outMatrix->_44 = matrix1->_44 - matrix2->_44;
 
 	return outMatrix;
 }

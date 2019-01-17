@@ -16,5 +16,6 @@ float m3dVec3Dot(const m3dVector3* vec1, const m3dVector3* vec2);
 float m3dVec3Length(const m3dVector3* vec);
 m3dVector3* m3dVec3Normalize(m3dVector3* outVec, const m3dVector3* vec);
 m3dVector3* m3dVec3Scale(m3dVector3* outVec, const m3dVector3* vec, float scale);
+m3dVector3* m3dVec3Copy(m3dVector3* outVec, const m3dVector3* vec);
 
 #endif

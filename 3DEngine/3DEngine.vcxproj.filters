@@ -227,6 +227,15 @@
     <ClCompile Include="vector4.c">
       <Filter>Файлы исходного кода\3DMath</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixOperations.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixBuilding.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorTransform.c">
+      <Filter>Файлы исходного кода\3DMath</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="testKernel.cl">

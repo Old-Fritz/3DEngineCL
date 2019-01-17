@@ -1,6 +1,5 @@
 #include "System.h"
 
-
 int main()
 {
 	int result;
@@ -11,6 +10,7 @@ int main()
 
 	sysRun();
 	sysShutdown();
+
 
 	return 0;
 }

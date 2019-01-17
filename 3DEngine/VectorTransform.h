@@ -8,13 +8,13 @@
 /// determine transform operations with vectors and matrix
 
 // vector2 transform
-m3dVector2* m3dVec2TransformCoord(m3dVector2* vecOut, const m3dVector2* vec, const m3dMatrix* matrix);
+m3dVector2* m3dVec2TransformCoord(m3dVector2* outVec, const m3dVector2* vec, const m3dMatrix* matrix);
 
 // vector3 transform
-m3dVector3* m3dVec3TransformCoord(m3dVector3* vecOut, const m3dVector3* vec, const m3dMatrix* matrix);
+m3dVector3* m3dVec3TransformCoord(m3dVector3* outVec, const m3dVector3* vec, const m3dMatrix* matrix);
 
 // vector4 transform
-m3dVector4* m3dVec4TransformCoord(m3dVector4* vecOut, const m3dVector4* vec, const m3dMatrix* matrix);
+m3dVector4* m3dVec4TransformCoord(m3dVector4* outVec, const m3dVector4* vec, const m3dMatrix* matrix);
 
 
 #endif

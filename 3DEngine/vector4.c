@@ -52,3 +52,13 @@ m3dVector4* m3dVec4Scale(m3dVector4* outVec, const m3dVector4* vec, float scale)
 
 	return outVec;
 }
+
+m3dVector4* m3dVec4Copy(m3dVector4* outVec, const m3dVector4* vec)
+{
+	outVec->x = vec->x;
+	outVec->y = vec->y;
+	outVec->z = vec->z;
+	outVec->w = vec->w;
+
+	return outVec;
+}
