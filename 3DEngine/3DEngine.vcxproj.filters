@@ -114,9 +114,6 @@
     <ClInclude Include="Window.h">
       <Filter>Заголовочные файлы\System\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic.h">
-      <Filter>Заголовочные файлы\System\Services</Filter>
-    </ClInclude>
     <ClInclude Include="VertexBuffer.h">
       <Filter>Заголовочные файлы\System\Graphic\GraphicBuffers</Filter>
     </ClInclude>
@@ -176,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="ClearKernel.h">
       <Filter>Заголовочные файлы\AdditionalElements\Graphic\Kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>Заголовочные файлы\System\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="ClearKernel.c">
       <Filter>Файлы исходного кода\AdditionalElements\Graphic\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.c">
+      <Filter>Файлы исходного кода\System\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

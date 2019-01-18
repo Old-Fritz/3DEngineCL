@@ -5,6 +5,7 @@
 #include "OpenCL.h"
 #include "KernelManager.h"
 #include "GraphicSystem.h"
+#include "Camera.h"
 
 static int x = 0;
 static int y;
@@ -34,6 +35,13 @@ int grInit()
 	if(!result)
 	{
 		logs("can't init graphic system");
+		return 0;
+	}
+
+	result = grCameraInit();
+	if(!result)
+	{
+		logs("can't init camera");
 		return 0;
 	}
 
