@@ -26,19 +26,12 @@ __kernel void testKernel(
 
 	int ind = p1.y*width * 3 + p1.x * 3;
 
-	if (fast_distance(p1, p2) > r)
+	if (fast_distance(p1, p2) < r)
 	{
 		//pOutputVectorHost[ind] = (uchar3)(255,0,0);
-		pOutputVectorHost[ind] = 255;
-		pOutputVectorHost[ind + 1] = 0;
-		pOutputVectorHost[ind + 2] = 0;
-	}
-	else
-	{
-		//pOutputVectorHost[ind] = (uchar3)(255, 255, 255);
 		pOutputVectorHost[ind] = 0;
-		pOutputVectorHost[ind + 1] = 255;
-		pOutputVectorHost[ind + 2] = 0;
+		pOutputVectorHost[ind + 1] = 0;
+		pOutputVectorHost[ind + 2] = 255;
 	}
 
 

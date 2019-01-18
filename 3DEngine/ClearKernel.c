@@ -20,7 +20,7 @@ int clCreateClearKernel(const char* filename)
 	return 1;
 }
 
-int clExecuteClearKernel(cl_mem buffer, int width, int height, int valuesCount, float* values)
+int clExecuteClearKernel(cl_mem buffer, int width, int height, int bufferElementSize, int valuesCount, float values[4])
 {
 	int result;
 	size_t globalWorkSize[3];
@@ -31,7 +31,7 @@ int clExecuteClearKernel(cl_mem buffer, int width, int height, int valuesCount, 
 	globalWorkSize[2] = valuesCount;
 
 
-	result = clExecuteKernel(kernel, clGetMainQueue(), globalWorkSize, 2, 2, &buffer, sizeof(cl_mem), values, sizeof(float)*valuesCount);
+	result = clExecuteKernel(kernel, clGetMainQueue(), globalWorkSize, 3, 3, &buffer, sizeof(cl_mem), &bufferElementSize, sizeof(int), values,  sizeof(float)*4);
 	if (!result)
 	{
 		logs("can't execute clear kernel");

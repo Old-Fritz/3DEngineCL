@@ -4,6 +4,7 @@
 
 static int screenWidth = 0;
 static int screenHeight = 0;
+static float fieldOfView = 0;
 
 int setsInit(const char* filename)
 {
@@ -29,6 +30,13 @@ int setsInit(const char* filename)
 	logs("screenHeight is ");
 	logsNum(screenHeight);
 
+	// load fieldOfView
+	result = fscanf_s(file, "%s%f", parName, 128, &fieldOfView);
+	if (!result)
+		return 0;
+	logs("fieldOfView is ");
+	logsNum(fieldOfView);
+
 	return 1;
 }
 
@@ -41,4 +49,9 @@ int setsGetScreenWidth()
 int setsGetScreenHeight()
 {
 	return screenHeight;
+}
+
+float setGetFieldOfView()
+{
+	return fieldOfView;
 }

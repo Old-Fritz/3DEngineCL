@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "OpenCL.h"
 #include "KernelManager.h"
+#include "GraphicSystem.h"
 
 static int x = 0;
 static int y;
@@ -29,6 +30,13 @@ int grInit()
 	}
 	logs("init openCL context");
 
+	result = grInitGraphicSystem();
+	if(!result)
+	{
+		logs("can't init graphic system");
+		return 0;
+	}
+
 	result = clCreateAllKernels();
 	if (!result)
 	{
@@ -46,10 +54,16 @@ int grInit()
 static int render()
 {
 	int result;
+	m3dVector4 color = { 255,255,0,0 };
 
 	x++;
 	if (x > setsGetScreenWidth())
 		x = 0;
+
+	
+	result = grClearBackBuffer(color);
+	if(!result)
+		return  0;
 
 	result = clExecuteTestKernel(&x, &y, &r);
 	if(!result)
@@ -100,6 +114,7 @@ int grFrame()
 
 void grShutdown()
 {
+	grShutdownGraphicSystem();
 	clShutdownAllKernels();
 	clShutdown();
 	winShutdown();

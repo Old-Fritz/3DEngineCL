@@ -8,5 +8,6 @@ int setsInit(const char* filename);
 // get screen parameters
 int setsGetScreenWidth();
 int setsGetScreenHeight();
+float setGetFieldOfView();
 
 #endif

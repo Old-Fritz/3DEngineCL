@@ -12,6 +12,8 @@ int clCreateAllKernels()
 	result = clCreateClearKernel("clearKernel.cl");
 	if (!result)
 		return 0;
+
+	return 1;
 }
 
 void clShutdownAllKernels()

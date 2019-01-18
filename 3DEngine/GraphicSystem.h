@@ -6,9 +6,10 @@
 /// Control of graphic global settings
 
 int grInitGraphicSystem();
+void grShutdownGraphicSystem();
 
 m3dMatrix* grGetWorldMatrix(m3dMatrix* outMatrix);
-m3dMatrix* grGetProjectionMatrix(m3dMatrix* outmatrix);
+m3dMatrix* grGetProjectionMatrix(m3dMatrix* outMatrix);
 
 cl_mem grGetDepthBuffer();
 int grClearDepthBuffer();

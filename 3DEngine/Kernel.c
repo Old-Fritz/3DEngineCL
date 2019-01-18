@@ -179,7 +179,6 @@ int clCreateKernelFromFiles(cl_kernel* kernel, const char* kernelName, const cha
 
 int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWorkSize, int globalWorkDimensions, int argsCount, ...)
 {
-	int ind = 0;
 	int i, argSize;
 	void* arg;
 	cl_int result;
@@ -192,7 +191,7 @@ int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWork
 		arg = va_arg(args, void*);
 		argSize = va_arg(args, int);
 
-		result = clSetKernelArg(kernel, ind++, argSize, arg);
+		result = clSetKernelArg(kernel, i, argSize, arg);
 		if (result != CL_SUCCESS)
 		{
 			logs("can't set argumet to kernel. Argument number:");
