@@ -10,10 +10,12 @@ typedef struct _grIndexBuffer*  grIndexBuffer;
 // Create buffer
 int grCreateIndexBuffer(grIndexBuffer* buffer, int indexCount);
 // Release buffer
-int grShutdownIndexBuffer(grIndexBuffer buffer);
+void grShutdownIndexBuffer(grIndexBuffer buffer);
 // Write data to buffer from ptr
 int grWriteIndexBuffer(grIndexBuffer buffer, void* ptr);
 // Read data from buffer to *ptr
-int grReadIndexxBuffer(grIndexBuffer buffer, void** ptr);
+int grReadIndexBuffer(grIndexBuffer buffer, void* ptr);
+// Get count of indicies in buffer
+int grGetIndexCount(grIndexBuffer buffer);
 
 #endif

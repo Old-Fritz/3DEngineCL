@@ -16,10 +16,12 @@ typedef struct _grVertexBuffer* grVertexBuffer;
 // Create buffer
 int grCreateVertexBuffer(grVertexBuffer* buffer, int vertexCount, size_t vertexSize, grPrimitiveTopology topology);
 // Release buffer
-int grShutdownVertexBuffer(grVertexBuffer buffer);
+void grShutdownVertexBuffer(grVertexBuffer buffer);
 // Write data to buffer from ptr
 int grWriteVertexBuffer(grVertexBuffer buffer, void* ptr);
 // Read data from buffer to *ptr
-int grReadVertexBuffer(grVertexBuffer buffer, void** ptr);
+int grReadVertexBuffer(grVertexBuffer buffer, void* ptr);
+// Get count of vertex in buffer
+int grGetVertexCount(grVertexBuffer buffer);
 
 #endif

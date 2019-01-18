@@ -182,6 +182,34 @@ int clCreateRWBuffer(cl_mem* buffer, size_t size)
 	return 1;
 }
 
+int clReadRWBuffer(cl_mem buffer, size_t size, void* ptr)
+{
+	cl_int result;
+
+	result = clEnqueueReadBuffer(mainQueue, buffer, CL_BLOCKING, 0, size, ptr, 0, NULL, NULL);
+	if (result != CL_SUCCESS)
+	{
+		logs("can't read OpenCL buffer");
+		return 0;
+	}
+
+	return 1;
+}
+
+int clWriteRWBuffer(cl_mem buffer, size_t size, void* ptr)
+{
+	cl_int result;
+
+	result = clEnqueueWriteBuffer(mainQueue, buffer, CL_BLOCKING, 0, size, ptr, 0, NULL, NULL);
+	if (result != CL_SUCCESS)
+	{
+		logs("can't write in OpenCL buffer");
+		return 0;
+	}
+
+	return 1;
+}
+
 
 int clSwapBuffers()
 {
@@ -206,6 +234,7 @@ int clReadInBuffer(void* buffer)
 
 	return 1;
 }
+
 
 int clFinishEx()
 {
