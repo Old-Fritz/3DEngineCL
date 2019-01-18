@@ -7,6 +7,6 @@
 // Create kernel from file
 int clCreateKernelFromFiles(cl_kernel* kernel, const char* kernelName, const char** filenames, int filesCount);
 // Execute kernel with set of arguments (after every argement size is required)
-int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWorkSize, int argsCount, ...);
+int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWorkSize, int globalWorkDimensions, int argsCount, ...);
 
 #endif

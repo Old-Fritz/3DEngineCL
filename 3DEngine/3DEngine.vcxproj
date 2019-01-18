@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="BaseModel.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ClearKernel.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="GraphicSystem.h" />
@@ -175,7 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseModel.c" />
+    <ClCompile Include="ClearKernel.c" />
     <ClCompile Include="Graphic.c" />
+    <ClCompile Include="GraphicSystem.c" />
     <ClCompile Include="IndexBuffer.c" />
     <ClCompile Include="Kernel.c" />
     <ClCompile Include="KernelManager.c" />
@@ -196,6 +199,7 @@
     <ClCompile Include="Window.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="clearKernel.cl" />
     <None Include="testKernel.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

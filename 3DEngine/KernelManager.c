@@ -3,13 +3,20 @@
 
 int clCreateAllKernels()
 {
-	int result = clCreateTestKernel("testKernel.cl");
+	int result;
+	
+	result = clCreateTestKernel("testKernel.cl");
+	if (!result)
+		return 0;
+
+	result = clCreateClearKernel("clearKernel.cl");
 	if (!result)
 		return 0;
 }
 
 void clShutdownAllKernels()
 {
+	clShutdownClearKernel();
 	clShutdownTestKernel();
 }
 

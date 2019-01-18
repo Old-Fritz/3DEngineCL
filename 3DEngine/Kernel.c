@@ -177,7 +177,7 @@ int clCreateKernelFromFiles(cl_kernel* kernel, const char* kernelName, const cha
 	return 1;
 }
 
-int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWorkSize, int argsCount, ...)
+int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWorkSize, int globalWorkDimensions, int argsCount, ...)
 {
 	int ind = 0;
 	int i, argSize;
@@ -202,7 +202,7 @@ int clExecuteKernel(cl_kernel kernel, cl_command_queue queue, size_t* globalWork
 	}
 
 	// add in queue and  execute
-	result = clEnqueueNDRangeKernel(queue, kernel, 2, NULL, globalWorkSize, NULL, 0, NULL, NULL);
+	result = clEnqueueNDRangeKernel(queue, kernel, globalWorkDimensions, NULL, globalWorkSize, NULL, 0, NULL, NULL);
 	if (result != CL_SUCCESS)
 	{
 		logs("can't add in queue and execute kernel");

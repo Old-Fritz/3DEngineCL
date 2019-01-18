@@ -35,7 +35,7 @@ int clExecuteTestKernel(int* x, int* y, int* r)
 	globalWorkSize[1] = setsGetScreenHeight();
 
 
-	result = clExecuteKernel(kernel, clGetMainQueue(), globalWorkSize, 4, x, sizeof(int), y, sizeof(int), r, sizeof(int), &outBuffer, sizeof(cl_mem));
+	result = clExecuteKernel(kernel, clGetMainQueue(), globalWorkSize, 2, 4, x, sizeof(int), y, sizeof(int), r, sizeof(int), &outBuffer, sizeof(cl_mem));
 	if (!result)
 	{
 		logs("can't execute test kernel");

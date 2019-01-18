@@ -1,6 +1,7 @@
 #ifndef KERNEL_MANAGER_H
 #define KERNEL_MANAGER_H
 #include "TestKernel.h"
+#include "ClearKernel.h"
 
 /// United control of creating and releasing all kernels
 
