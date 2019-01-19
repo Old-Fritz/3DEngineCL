@@ -603,6 +603,7 @@ m3dVector2* m3dVec2TransformCoord(m3dVector2* outVec, const m3dVector2* vec, con
 	m3dVector4 transVec = { vec->x, vec->y, 0, 1 };
 
 	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	m3dVec4Scale(&transVec, &transVec, 1 / transVec.w);
 	m3dVec2Copy(outVec, &transVec);
 
 	return outVec;
@@ -613,7 +614,51 @@ m3dVector3* m3dVec3TransformCoord(m3dVector3* outVec, const m3dVector3* vec, con
 	m3dVector4 transVec = { vec->x, vec->y, vec->z, 1 };
 
 	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	m3dVec4Scale(&transVec, &transVec, 1 / transVec.w);
 	m3dVec3Copy(outVec, &transVec);
 
 	return outVec;
 }
+
+
+m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector4* vec, const m3dMatrix* matrix)
+{
+	m3dVector4 transVec = { vec->x, vec->y, vec->z, 1 };
+
+	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	transVec.x /= transVec.w;
+	transVec.y /= transVec.w;
+
+	m3dVec3Copy(outVec, &transVec);
+
+	return outVec;
+}
+
+
+inline float atomicMaxf(volatile __global float *source, const float operand) {
+	union {
+		unsigned int intVal;
+		float floatVal;
+	} newVal;
+	union {
+		unsigned int intVal;
+		float floatVal;
+	} prevVal;
+	do {
+		prevVal.floatVal = *source;
+		newVal.floatVal = max(prevVal.floatVal, operand);
+	} while (atomic_cmpxchg((volatile __global unsigned int *)source, prevVal.intVal, newVal.intVal) != prevVal.intVal);
+
+	return newVal.floatVal;
+}
+
+void swap(void** val1, void** val2)
+{
+	void* temp = *val1;
+	*val1 = *val2;
+	*val2 = temp;
+}
+
+
+
+

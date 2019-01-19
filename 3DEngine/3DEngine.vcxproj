@@ -206,10 +206,10 @@
     <None Include="kernels\libs\math3d.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
-    <None Include="kernels\shaderBase\clipping.cl">
+    <None Include="kernels\libs\shaderBase.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
-    <None Include="kernels\shaderBase\depth.cl">
+    <None Include="kernels\shaderBase\clipping.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="kernels\shaderBase\rasterization.cl">

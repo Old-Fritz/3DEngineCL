@@ -1,13 +1,4 @@
-#include "../libs/math3d.cl"
-#include "../libs/shaderBase.cl"
-
-typedef struct PixelInputType
+int PixelShader(PixelInputType* input, ShaderParams* params, m3dVector4* outputColor)
 {
-	m3dVector3 position;
-	m3dVector4 color;
-} PixelInputType;
-
-m3dVector4 PixelInput(PixelInputType input)
-{
-	return input.color;
+	return params->color;
 }

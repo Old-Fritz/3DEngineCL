@@ -6,6 +6,7 @@ m3dVector2* m3dVec2TransformCoord(m3dVector2* outVec, const m3dVector2* vec, con
 	m3dVector4 transVec = { vec->x, vec->y, 0, 1 };
 
 	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	m3dVec4Scale(&transVec, &transVec, 1 / transVec.w);
 	m3dVec2Copy(outVec, &transVec);
 
 	return outVec;
@@ -16,6 +17,7 @@ m3dVector3* m3dVec3TransformCoord(m3dVector3* outVec, const m3dVector3* vec, con
 	m3dVector4 transVec = {vec->x, vec->y, vec->z, 1};
 
 	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	m3dVec4Scale(&transVec, &transVec, 1 / transVec.w);
 	m3dVec3Copy(outVec, &transVec);
 
 	return outVec;
@@ -31,6 +33,19 @@ m3dVector4* m3dVec4TransformCoord(m3dVector4* outVec, const m3dVector4* vec, con
 	tempVec.w = vec->x*matrix->_14 + vec->y*matrix->_24 + vec->z*matrix->_34 + vec->w*matrix->_44;
 
 	m3dVec4Copy(outVec, &tempVec);
+
+	return outVec;
+}
+
+m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector4* vec, const m3dMatrix* matrix)
+{
+	m3dVector4 transVec = { vec->x, vec->y, vec->z, 1 };
+
+	m3dVec4TransformCoord(&transVec, &transVec, matrix);
+	transVec.x /= transVec.w;
+	transVec.y /= transVec.w;
+
+	m3dVec3Copy(outVec, &transVec);
 
 	return outVec;
 }

@@ -274,9 +274,6 @@
     <None Include="kernels\shaderBase\clipping.cl">
       <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
     </None>
-    <None Include="kernels\shaderBase\depth.cl">
-      <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
-    </None>
     <None Include="kernels\shaderBase\rasterization.cl">
       <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
     </None>
@@ -284,6 +281,9 @@
       <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
     </None>
     <None Include="kernels\libs\math3d.cl">
+      <Filter>Файлы ресурсов\kernels\libs</Filter>
+    </None>
+    <None Include="kernels\libs\shaderBase.cl">
       <Filter>Файлы ресурсов\kernels\libs</Filter>
     </None>
   </ItemGroup>
