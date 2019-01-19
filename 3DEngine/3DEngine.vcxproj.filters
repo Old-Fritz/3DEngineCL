@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Файлы ресурсов\kernels">
-      <UniqueIdentifier>{8f41196f-5423-4870-ab03-90acaa49ee81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Заголовочные файлы\AdditionalElements">
       <UniqueIdentifier>{d47e9da3-930a-408a-abf8-9a5f7ecce797}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,18 @@
     </Filter>
     <Filter Include="Файлы исходного кода\3DMath">
       <UniqueIdentifier>{bf7032c1-1514-4042-ba62-1b9020068f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\kernels">
+      <UniqueIdentifier>{cf75068a-d382-47ed-9fd5-445503d30186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\kernels\libs">
+      <UniqueIdentifier>{9fbecef5-95a3-4639-a1de-4f77a22ce207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\kernels\shaders">
+      <UniqueIdentifier>{4dcac737-41ad-4ccd-af7f-3f145db97153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\kernels\shaderBase">
+      <UniqueIdentifier>{1e44457f-5677-42af-b77a-3b960c892f22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,11 +259,32 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="testKernel.cl">
+    <None Include="kernels\clearKernel.cl">
       <Filter>Файлы ресурсов\kernels</Filter>
     </None>
-    <None Include="clearKernel.cl">
+    <None Include="kernels\testKernel.cl">
       <Filter>Файлы ресурсов\kernels</Filter>
+    </None>
+    <None Include="kernels\shaders\psSimple.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\vsSimple.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaderBase\clipping.cl">
+      <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
+    </None>
+    <None Include="kernels\shaderBase\depth.cl">
+      <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
+    </None>
+    <None Include="kernels\shaderBase\rasterization.cl">
+      <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
+    </None>
+    <None Include="kernels\shaderBase\shaderKernel.cl">
+      <Filter>Файлы ресурсов\kernels\shaderBase</Filter>
+    </None>
+    <None Include="kernels\libs\math3d.cl">
+      <Filter>Файлы ресурсов\kernels\libs</Filter>
     </None>
   </ItemGroup>
 </Project>

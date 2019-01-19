@@ -6,9 +6,9 @@
 /// Buffer in graphic devices that contains data about verticies
 
 typedef enum grPrimitiveTopology{
-	GR_PRIMITIVE_TOPOLOGY_POINT,
-	GR_PRIMITIVE_TOPOLOGY_LINE,
-	GR_PRIMITIVE_TOPOLOGY_TRIANGLE
+	GR_PRIMITIVE_TOPOLOGY_POINT = 1,
+	GR_PRIMITIVE_TOPOLOGY_LINE = 2,
+	GR_PRIMITIVE_TOPOLOGY_TRIANGLE = 3
 } grPrimitiveTopology;
 
 typedef struct _grVertexBuffer* grVertexBuffer;
@@ -23,5 +23,7 @@ int grWriteVertexBuffer(grVertexBuffer buffer, void* ptr);
 int grReadVertexBuffer(grVertexBuffer buffer, void* ptr);
 // Get count of vertex in buffer
 int grGetVertexCount(grVertexBuffer buffer);
+// Get primitive of buffer
+grPrimitiveTopology grGetVertexPrimitive(grVertexBuffer buffer);
 
 #endif

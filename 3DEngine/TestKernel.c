@@ -11,10 +11,11 @@ static cl_kernel kernel;
 int clCreateTestKernel(const char* filename)
 {
 	int result;
-	char* filenames[1];
-	filenames[0] = filename;
+	char* filenames[2];
+	filenames[0] = "kernels/libs/math3d.cl";
+	filenames[1] = filename;
 
-	result = clCreateKernelFromFiles(&kernel, "testKernel", filenames, 1);
+	result = clCreateKernelFromFiles(&kernel, "testKernel", filenames, 2);
 	if (!result)
 	{
 		logs("can't create test kernel");

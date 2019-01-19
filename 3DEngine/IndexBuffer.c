@@ -13,20 +13,20 @@ struct _grIndexBuffer
 int grCreateIndexBuffer(grIndexBuffer* buffer, int indexCount)
 {
 	int result;
-	struct _grIndexBuffer* structBuffer = malloc(sizeof(struct _grIndexBuffer));
+	struct _grIndexBuffer* bufferStruct = malloc(sizeof(struct _grIndexBuffer));
 
 	// fill new structure
-	result = clCreateRWBuffer(&(structBuffer->clBuffer), indexCount*sizeof(int));
+	result = clCreateRWBuffer(&(bufferStruct->clBuffer), indexCount*sizeof(int));
 	if (!result)
 	{
 		logs("Can't get memory for index buffer");
-		free(structBuffer);
+		free(bufferStruct);
 		return 0;
 	}
-	structBuffer->indexCount = indexCount;
+	bufferStruct->indexCount = indexCount;
 
 	// set new structure to output buffer
-	*buffer = structBuffer;
+	*buffer = bufferStruct;
 
 	return 1;
 }

@@ -15,22 +15,22 @@ struct _grVertexBuffer
 int grCreateVertexBuffer(grVertexBuffer* buffer, int vertexCount, size_t vertexSize, grPrimitiveTopology topology)
 {
 	int result;
-	struct _grVertexBuffer* structBuffer = malloc(sizeof(struct _grVertexBuffer));
+	struct _grVertexBuffer* bufferStruct = malloc(sizeof(struct _grVertexBuffer));
 
 	// fill new structure
-	result = clCreateRWBuffer(&(structBuffer->clBuffer), vertexCount*vertexSize);
+	result = clCreateRWBuffer(&(bufferStruct->clBuffer), vertexCount*vertexSize);
 	if(!result)
 	{
 		logs("Can't get memory for vertex buffer");
-		free(structBuffer);
+		free(bufferStruct);
 		return 0;
 	}
-	structBuffer->vertexCount = vertexCount;
-	structBuffer->vertexSize = vertexSize;
-	structBuffer->topology = topology;
+	bufferStruct->vertexCount = vertexCount;
+	bufferStruct->vertexSize = vertexSize;
+	bufferStruct->topology = topology;
 
 	// set new structure to output buffer
-	*buffer = structBuffer;
+	*buffer = bufferStruct;
 
 	return 1;
 }
@@ -76,4 +76,9 @@ int grReadVertexBuffer(grVertexBuffer buffer, void* ptr)
 int grGetVertexCount(grVertexBuffer buffer)
 {
 	return buffer->vertexCount;
+}
+
+grPrimitiveTopology grGetVertexPrimitive(grVertexBuffer buffer)
+{
+	return buffer->topology;
 }

@@ -5,11 +5,11 @@ int clCreateAllKernels()
 {
 	int result;
 	
-	result = clCreateTestKernel("testKernel.cl");
+	result = clCreateTestKernel("kernels/testKernel.cl");
 	if (!result)
 		return 0;
 
-	result = clCreateClearKernel("clearKernel.cl");
+	result = clCreateClearKernel("kernels/clearKernel.cl");
 	if (!result)
 		return 0;
 
