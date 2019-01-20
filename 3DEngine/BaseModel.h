@@ -8,20 +8,20 @@
 
 typedef struct _mdBaseModel mdBaseModel;
 
-int mdBaseModelInit(mdBaseModel* model, void* vertexData, void* indexData, int vertexCount, int indexCount);
+int mdBaseModelInit(mdBaseModel* model, void* vertexData, void* indexData, int vertexCount, int indexCount, size_t vertexSize, grPrimitiveTopology topology);
 
 // Set params
-int mdSetPosition(mdBaseModel* model, const m3dVector3* position);
-int mdSetRotation(mdBaseModel* model, const m3dVector3* rotation);
+void mdSetPosition(mdBaseModel* model, const m3dVector3* position);
+void mdSetRotation(mdBaseModel* model, const m3dVector3* rotation);
 
 // Change params
-int mdMove(mdBaseModel* model, float x, float y, float z);
-int mdRotate(mdBaseModel* model, float yaw, float pitch, float row);
+void mdMove(mdBaseModel* model, float x, float y, float z);
+void mdRotate(mdBaseModel* model, float yaw, float pitch, float roll);
 
 // Get params
 m3dVector3* mdGetPosition(mdBaseModel* model, m3dVector3* outVector);
 m3dVector3* mdGetRotation(mdBaseModel* model, m3dVector3* outVector);
-int mdGetBuffers(grVertexBuffer* vertexBuffer, grIndexBuffer* indexBuffer);
+void mdGetBuffers(mdBaseModel* model,  grVertexBuffer* vertexBuffer, grIndexBuffer* indexBuffer);
 
 void mdShutdown(mdBaseModel* model);
 

@@ -106,6 +106,9 @@
     <Filter Include="Файлы ресурсов\kernels\shaderBase">
       <UniqueIdentifier>{1e44457f-5677-42af-b77a-3b960c892f22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\AdditionalElements\Models">
+      <UniqueIdentifier>{ee493b87-30ca-43b5-b175-a6bc4960a897}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -262,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="ShaderManager.c">
       <Filter>Файлы исходного кода\System\Graphic\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleModel.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="SSMMRenderer.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

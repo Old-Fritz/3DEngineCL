@@ -7,10 +7,12 @@
 #include "GraphicSystem.h"
 #include "Camera.h"
 #include "ShaderManager.h"
+#include "SimpleModel.h"
 
 static int x = 0;
 static int y;
 static int r;
+static mdSimpleModel model;
 
 int grInit()
 {
@@ -63,6 +65,10 @@ int grInit()
 
 	y = setsGetScreenHeight() / 2;
 	r = setsGetScreenHeight() / 4;
+
+	result = mdSimpleCreate(&model);
+	if (!result)
+		return 0;
 
 	return 1;
 }

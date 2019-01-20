@@ -2,10 +2,10 @@
 #define SIMPLE_MODEL_H
 #include "BaseModel.h"
 
-struct mdSimpleModelVertex
+typedef struct mdSimpleModelVertex
 {
 	m3dVector3 position;
-};
+} mdSimpleModelVertex;
 
 typedef struct mdSimpleModel
 {
@@ -13,7 +13,7 @@ typedef struct mdSimpleModel
 	m3dVector4 color;
 } mdSimpleModel;
 
-int mdSimpleCreate(mdSimpleModel* model, const char* filename);
+int mdSimpleCreate(mdSimpleModel* model);
 void mdSimpleShutdown(mdSimpleModel* model);
 
 #endif
