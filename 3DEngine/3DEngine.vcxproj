@@ -190,6 +190,8 @@
     <ClCompile Include="OpenCL.c" />
     <ClCompile Include="Settings.c" />
     <ClCompile Include="Shader.c" />
+    <ClCompile Include="ShaderManager.c" />
+    <ClCompile Include="SimpleShader.c" />
     <ClCompile Include="system.c" />
     <ClCompile Include="TestKernel.c" />
     <ClCompile Include="vector2.c" />

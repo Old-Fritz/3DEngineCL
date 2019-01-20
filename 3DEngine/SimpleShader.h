@@ -2,13 +2,17 @@
 #define SIMPLE_SHADER_H
 
 #include "Shader.h"
+#include "vector3.h"
+
 /// Simple shader that draw verticies in provided color
 
-typedef struct _grSimpleShaderParams* grSimpleShaderParams;
+typedef struct grSimpleShaderParams
+{
+	m3dVector3 color;
+} grSimpleShaderParams;
 
-int grCreateSimpleShader(char* psShader, char* vsShader);
+int grCreateSimpleShader(char* vsShader, char* psShader);
 void grShutdownSimpleShader();
-int grCreateSimpleShaderParams(grSimpleShaderParams* params, float color);
 int grRenderSimpleShader(grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, grSimpleShaderParams params);
 int grExexuteSimpleShader();
 

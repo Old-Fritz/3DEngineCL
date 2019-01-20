@@ -1,88 +1,86 @@
-#include"../libs/math3d.cl"
 
 
-
-void primitiveController1(ShaderObject* object, ShaderParams* params, int primitiveId)
+void primitiveController1(__global ShaderObject* object, ShaderParams* params, int primitiveId, __global ShaderGlobal* sg)
 {
 	int result, ind;
 	PixelInputType psInput;
-	VertexInputType* vsInput;
+	VertexInputType vsInput;
 
 	// getIndex of current primitive
-	ind = object->indexBuffer->indexData[primitiveId];
+	ind = object->indexBuffer.indexData[primitiveId];
 	// get vertex with given index
-	vsInput = object->vertexBuffer->vertexData + ind;
+	vsInput = object->vertexBuffer.vertexData[ind];
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(vsInput, params, &psInput);
+	result = VertexShader(&vsInput, params, &psInput);
 	if (!result)
 		return;
 	
 	// go to splitter stage
-	spliter1(&psInput, params);
+	spliter1(&psInput, params, sg);
 }
-void primitiveController2(ShaderObject* object, ShaderParams* params, int primitiveId)
+void primitiveController2(__global ShaderObject* object, ShaderParams* params, int primitiveId, __global ShaderGlobal* sg)
 {
 	int result, ind1, ind2;
 	PixelInputType psInput1, psInput2;
-	VertexInputType *vsInput1, *vsInput2;
+	VertexInputType vsInput1, vsInput2;
 
 	// getIndex of current primitive
-	ind1 = object->indexBuffer->indexData[primitiveId * 2];
-	ind2 = object->indexBuffer->indexData[primitiveId * 2 + 1];
+	ind1 = object->indexBuffer.indexData[primitiveId * 2];
+	ind2 = object->indexBuffer.indexData[primitiveId * 2 + 1];
 
 	// get vertex with given index
-	vsInput1 = object->vertexBuffer->vertexData + ind1;
-	vsInput2 = object->vertexBuffer->vertexData + ind2;
+	vsInput1 = object->vertexBuffer.vertexData[ind1];
+	vsInput2 = object->vertexBuffer.vertexData[ind2];
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(vsInput1, params, &psInput1);
+	result = VertexShader(&vsInput1, params, &psInput1);
 	if (!result)
 		return;
 
-	result = VertexShader(vsInput2, params, &psInput2);
+	result = VertexShader(&vsInput2, params, &psInput2);
 	if (!result)
 		return;
 
 	// go to splitter stage
-	spliter2 (&psInput1, &psInput2, params);
+	spliter2 (&psInput1, &psInput2, params, sg);
 }
-void primitiveController3(ShaderObject* object, ShaderParams* params, int primitiveId)
+void primitiveController3(__global ShaderObject* object, ShaderParams* params, int primitiveId, __global ShaderGlobal* sg)
 {
 	int result, ind1, ind2, ind3;
 	PixelInputType psInput1, psInput2, psInput3;
-	VertexInputType *vsInput1, *vsInput2, *vsInput3;
+	VertexInputType vsInput1, vsInput2, vsInput3;
 
 	// getIndex of current primitive
-	ind1 = object->indexBuffer->indexData[primitiveId * 3];
-	ind2 = object->indexBuffer->indexData[primitiveId * 3 + 1];
-	ind3 = object->indexBuffer->indexData[primitiveId * 3 + 2];
+	ind1 = object->indexBuffer.indexData[primitiveId * 3];
+	ind2 = object->indexBuffer.indexData[primitiveId * 3 + 1];
+	ind3 = object->indexBuffer.indexData[primitiveId * 3 + 2];
 
 	// get vertex with given index
-	vsInput1 = object->vertexBuffer->vertexData + ind1;
-	vsInput2 = object->vertexBuffer->vertexData + ind2;
-	vsInput3 = object->vertexBuffer->vertexData + ind3;
+	vsInput1 = object->vertexBuffer.vertexData[ind1];
+	vsInput2 = object->vertexBuffer.vertexData[ind2];
+	vsInput3 = object->vertexBuffer.vertexData[ind3];
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(vsInput1, params, &psInput1);
+	result = VertexShader(&vsInput1, params, &psInput1);
 	if (!result)
 		return;
 
-	result = VertexShader(vsInput2, params, &psInput2);
+	result = VertexShader(&vsInput2, params, &psInput2);
 	if (!result)
 		return;
 
-	result = VertexShader(vsInput3, params, &psInput3);
+	result = VertexShader(&vsInput3, params, &psInput3);
 	if (!result)
 		return;
 
 	// go to splitter stage
-	spliter2(&psInput1, &psInput2, &psInput3, params);
+	spliter3(&psInput1, &psInput2, &psInput3, params, sg);
 }
 
 
 
-void getObjectId(ShaderObject* objects, int primitiveId, int objectsCount, int* objectId, int* relativeId)
+void getObjectId(__global ShaderObject* objects, int primitiveId, int objectsCount, int* objectId, int* relativeId)
 {
 	int i;
 	for (i = 0;i <= objectsCount;i++)
@@ -98,20 +96,21 @@ void getObjectId(ShaderObject* objects, int primitiveId, int objectsCount, int* 
 	}
 }
 
-void shaderKernel(ShaderObject* objects, ShaderParams* params, int objectsCount, ShaderGlobal* shaderGlobal)
+__kernel void shaderKernel(__global ShaderObject* objects, __global ShaderParams* params, int objectsCount, __global ShaderGlobal* shaderGlobal)
 {
 	int objectId, relativeId;
+	ShaderParams localParams;
 
-	sg = shaderGlobal;
 	getObjectId(objects, get_global_id(0), objectsCount, &objectId, &relativeId);
-	switch (objects[objectId].vertexBuffer->topology)
+	localParams = params[objectId];
+	switch (objects[objectId].vertexBuffer.topology)
 	{
 	case GR_PRIMITIVE_TOPOLOGY_POINT:
-		primitiveController1(objects + objectId, params, relativeId);
+		primitiveController1(objects + objectId, &localParams, relativeId, shaderGlobal);
 	case GR_PRIMITIVE_TOPOLOGY_LINE:
-		primitiveController2(objects + objectId, params, relativeId);
+		primitiveController2(objects + objectId, &localParams, relativeId, shaderGlobal);
 	case GR_PRIMITIVE_TOPOLOGY_TRIANGLE:
-		primitiveController3(objects + objectId, params, relativeId);
+		primitiveController3(objects + objectId, &localParams, relativeId, shaderGlobal);
 	default:
 		break;
 	}

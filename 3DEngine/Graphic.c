@@ -6,6 +6,7 @@
 #include "KernelManager.h"
 #include "GraphicSystem.h"
 #include "Camera.h"
+#include "ShaderManager.h"
 
 static int x = 0;
 static int y;
@@ -52,6 +53,13 @@ int grInit()
 		return 0;
 	}
 	logs("init all kernels");
+
+	result = grCreateAllShaders();
+	if(!result)
+	{
+		logs("can't create shaders");
+		return 0;
+	}
 
 	y = setsGetScreenHeight() / 2;
 	r = setsGetScreenHeight() / 4;
@@ -122,6 +130,7 @@ int grFrame()
 
 void grShutdown()
 {
+	grShutdownAllShaders();
 	grShutdownGraphicSystem();
 	clShutdownAllKernels();
 	clShutdown();

@@ -1,3 +1,4 @@
+
 float interpolateF(float value1, float value2, float perCent)
 {
 	return value1 + (value2 - value1)*perCent;
@@ -59,10 +60,9 @@ void copyPI(PixelInputType* output, PixelInputType* value)
 }
 
 
-void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* params)
+void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	int ind, result;
-	float z;
 	m3dVector4 color;
 	ind = sg->screenWidth*y + x; // ind in buffer
 
@@ -71,7 +71,7 @@ void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* pa
 		return;
 
 	// check depth buffer
-	if (!checkDepth(x, y, z))
+	if (!checkDepth(ind, z, sg))
 		return;
 
 	// proccess shader
@@ -80,15 +80,15 @@ void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* pa
 		return;
 
 	// draw pixel
-	draw(ind, z, &color);
+	draw(ind, z, &color, sg);
 }
-void rasterizer1(PixelInputType* input, ShaderParams* params)
+void rasterizer1(PixelInputType* input, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	m3dVector3* position = input;
 	// there are only one point so we can only draw it immidietly
-	processPoint(input, position->x, position->y, position->z, params);
+	processPoint(input, position->x, position->y, position->z, params, sg);
 }
-void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* params)
+void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* params, __global ShaderGlobal* sg)
 {
 	m3dVector3 *pos1, *pos2, *pos;
 	PixelInputType stepInput;
@@ -126,11 +126,11 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* p
 	for (i = 0;i < steps;i++)
 	{
 		pos = &nextInput;
-		processPoint(&nextInput, pos->x, pos->y, pos->z, params);
+		processPoint(&nextInput, pos->x, pos->y, pos->z, params, sg);
 		addPI(&nextInput, &nextInput, &stepInput);
 	}
 }
-void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType* input3, ShaderParams* params)
+void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType* input3, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	m3dVector3 *pos1, *pos2, *pos3;
 	PixelInputType stepInput1, stepInput2, stepInput3;
@@ -165,7 +165,7 @@ void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType*
 	// bottom side
 	while (((m3dVector3*)&nextInputL)->y <= pos2->y)
 	{
-		rasterizer2(&nextInputL, &nextInputR, params);
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		addPI(&nextInputL, &nextInputL, &stepInput1);
 		addPI(&nextInputR, &nextInputR, &stepInput2);
 	}
@@ -174,7 +174,7 @@ void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType*
 	copyPI(&nextInputR, &input3);
 	while (((m3dVector3*)&nextInputL)->y > pos2->y)
 	{
-		rasterizer2(&nextInputL, &nextInputR, params);
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		subPI(&nextInputL, &nextInputL, &stepInput1);
 		subPI(&nextInputR, &nextInputR, &stepInput3);
 	}

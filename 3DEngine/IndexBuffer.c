@@ -3,11 +3,7 @@
 #include "LogManager.h"
 #include <stdlib.h>
 
-struct _grIndexBuffer
-{
-	cl_mem clBuffer;
-	int indexCount;
-};
+
 
 // Create buffer
 int grCreateIndexBuffer(grIndexBuffer* buffer, int indexCount)

@@ -257,6 +257,12 @@
     <ClCompile Include="Camera.c">
       <Filter>Файлы исходного кода\System\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleShader.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Graphic\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.c">
+      <Filter>Файлы исходного кода\System\Graphic\ShaderManagment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">

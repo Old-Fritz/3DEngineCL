@@ -51,7 +51,7 @@ int setsGetScreenHeight()
 	return screenHeight;
 }
 
-float setGetFieldOfView()
+float sestGetFieldOfView()
 {
 	return fieldOfView;
 }

@@ -1,3 +1,4 @@
+
 typedef struct _m3dVector2 {
 	float x;
 	float y;

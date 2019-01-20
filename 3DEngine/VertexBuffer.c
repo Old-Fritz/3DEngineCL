@@ -3,14 +3,6 @@
 #include "LogManager.h"
 #include <stdlib.h>
 
-struct _grVertexBuffer
-{
-	cl_mem clBuffer;
-	int vertexCount;
-	size_t vertexSize;
-	grPrimitiveTopology topology;
-};
-
 // Create buffer
 int grCreateVertexBuffer(grVertexBuffer* buffer, int vertexCount, size_t vertexSize, grPrimitiveTopology topology)
 {

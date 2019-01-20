@@ -5,6 +5,11 @@
 
 /// Buffer in graphic devices that contains data about vertex indicies
 
+struct _grIndexBuffer
+{
+	cl_mem clBuffer;
+	int indexCount;
+};
 typedef struct _grIndexBuffer*  grIndexBuffer;
 
 // Create buffer
