@@ -24,7 +24,7 @@ int grExecuteAllShaders()
 	int result;
 
 	result = grExexuteSimpleShader();
-	if (result)
+	if (!result)
 		return 0;
 
 	return 1;

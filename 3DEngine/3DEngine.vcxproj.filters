@@ -174,9 +174,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Заголовочные файлы\System\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleModel.h">
-      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
-    </ClInclude>
     <ClInclude Include="BaseModel.h">
       <Filter>Заголовочные файлы\System\ModelManagment</Filter>
     </ClInclude>
@@ -188,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="Graphic.h">
       <Filter>Заголовочные файлы\System\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleModel.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +230,6 @@
     <ClCompile Include="system.c">
       <Filter>Файлы исходного кода\System</Filter>
     </ClCompile>
-    <ClCompile Include="BaseModel.c">
-      <Filter>Файлы исходного кода\System\ModelManagment</Filter>
-    </ClCompile>
     <ClCompile Include="vector2.c">
       <Filter>Файлы исходного кода\3DMath</Filter>
     </ClCompile>
@@ -269,8 +266,11 @@
     <ClCompile Include="SimpleModel.c">
       <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
     </ClCompile>
-    <ClCompile Include="SSMMRenderer.c">
+    <ClCompile Include="SSSMRenderer.c">
       <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseModel.c">
+      <Filter>Файлы исходного кода\System\ModelManagment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

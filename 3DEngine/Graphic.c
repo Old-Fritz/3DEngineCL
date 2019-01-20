@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "ShaderManager.h"
 #include "SimpleModel.h"
+#include "SSSMRenderer.h"
 
 static int x = 0;
 static int y;
@@ -83,14 +84,17 @@ static int render()
 		x = 0;
 
 	
-	result = grClearBackBuffer(color);
+	result = grClearBuffers(color);
 	if(!result)
 		return  0;
 
-	result = clExecuteTestKernel(&x, &y, &r);
+	//result = clExecuteTestKernel(&x, &y, &r);
+	result = renderSSSM(&model);
 	if(!result)
 		return  0;
-
+	result = grExecuteAllShaders();
+	if (!result)
+		return 0;
 	return 1;
 }
 

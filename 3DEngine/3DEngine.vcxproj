@@ -193,7 +193,7 @@
     <ClCompile Include="ShaderManager.c" />
     <ClCompile Include="SimpleModel.c" />
     <ClCompile Include="SimpleShader.c" />
-    <ClCompile Include="SSMMRenderer.c" />
+    <ClCompile Include="SSSMRenderer.c" />
     <ClCompile Include="system.c" />
     <ClCompile Include="TestKernel.c" />
     <ClCompile Include="vector2.c" />

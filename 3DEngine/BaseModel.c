@@ -1,13 +1,6 @@
 #include "BaseModel.h"
 #include "LogManager.h"
 
-struct _mdBaseModel {
-	grVertexBuffer vertexBuffer;
-	grIndexBuffer indexBuffer;
-
-	m3dVector3 position;
-	m3dVector3 rotation;
-};
 
 int mdBaseModelInit(mdBaseModel* model, void* vertexData, void* indexData, int vertexCount, int indexCount, size_t vertexSize, grPrimitiveTopology topology)
 {
@@ -15,13 +8,13 @@ int mdBaseModelInit(mdBaseModel* model, void* vertexData, void* indexData, int v
 
 	// create vertex buffer with data
 	result = grCreateVertexBuffer(&(model->vertexBuffer), vertexCount, vertexSize, topology);
-	if(!result)
+	if (!result)
 	{
 		logs("can't create vertex buffer for model");
 		return 0;
 	}
 	result = grWriteVertexBuffer(model->vertexBuffer, vertexData);
-	if(!result)
+	if (!result)
 	{
 		logs("can't write to model vertex buffer");
 		return 0;
@@ -83,7 +76,7 @@ m3dVector3* mdGetRotation(mdBaseModel* model, m3dVector3* outVector)
 	return m3dVec3Copy(outVector, &(model->rotation));
 }
 
-void mdGetBuffers(mdBaseModel* model,  grVertexBuffer* vertexBuffer, grIndexBuffer* indexBuffer)
+void mdGetBuffers(mdBaseModel* model, grVertexBuffer* vertexBuffer, grIndexBuffer* indexBuffer)
 {
 	*vertexBuffer = model->vertexBuffer;
 	*indexBuffer = model->indexBuffer;

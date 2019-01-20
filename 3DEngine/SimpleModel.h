@@ -9,7 +9,7 @@ typedef struct mdSimpleModelVertex
 
 typedef struct mdSimpleModel
 {
-	mdBaseModel* model;
+	mdBaseModel model;
 	m3dVector4 color;
 } mdSimpleModel;
 

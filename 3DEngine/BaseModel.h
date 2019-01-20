@@ -6,7 +6,13 @@
 
 /// Base model that must be part of all other models
 
-typedef struct _mdBaseModel mdBaseModel;
+typedef struct _mdBaseModel {
+	grVertexBuffer vertexBuffer;
+	grIndexBuffer indexBuffer;
+
+	m3dVector3 position;
+	m3dVector3 rotation;
+} mdBaseModel;
 
 int mdBaseModelInit(mdBaseModel* model, void* vertexData, void* indexData, int vertexCount, int indexCount, size_t vertexSize, grPrimitiveTopology topology);
 

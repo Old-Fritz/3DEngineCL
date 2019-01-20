@@ -4,11 +4,11 @@
 int mdSimpleCreate(mdSimpleModel* model)
 {
 	int result;
-	mdSimpleModelVertex verticies[4] = {{ -10,10,5 },{10,10,5},{ 10,-10,5 },{ -10,-10,5 }};
-	int indicies[6] = {0, 1, 2, 2,3,1};
+	mdSimpleModelVertex verticies[4] = { { -10,10,5 },{ 10,10,5 },{ 10,-10,5 },{ -10,-10,5 } };
+	int indicies[6] = { 0, 1, 2, 2,3,1 };
 
 	result = mdBaseModelInit(&(model->model), verticies, indicies, 4, 6, sizeof(mdSimpleModelVertex), GR_PRIMITIVE_TOPOLOGY_TRIANGLE);
-	if(!result)
+	if (!result)
 	{
 		logs("can't create simple model");
 		return 0;
@@ -18,5 +18,5 @@ int mdSimpleCreate(mdSimpleModel* model)
 }
 void mdSimpleShutdown(mdSimpleModel* model)
 {
-	mdShutdown(model->model);
+	mdShutdown(&(model->model));
 }

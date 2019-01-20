@@ -4,14 +4,6 @@
 
 /// Class for render simple model with simple shader
 
-struct renderSSSMParams
-{
-	m3dMatrix worldMatrix;
-	m3dMatrix viewMatrix;
-	m3dMatrix projectionMatrix;
-	m3dVector4 color;
-};
-
 int renderSSSM(mdSimpleModel* simpleModel);
 
 #endif

@@ -204,7 +204,7 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 	if (shader->elementsCount)
 		primitiveEnd = shader->shaderElements[shader->elementsCount - 1].primitiveCountEnd;
 	// calculate count of primitives
-	primitiveEnd += grGetVertexPrimitive(vertexBuffer)*grGetIndexCount(indexBuffer);
+	primitiveEnd += grGetIndexCount(indexBuffer)/ grGetVertexPrimitive(vertexBuffer);
 
 	newShaderElement = &(shader->shaderElements[shader->elementsCount]);
 	newShaderElement->indexBuffer = *indexBuffer;
@@ -218,7 +218,7 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 		if (!result)
 			return 0;
 	}
-	newParams = (char*)params + paramsSize*shader->elementsCount;
+	newParams = (char*)(shader->params) + paramsSize*shader->elementsCount;
 	memcpy_s(newParams, paramsSize, params, paramsSize);
 
 	shader->elementsCount++;
@@ -251,7 +251,7 @@ int grExecuteShader(grShader shader)
 
 	// execute shader kernel
 	result = clExecuteKernel(shader->kernel, shader->queue, globalWorkSize, 1, 4,
-		shader->elementsBuffer, sizeof(cl_mem), shader->paramsBuffer, sizeof(cl_mem), shader->elementsCount, sizeof(int), shader->shaderGlobalBuffer, sizeof(cl_mem));
+		&(shader->elementsBuffer), sizeof(cl_mem), &(shader->paramsBuffer), sizeof(cl_mem), &(shader->elementsCount), sizeof(int), &(shader->shaderGlobalBuffer), sizeof(cl_mem));
 	if(!result)
 	{
 		logs("can't execute shader");
