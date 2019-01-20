@@ -2,6 +2,7 @@
 #define KERNEL_MANAGER_H
 #include "TestKernel.h"
 #include "ClearKernel.h"
+#include "GetGPUPtrKernel.h"
 
 /// United control of creating and releasing all kernels
 

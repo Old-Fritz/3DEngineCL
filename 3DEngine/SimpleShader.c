@@ -34,11 +34,11 @@ int grRenderSimpleShader(grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer,
 
 	return 1;
 }
-int grExexuteSimpleShader()
+int grExecuteSimpleShader(void* outBuffer)
 {
 	int result;
 
-	result = grExecuteShader(shader);
+	result = grExecuteShader(shader, outBuffer);
 	if(!result)
 	{
 		logs("can't execute simple shader");

@@ -80,6 +80,10 @@ int grClearBuffers(m3dVector4 color)
 	if (!result)
 		return 0;
 
+	result = clFinishEx();
+	if (!result)
+		return 0;
+
 	return 1;
 }
 int grClearAccessBuffer()

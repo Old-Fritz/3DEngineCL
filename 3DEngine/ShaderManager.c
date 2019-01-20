@@ -1,4 +1,5 @@
 #include "ShaderManager.h"
+#include "OpenCL.h"
 
 // Initialize all shaders
 int grCreateAllShaders()
@@ -22,8 +23,9 @@ void grShutdownAllShaders()
 int grExecuteAllShaders()
 {
 	int result;
+	void* outBuffer = clGetOutBufferPtr();
 
-	result = grExexuteSimpleShader();
+	result = grExecuteSimpleShader(outBuffer);
 	if (!result)
 		return 0;
 

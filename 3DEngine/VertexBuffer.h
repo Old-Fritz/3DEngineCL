@@ -14,6 +14,7 @@ typedef enum grPrimitiveTopology{
 struct _grVertexBuffer
 {
 	cl_mem clBuffer;
+	void* bufferPtr;
 	int vertexCount;
 	size_t vertexSize;
 	grPrimitiveTopology topology;
@@ -32,8 +33,6 @@ int grWriteVertexBuffer(grVertexBuffer buffer, void* ptr);
 int grReadVertexBuffer(grVertexBuffer buffer, void* ptr);
 // Get count of vertex in buffer
 int grGetVertexCount(grVertexBuffer buffer);
-// Get memory object
-cl_mem grGetVertexBuffer(grVertexBuffer buffer);
 // Get primitive of buffer
 grPrimitiveTopology grGetVertexPrimitive(grVertexBuffer buffer);
 

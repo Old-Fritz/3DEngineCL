@@ -7,7 +7,7 @@ int mdSimpleCreate(mdSimpleModel* model)
 	mdSimpleModelVertex verticies[4] = { { -10,10,5 },{ 10,10,5 },{ 10,-10,5 },{ -10,-10,5 } };
 	int indicies[6] = { 0, 1, 2, 2,3,1 };
 
-	result = mdBaseModelInit(&(model->model), verticies, indicies, 4, 6, sizeof(mdSimpleModelVertex), GR_PRIMITIVE_TOPOLOGY_TRIANGLE);
+	result = mdBaseModelInit(&(model->model), verticies, indicies, 4, 6, sizeof(mdSimpleModelVertex), GR_PRIMITIVE_TOPOLOGY_POINT);
 	if (!result)
 	{
 		logs("can't create simple model");

@@ -10,9 +10,9 @@
 typedef struct _grShader* grShader;
 typedef struct grShaderGlobal
 {
-	cl_mem outBuffer;
-	cl_mem depthBuffer;
-	cl_mem accessBuffer;
+	void* outBuffer;
+	void* depthBuffer;
+	void* accessBuffer;
 	int screenWidth, screenHegiht;
 	float farZ, nearZ;
 	float left, right, top, bottom;
@@ -25,7 +25,7 @@ void grShutdownShader(grShader shader);
 // Add model element before execution of shader (with all models in one time)
 int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, void* params, size_t paramsSize);
 // Execute shader and clear shader queue
-int grExecuteShader(grShader shader);
+int grExecuteShader(grShader shader, void* outBuffer);
 // Work with global shader params
 int grGetShaderGlobal(grShader shader, grShaderGlobal*shaderGlobal);
 int grSetShaderGlobal(grShader shader, grShaderGlobal* shaderGlobal);

@@ -10,8 +10,10 @@ int clInit(int width, int height, size_t pixelSize);
 
 // Get components of device
 cl_mem clGetOutBuffer();
+void* clGetOutBufferPtr();
 cl_context clGetContext();
 cl_command_queue clGetMainQueue();
+int clSetOutBufferPtrs();
 
 // Create queue for parallel work
 int clCreateQueue(cl_command_queue* queue);
@@ -20,6 +22,9 @@ int clCreateQueue(cl_command_queue* queue);
 int clCreateRWBuffer(cl_mem* buffer, size_t size);
 int clReadRWBuffer(cl_mem buffer, size_t size, void* ptr);
 int clWriteRWBuffer(cl_mem buffer, size_t size, void* ptr);
+
+// Get ptr to gpu data
+void* clGetGPUPtr(cl_mem buffer);
 
 // Swap current out buffer
 int clSwapBuffers();

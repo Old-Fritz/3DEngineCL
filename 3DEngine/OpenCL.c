@@ -1,13 +1,15 @@
 #include "OpenCL.h"
 #include "LogManager.h"
 #include <stdlib.h>
+#include "GetGPUPtrKernel.h"
 
 #define USED_DEVICE 0
 
 static cl_context context;
 static cl_command_queue mainQueue;
 static cl_device_id deviceId;
-static cl_mem backBuffer, frontBuffer;
+static cl_mem backBuffer, frontBuffer, getPtrBuffer;
+static void *backBufferPtr, *frontBufferPtr;
 static size_t outBufferSize;
 
 static int getDeviceId()
@@ -136,6 +138,13 @@ int clInit(int width, int height, size_t pixelSize)
 		return 0;
 	}
 
+	result = clCreateRWBuffer(&getPtrBuffer, sizeof(void*));
+	if(!result)
+	{
+		logs("can't create buffer for getting pointer");
+		return 0;
+	}
+
 	return 1;
 }
 
@@ -144,6 +153,10 @@ cl_mem clGetOutBuffer()
 {
 	return backBuffer;
 }
+void* clGetOutBufferPtr()
+{
+	return backBufferPtr;
+}
 cl_context clGetContext()
 {
 	return context;
@@ -151,6 +164,18 @@ cl_context clGetContext()
 cl_command_queue clGetMainQueue()
 {
 	return mainQueue;
+}
+
+int clSetOutBufferPtrs()
+{
+	backBufferPtr = clGetGPUPtr(backBuffer);
+	if (!backBufferPtr)
+		return 0;
+	frontBufferPtr = clGetGPUPtr(frontBuffer);
+	if (!frontBufferPtr)
+		return 0;
+
+	return 1;
 }
 
 int clCreateQueue(cl_command_queue* queue)
@@ -210,12 +235,39 @@ int clWriteRWBuffer(cl_mem buffer, size_t size, void* ptr)
 	return 1;
 }
 
+void* clGetGPUPtr(cl_mem buffer)
+{
+	int result;
+	void* ptr;
+
+	result = clExecuteGetGPUPtrKernel(buffer, getPtrBuffer);
+	if(!result)
+	{
+		logs("can't get buffer pointer");
+		return 0;
+	}
+
+	result = clReadRWBuffer(getPtrBuffer, sizeof(void*), &ptr);
+	if(!result)
+	{
+		logs("can't read buffer pointer");
+		return 0;
+	}
+
+	return ptr;
+}
+
 
 int clSwapBuffers()
 {
+	void* tempPtr;
 	cl_mem temp = backBuffer;
 	backBuffer = frontBuffer;
 	frontBuffer = temp;
+
+	tempPtr = backBufferPtr;
+	backBufferPtr = frontBufferPtr;
+	frontBufferPtr = tempPtr;
 
 	return  1;
 }
@@ -230,7 +282,6 @@ int clReadInBuffer(void* buffer)
 		logs("can't read OpenCL out buffer");
 		return 0;
 	}
-
 
 	return 1;
 }
@@ -252,6 +303,7 @@ int clFinishEx()
 
 void clShutdown()
 {
+	clReleaseMemObject(getPtrBuffer);
 	clReleaseContext(context);
 	clReleaseCommandQueue(mainQueue);
 	clReleaseMemObject(backBuffer);

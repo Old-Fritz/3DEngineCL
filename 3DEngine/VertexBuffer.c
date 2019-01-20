@@ -20,6 +20,12 @@ int grCreateVertexBuffer(grVertexBuffer* buffer, int vertexCount, size_t vertexS
 	bufferStruct->vertexCount = vertexCount;
 	bufferStruct->vertexSize = vertexSize;
 	bufferStruct->topology = topology;
+	bufferStruct->bufferPtr = clGetGPUPtr(bufferStruct->clBuffer);
+	if(!bufferStruct->bufferPtr)
+	{
+		logs("can't get gpu pointer to buffer");
+		return 0;
+	}
 
 	// set new structure to output buffer
 	*buffer = bufferStruct;

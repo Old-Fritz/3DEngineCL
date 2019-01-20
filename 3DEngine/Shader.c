@@ -10,8 +10,12 @@
 
 static struct ShaderElement
 {
-	struct _grVertexBuffer vertexBuffer;
-	struct _grIndexBuffer indexBuffer;
+	void* vertexBuffer;
+	int vertexCount;
+	size_t vertexSize;
+	grPrimitiveTopology topology;
+	void* indexBuffer;
+	int indexCount;
 	int primitiveCountEnd;
 };
 
@@ -24,6 +28,7 @@ struct _grShader
 	cl_mem shaderGlobalBuffer;
 	cl_mem elementsBuffer;
 	cl_mem paramsBuffer;
+	grShaderGlobal shaderGlobal;
 	ShaderElement* shaderElements;
 	void* params;
 	size_t paramsSize;
@@ -48,7 +53,8 @@ int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFile
 
 	// create kernel
 	// fill filenames with parts of shader kernel
-	filenames[0] = "kernels/libs/math3d.cl";
+	filenames[0] = "kernels/shaderBase/shaderKernel.cl";
+	//filenames[0] = "kernels/libs/math3d.cl";
 	filenames[1] = "kernels/libs/shaderBase.cl";
 	filenames[2] = vsFilename;
 	filenames[3] = psFilename;
@@ -57,7 +63,7 @@ int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFile
 	filenames[6] = "kernels/shaderBase/shaderKernel.cl";
 
 	// init kernel
-	result = clCreateKernelFromFiles(&(shaderStruct->kernel), "shaderKernel", filenames, 7);
+	result = clCreateKernelFromFiles(&(shaderStruct->kernel), "shaderKernel", filenames, 1);
 	if(!result)
 	{
 		logs("can't create kernel for shader");
@@ -191,7 +197,7 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 	int result;
 	ShaderElement* newShaderElement;
 	void* newParams;
-	int primitiveEnd = 0;
+	int primitiveEnd = -1;
 	// double size of elemetnts array if it was filled
 	if(shader->elementsCapacity==shader->elementsCount)
 	{
@@ -207,8 +213,12 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 	primitiveEnd += grGetIndexCount(indexBuffer)/ grGetVertexPrimitive(vertexBuffer);
 
 	newShaderElement = &(shader->shaderElements[shader->elementsCount]);
-	newShaderElement->indexBuffer = *indexBuffer;
-	newShaderElement->vertexBuffer = *vertexBuffer;
+	newShaderElement->indexBuffer = indexBuffer->bufferPtr;
+	newShaderElement->indexCount = indexBuffer->indexCount;
+	newShaderElement->vertexBuffer = vertexBuffer->bufferPtr;
+	newShaderElement->vertexCount = vertexBuffer->vertexCount;
+	newShaderElement->vertexSize = vertexBuffer->vertexSize;
+	newShaderElement->topology = vertexBuffer->topology;
 	newShaderElement->primitiveCountEnd = primitiveEnd;
 
 	// add params
@@ -227,7 +237,7 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 }
 
 // Execute shader and clear shader queue
-int grExecuteShader(grShader shader)
+int grExecuteShader(grShader shader, void* outBuffer)
 {
 	int result;
 	size_t globalWorkSize[1];
@@ -247,7 +257,16 @@ int grExecuteShader(grShader shader)
 	}
 
 	// set global work size
-	globalWorkSize[0] = shader->shaderElements[shader->elementsCount - 1].primitiveCountEnd;
+	globalWorkSize[0] = shader->shaderElements[shader->elementsCount - 1].primitiveCountEnd+1;
+
+	// set out buffer
+	shader->shaderGlobal.outBuffer = outBuffer;
+	result = grSetShaderGlobal(shader, &(shader->shaderGlobal));
+	if(!result)
+	{
+		logs("can't set out buffer to shader");
+		return 0;
+	}
 
 	// execute shader kernel
 	result = clExecuteKernel(shader->kernel, shader->queue, globalWorkSize, 1, 4,
@@ -268,12 +287,7 @@ int grGetShaderGlobal(grShader shader, grShaderGlobal*shaderGlobal)
 {
 	int result;
 
-	result = clReadRWBuffer(shader->shaderGlobalBuffer, sizeof(grShaderGlobal), shaderGlobal);
-	if (!result)
-	{
-		logs("can't read shader global");
-		return 0;
-	}
+	*shaderGlobal = shader->shaderGlobal;
 
 	return 1;
 }
@@ -281,7 +295,9 @@ int grSetShaderGlobal(grShader shader, grShaderGlobal* shaderGlobal)
 {
 	int result;
 
-	result = clWriteRWBuffer(shader->shaderGlobalBuffer, sizeof(grShaderGlobal), shaderGlobal);
+	shader->shaderGlobal = *shaderGlobal;
+
+	result = clWriteRWBuffer(shader->shaderGlobalBuffer, sizeof(grShaderGlobal), &(shader->shaderGlobal));
 	if(!result)
 	{
 		logs("can't write shader global");
@@ -297,9 +313,9 @@ int grSetDefaultShaderGlobal(grShader shader)
 
 	shaderGlobal.screenWidth = setsGetScreenWidth();
 	shaderGlobal.screenHegiht = setsGetScreenHeight();
-	shaderGlobal.accessBuffer = grGetAccessBuffer();
-	shaderGlobal.depthBuffer = grGetDepthBuffer();
-	shaderGlobal.outBuffer = clGetOutBuffer();
+	shaderGlobal.accessBuffer = clGetGPUPtr(grGetAccessBuffer());
+	shaderGlobal.depthBuffer = clGetGPUPtr(grGetDepthBuffer());
+	shaderGlobal.outBuffer = clGetOutBufferPtr();
 	shaderGlobal.farZ = grGetFarZ();
 	shaderGlobal.nearZ = grGetNearZ();
 	shaderGlobal.left = -setsGetScreenWidth() / 2 + 1;

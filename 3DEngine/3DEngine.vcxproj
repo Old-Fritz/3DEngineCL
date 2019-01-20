@@ -150,6 +150,7 @@
     <ClInclude Include="BaseModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearKernel.h" />
+    <ClInclude Include="GetGPUPtrKernel.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="GraphicSystem.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="BaseModel.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="ClearKernel.c" />
+    <ClCompile Include="GetGPUPtrKernel.c" />
     <ClCompile Include="Graphic.c" />
     <ClCompile Include="GraphicSystem.c" />
     <ClCompile Include="IndexBuffer.c" />
@@ -205,6 +207,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="kernels\getGPUPtr.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="kernels\libs\math3d.cl">

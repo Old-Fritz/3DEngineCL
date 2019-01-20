@@ -189,6 +189,9 @@
     <ClInclude Include="SimpleModel.h">
       <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
     </ClInclude>
+    <ClInclude Include="GetGPUPtrKernel.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Graphic\Kernels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -272,6 +275,9 @@
     <ClCompile Include="BaseModel.c">
       <Filter>Файлы исходного кода\System\ModelManagment</Filter>
     </ClCompile>
+    <ClCompile Include="GetGPUPtrKernel.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Graphic\Kernels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">
@@ -300,6 +306,9 @@
     </None>
     <None Include="kernels\libs\shaderBase.cl">
       <Filter>Файлы ресурсов\kernels\libs</Filter>
+    </None>
+    <None Include="kernels\getGPUPtr.cl">
+      <Filter>Файлы ресурсов\kernels</Filter>
     </None>
   </ItemGroup>
 </Project>

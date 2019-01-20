@@ -8,6 +8,7 @@
 struct _grIndexBuffer
 {
 	cl_mem clBuffer;
+	void* bufferPtr;
 	int indexCount;
 };
 typedef struct _grIndexBuffer*  grIndexBuffer;

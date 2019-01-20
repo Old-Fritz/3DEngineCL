@@ -14,6 +14,7 @@ static int x = 0;
 static int y;
 static int r;
 static mdSimpleModel model;
+static mdSimpleModel model2;
 
 int grInit()
 {
@@ -71,13 +72,21 @@ int grInit()
 	if (!result)
 		return 0;
 
+	model.color.y = 255;
+
+	result = mdSimpleCreate(&model2);
+	if (!result)
+		return 0;
+
+	model2.color.x = 255;
+
 	return 1;
 }
 
 static int render()
 {
 	int result;
-	m3dVector4 color = { 255,255,0,0 };
+	m3dVector4 color = { 0,0,0,0 };
 
 	x++;
 	if (x > setsGetScreenWidth())
@@ -92,9 +101,11 @@ static int render()
 	result = renderSSSM(&model);
 	if(!result)
 		return  0;
-	result = grExecuteAllShaders();
+
+	result = renderSSSM(&model2);
 	if (!result)
-		return 0;
+		return  0;
+
 	return 1;
 }
 
@@ -126,14 +137,20 @@ int grFrame()
 		return 0;
 	}
 
+	// finish all sub job
+	result = clFinishEx();
+	if (!result)
+		return 0;
+
+	result = grExecuteAllShaders();
+	if (!result)
+		return 0;
+
 	// show old back buffer
 	result = winRender();
 	if (!result)
 		return 0;
-	// finish all render job
-	result = clFinishEx();
-	if (!result)
-		return 0;
+
 	result = grFinishAllShaders();
 	if (!result)
 		return 0;
