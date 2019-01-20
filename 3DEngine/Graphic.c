@@ -134,6 +134,9 @@ int grFrame()
 	result = clFinishEx();
 	if (!result)
 		return 0;
+	result = grFinishAllShaders();
+	if (!result)
+		return 0;
 
 	return 1;
 }

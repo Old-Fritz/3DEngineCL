@@ -47,3 +47,17 @@ int grExexuteSimpleShader()
 
 	return 1;
 }
+
+int grFinishSimpleShader()
+{
+	int result;
+
+	result = grFinishShader(shader);
+	if(!result)
+	{
+		logs("can't finish simple shader");
+		return 0;
+	}
+
+	return 1;
+}

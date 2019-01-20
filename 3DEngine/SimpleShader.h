@@ -18,5 +18,6 @@ int grCreateSimpleShader(char* vsShader, char* psShader);
 void grShutdownSimpleShader();
 int grRenderSimpleShader(grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, grSimpleShaderParams params);
 int grExexuteSimpleShader();
+int grFinishSimpleShader();
 
 #endif

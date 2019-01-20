@@ -11,6 +11,6 @@ void grShutdownAllShaders();
 // Execute all shaders
 int grExecuteAllShaders();
 // Wait for finish all shaders
-
+int grFinishAllShaders();
 
 #endif

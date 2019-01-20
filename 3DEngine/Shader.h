@@ -30,5 +30,7 @@ int grExecuteShader(grShader shader);
 int grGetShaderGlobal(grShader shader, grShaderGlobal*shaderGlobal);
 int grSetShaderGlobal(grShader shader, grShaderGlobal* shaderGlobal);
 int grSetDefaultShaderGlobal(grShader shader);
+// Wait for end of execution
+int grFinishShader(grShader shader);
 
 #endif

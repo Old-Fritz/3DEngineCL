@@ -29,3 +29,14 @@ int grExecuteAllShaders()
 
 	return 1;
 }
+
+int grFinishAllShaders()
+{
+	int result;
+
+	result = grFinishSimpleShader();
+	if (!result)
+		return 0;
+
+	return 1;
+}

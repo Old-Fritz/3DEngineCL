@@ -316,3 +316,17 @@ int grSetDefaultShaderGlobal(grShader shader)
 
 	return  1;
 }
+
+int grFinishShader(grShader shader)
+{
+	cl_int result;
+
+	result = clFinish(shader->queue);
+	if(result != CL_SUCCESS)
+	{
+		logs("can't finish shader queue");
+		return 0;
+	}
+
+	return 1;
+}
