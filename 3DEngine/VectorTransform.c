@@ -37,7 +37,7 @@ m3dVector4* m3dVec4TransformCoord(m3dVector4* outVec, const m3dVector4* vec, con
 	return outVec;
 }
 
-m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector4* vec, const m3dMatrix* matrix)
+m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector3* vec, const m3dMatrix* matrix)
 {
 	m3dVector4 transVec = { vec->x, vec->y, vec->z, 1 };
 

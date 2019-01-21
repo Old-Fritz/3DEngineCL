@@ -20,6 +20,8 @@ int grCreateIndexBuffer(grIndexBuffer* buffer, int indexCount)
 		return 0;
 	}
 	bufferStruct->indexCount = indexCount;
+
+	bufferStruct->bufferPtr = clGetGPUPtr(bufferStruct->clBuffer);
 	if (!bufferStruct->bufferPtr)
 	{
 		logs("can't get gpu pointer to buffer");

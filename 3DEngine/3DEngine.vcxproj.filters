@@ -200,9 +200,6 @@
     <ClCompile Include="LogManager.c">
       <Filter>Файлы исходного кода\System\Services</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.c">
-      <Filter>Файлы исходного кода\System\Services</Filter>
-    </ClCompile>
     <ClCompile Include="Graphic.c">
       <Filter>Файлы исходного кода\System\Graphic</Filter>
     </ClCompile>
@@ -277,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="GetGPUPtrKernel.c">
       <Filter>Файлы исходного кода\AdditionalElements\Graphic\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.c">
+      <Filter>Файлы исходного кода\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

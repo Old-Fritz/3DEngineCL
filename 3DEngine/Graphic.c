@@ -86,7 +86,7 @@ int grInit()
 static int render()
 {
 	int result;
-	m3dVector4 color = { 0,0,0,0 };
+	m3dVector4 color = { 30,30,30,0 };
 
 	x++;
 	if (x > setsGetScreenWidth())
@@ -102,9 +102,9 @@ static int render()
 	if(!result)
 		return  0;
 
-	result = renderSSSM(&model2);
-	if (!result)
-		return  0;
+	//result = renderSSSM(&model2);
+	//if (!result)
+	//	return  0;
 
 	return 1;
 }

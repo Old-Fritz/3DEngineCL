@@ -11,11 +11,8 @@
 static struct ShaderElement
 {
 	void* vertexBuffer;
-	int vertexCount;
-	size_t vertexSize;
-	grPrimitiveTopology topology;
 	void* indexBuffer;
-	int indexCount;
+	grPrimitiveTopology topology;
 	int primitiveCountEnd;
 };
 
@@ -214,10 +211,7 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 
 	newShaderElement = &(shader->shaderElements[shader->elementsCount]);
 	newShaderElement->indexBuffer = indexBuffer->bufferPtr;
-	newShaderElement->indexCount = indexBuffer->indexCount;
 	newShaderElement->vertexBuffer = vertexBuffer->bufferPtr;
-	newShaderElement->vertexCount = vertexBuffer->vertexCount;
-	newShaderElement->vertexSize = vertexBuffer->vertexSize;
 	newShaderElement->topology = vertexBuffer->topology;
 	newShaderElement->primitiveCountEnd = primitiveEnd;
 

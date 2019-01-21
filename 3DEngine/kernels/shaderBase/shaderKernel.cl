@@ -622,7 +622,7 @@ m3dVector3* m3dVec3TransformCoord(m3dVector3* outVec, const m3dVector3* vec, con
 }
 
 
-m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector4* vec, const m3dMatrix* matrix)
+m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector3* vec, const m3dMatrix* matrix)
 {
 	m3dVector4 transVec = { vec->x, vec->y, vec->z, 1 };
 
@@ -682,25 +682,12 @@ typedef enum grPrimitiveTopology {
 	GR_PRIMITIVE_TOPOLOGY_TRIANGLE = 3
 } grPrimitiveTopology;
 
-typedef struct VertexBuffer
-{
-	__global VertexInputType* vertexData;
-	int vertexCount;
-	int vertexSize;
-	grPrimitiveTopology topology;
-} VertexBuffer;
-
-typedef struct IndexBuffer
-{
-	__global unsigned int* indexData;
-	int indexCount;
-} IndexBuffer;
-
 
 typedef struct ShaderObject
 {
-	VertexBuffer vertexBuffer;
-	IndexBuffer indexBuffer;
+	__global VertexInputType* vertexData;
+	__global unsigned int* indexData;
+	grPrimitiveTopology topology;
 	int primitiveCountEnd;
 } ShaderObject;
 
@@ -709,7 +696,7 @@ typedef struct ShaderGlobal
 	__global rgb* outBuffer;
 	__global float* depthBuffer;
 	__global int* accessBuffer;
-	int screenWidth, screenHegiht;
+	int screenWidth, screenHeight;
 	float farZ, nearZ;
 	float left, right, top, bottom;
 } ShaderGlobal;
@@ -736,11 +723,11 @@ inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
 	newColor.r = color->x;
 	newColor.g = color->y;
 	newColor.b = color->z;
-	getAccess(ind, sg);
+	//getAccess(ind, sg);
 	// if weren't any changes during computations save
 	if (sg->depthBuffer[ind] == z)
 		sg->outBuffer[ind] = newColor;
-	giveAccess(ind, sg);
+	//giveAccess(ind, sg);
 }
 
 int checkDepth(int ind, float z, __global ShaderGlobal* sg)
@@ -776,7 +763,7 @@ int VertexShader(VertexInputType* input, ShaderParams* params, PixelInputType* o
 	// calculate projected position
 	m3dVec3TransformCoord(&(output->position), &(input->position), &(params->worldMatrix));
 	m3dVec3TransformCoord(&(output->position), &(output->position), &(params->viewMatrix));
-	m3dVec3Projection(&(output->position), &(output->position), &(params->projectionMatrix));
+	m3dVec3Projection(&(output->position), &(input->position), &(params->projectionMatrix));
 
 	return 1;
 }
@@ -852,30 +839,66 @@ void copyPI(PixelInputType* output, PixelInputType* value)
 void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	int ind, result;
-	m3dVector4 color;
-	ind = sg->screenWidth*y + x; // ind in buffer
+	m3dVector4 color4;
+	//int ind;
+	
+	
+	/*
+	m3dMatrix projectionMatrix;
+	m3dVector3* position;
+	rgb color;
+	color.r = params->color.x;
+	color.g = params->color.y;
+	color.b = params->color.z;
 
-								 // check screen
-	if (x < sg->left || x>  sg->right || y <  sg->bottom || y> sg->top)
+
+	position = &(input->position);
+
+	x += sg->right;
+	y = sg->top - y;
+	//position->x = x;
+	//position->y = y;
+	//position->x = (int)(position->x) + sg->right;
+	//position->y = sg->top - (int)position->y;
+	//position.y += 100;
+
+	ind = y*sg->screenWidth + x;
+	//ind = position->y *sg->screenWidth + position->x;
+	sg->outBuffer[ind] = color;
+
+	return;
+	*/
+
+	// check screen
+	if (x < sg->left || x > sg->right || y < sg->bottom || y > sg->top)
 		return;
 
+	x += sg->right;
+	y = sg->top - y;
+	ind = sg->screenWidth*y + x; // ind in buffer
+
+	
 	// check depth buffer
 	if (!checkDepth(ind, z, sg))
 		return;
 
+
 	// proccess shader
-	result = PixelShader(input, params, &color);
+	result = PixelShader(input, params, &color4);
 	if (!result)
 		return;
 
 	// draw pixel
-	draw(ind, z, &color, sg);
+	draw(ind, z, &color4, sg);
 }
 void rasterizer1(PixelInputType* input, ShaderParams* params, __global ShaderGlobal* sg)
 {
-	m3dVector3* position = input;
+	
+	
+	
+	//m3dVector3* position = input;
 	// there are only one point so we can only draw it immidietly
-	processPoint(input, position->x, position->y, position->z, params, sg);
+	processPoint(input, input->position.x, input->position.y, input->position.z, params, sg);
 }
 void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* params, __global ShaderGlobal* sg)
 {
@@ -887,7 +910,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* p
 	int x, y, i;
 	pos1 = input1;
 	pos2 = input2;
-	slope = (pos2->x - pos1->x) / (pos2->y - pos2->y);
+	slope = (pos2->y - pos1->y) / (pos2->x - pos1->x);
 	// if line closer to horizontal
 	if (slope > -1 && slope < 1)
 	{
@@ -897,7 +920,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* p
 			swap(&input2, &input1);
 			swap(&pos2, &pos1);
 		}
-		steps = pos2->x - pos1->x;
+		steps = pos2->x - pos1->x+1;
 	}
 	// if line closer to vertical
 	else
@@ -908,7 +931,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* p
 			swap(&input2, &input1);
 			swap(&pos2, &pos1);
 		}
-		steps = pos2->y - pos1->y;
+		steps = pos2->y - pos1->y+1;
 	}
 	copyPI(&nextInput, input1);
 	createDeltaPI(&stepInput, input1, input2, steps);
@@ -921,39 +944,132 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* p
 }
 void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType* input3, ShaderParams* params, __global ShaderGlobal* sg)
 {
-	m3dVector3 *pos1, *pos2, *pos3;
 	PixelInputType stepInput1, stepInput2, stepInput3;
 	PixelInputType nextInputL, nextInputR;
-	int steps, i;
+	int steps, steps1,steps2, i;
+
+	rgb color;
+	int j;
+	color.r = params->color.x;
+	color.g = params->color.y;
+	color.b = params->color.z;
+	for (i = 0;i < 5;i++)
+	{
+		for (j = 0; j < sg->screenWidth; j++)
+		{
+			//sg->outBuffer[(i + get_global_id(0) * 10)*sg->screenWidth + j] = color;
+		}
+	}
+
 	// order verticies py1<py2<py3
-	pos1 = input1;
-	pos2 = input2;
-	pos3 = input3;
-	if (pos2->y < pos1->y)
+	if (input2->position.y < input1->position.y)
 	{
 		swap(&input2, &input1);
-		swap(&pos2, &pos1);
 	}
-	if (pos3->y < pos1->y)
+	if (input3->position.y < input1->position.y)
 	{
 		swap(&input3, &input1);
-		swap(&pos3, &pos1);
 	}
-	if (pos3->y < pos2->y)
+	if (input3->position.y < input2->position.y)
 	{
 		swap(&input3, &input2);
-		swap(&pos3, &pos2);
 	}
-	steps = pos3->y - pos1->y;
+	
+	steps = input3->position.y - input1->position.y + 1;
 	createDeltaPI(&stepInput1, input1, input3, steps);
-	createDeltaPI(&stepInput2, input1, input2, (pos3->y - pos1->y) / steps*(pos2->y - pos1->y));
-	createDeltaPI(&stepInput3, input2, input3, (pos3->y - pos1->y) / steps*(pos3->y - pos2->y));
-	copyPI(&nextInputL, &input1);
-	copyPI(&nextInputR, &input1);
+	createDeltaPI(&stepInput2, input1, input2, (input3->position.y - input1->position.y) / steps*(input2->position.y - input1->position.y));
+	createDeltaPI(&stepInput3, input2, input3, (input3->position.y - input1->position.y) / steps*(input3->position.y - input2->position.y));
+	copyPI(&nextInputL, input1);
+	copyPI(&nextInputR, input1);
+	stepInput2.position.y = stepInput3.position.y = stepInput1.position.y;
 
 	// bottom side
-	while (((m3dVector3*)&nextInputL)->y <= pos2->y)
+	while (nextInputL.position.y <= input2->position.y)
 	{
+		nextInputR.position.y = nextInputL.position.y;
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
+		addPI(&nextInputL, &nextInputL, &stepInput1);
+		addPI(&nextInputR, &nextInputR, &stepInput2);
+	}
+	// up side
+	copyPI(&nextInputL, input3);
+	copyPI(&nextInputR, input3);
+	//return;
+	while (nextInputL.position.y > input2->position.y)
+	{
+		nextInputR.position.y = nextInputL.position.y;
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
+		subPI(&nextInputL, &nextInputL, &stepInput1);
+		subPI(&nextInputR, &nextInputR, &stepInput3);
+	}
+	
+	
+	/*
+	steps1 = input2->position.y - input1->position.y + 1;
+	steps2 = input3->position.y - input2->position.y + 1;
+	for (i = 0;i < steps1;i++)
+	{
+		for (j = 0; j < sg->screenWidth; j++)
+		{
+			//sg->outBuffer[(i + get_global_id(0) * steps*2)*sg->screenWidth + j] = color;
+		}
+	}
+	
+	createDeltaPI(&stepInput1, input1, input2, steps1);
+	createDeltaPI(&stepInput2, input1, input3, steps1+steps2);
+	copyPI(&nextInputL, input1);
+	copyPI(&nextInputR, input1);
+
+	
+	for (i = 0; i < steps1;i++)
+	{
+		for (j = 0; j < sg->screenWidth; j++)
+		{
+			//sg->outBuffer[(i + get_global_id(0) * (steps1+steps2)*2)*sg->screenWidth + j] = color;
+		}
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
+		addPI(&nextInputL, &nextInputL, &stepInput1);
+		addPI(&nextInputR, &nextInputR, &stepInput2);
+	
+	}
+	copyPI(&nextInputL, input2);
+	createDeltaPI(&stepInput1, input2, input3, steps2);
+	for (i = 0; i < steps2;i++)
+	{
+		rasterizer2(&nextInputL, &nextInputR, params, sg);
+		addPI(&nextInputL, &nextInputL, &stepInput1);
+		addPI(&nextInputR, &nextInputR, &stepInput2);
+	}
+	return;
+	
+	*/
+	/*
+		if (nextInputL.position.y <= input2->position.y)
+		{
+			for (j = 0; j < sg->screenWidth; j++)
+			{
+				sg->outBuffer[(i + get_global_id(0) * steps * 2)*sg->screenWidth + j] = color;
+			}
+			rasterizer2(&nextInputL, &nextInputR, params, sg);
+			addPI(&nextInputL, &nextInputL, &stepInput1);
+			addPI(&nextInputR, &nextInputR, &stepInput2);
+		}
+		else {
+			rasterizer2(&nextInputL, &nextInputR, params, sg);
+			subPI(&nextInputL, &nextInputL, &stepInput1);
+			subPI(&nextInputR, &nextInputR, &stepInput3);
+		}
+	}
+
+	return;
+	
+	while (nextInputL.position.y <= input2->position.y)
+	{
+		for (j = 0; j < sg->screenWidth; j++)
+		{
+			sg->outBuffer[(i + get_global_id(0) * steps * 2)*sg->screenWidth + j] = color;
+		}
+		i++;
 		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		addPI(&nextInputL, &nextInputL, &stepInput1);
 		addPI(&nextInputR, &nextInputR, &stepInput2);
@@ -961,12 +1077,13 @@ void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType*
 	// up side
 	copyPI(&nextInputL, &input3);
 	copyPI(&nextInputR, &input3);
-	while (((m3dVector3*)&nextInputL)->y > pos2->y)
+	while (nextInputL.position.y > input2->position.y)
 	{
 		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		subPI(&nextInputL, &nextInputL, &stepInput1);
 		subPI(&nextInputR, &nextInputR, &stepInput3);
 	}
+	*/
 }
 
 
@@ -975,6 +1092,7 @@ void spliter2D1(PixelInputType* psInput, ShaderParams* params, __global ShaderGl
 	// There can be 2D splitters
 	// ...
 	// ...
+	
 	rasterizer1(psInput, params, sg);
 }
 void spliter2D2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* params, __global ShaderGlobal* sg)
@@ -989,7 +1107,7 @@ void spliter2D3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputTy
 	// There can be 2D splitters
 	// ...
 	// ...
-	rasterizer3(psInput1, psInput2, psInput2, params, sg);
+	rasterizer3(psInput1, psInput2, psInput3, params, sg);
 }
 
 
@@ -1038,7 +1156,6 @@ void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType
 	pos1 = psInput1; // first value is position
 	pos2 = psInput2;
 	pos3 = psInput3;
-
 
 	// Finish if all points out of near Z
 	if (pos1->z < 0 && pos2->z < 0 && pos3->z < 0)
@@ -1094,7 +1211,7 @@ void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType
 	}
 
 	// split in 2D and go next
-	spliter2D3(psInput2, psInput3, psInput1, params, sg);
+	spliter2D3(psInput1, psInput2, psInput3, params, sg);
 }
 
 
@@ -1106,9 +1223,9 @@ void primitiveController1(__global ShaderObject* object, ShaderParams* params, i
 	VertexInputType vsInput;
 
 	// getIndex of current primitive
-	ind = object->indexBuffer.indexData[primitiveId];
+	ind = object->indexData[primitiveId];
 	// get vertex with given index
-	vsInput = object->vertexBuffer.vertexData[ind];
+	vsInput = object->vertexData[ind];
 
 	// Calculate vertex shader that can stop execution
 	result = VertexShader(&vsInput, params, &psInput);
@@ -1125,12 +1242,12 @@ void primitiveController2(__global ShaderObject* object, ShaderParams* params, i
 	VertexInputType vsInput1, vsInput2;
 
 	// getIndex of current primitive
-	ind1 = object->indexBuffer.indexData[primitiveId * 2];
-	ind2 = object->indexBuffer.indexData[primitiveId * 2 + 1];
+	ind1 = object->indexData[primitiveId * 2];
+	ind2 = object->indexData[primitiveId * 2 + 1];
 
 	// get vertex with given index
-	vsInput1 = object->vertexBuffer.vertexData[ind1];
-	vsInput2 = object->vertexBuffer.vertexData[ind2];
+	vsInput1 = object->vertexData[ind1];
+	vsInput2 = object->vertexData[ind2];
 
 	// Calculate vertex shader that can stop execution
 	result = VertexShader(&vsInput1, params, &psInput1);
@@ -1151,14 +1268,14 @@ void primitiveController3(__global ShaderObject* object, ShaderParams* params, i
 	VertexInputType vsInput1, vsInput2, vsInput3;
 
 	// getIndex of current primitive
-	ind1 = object->indexBuffer.indexData[primitiveId * 3];
-	ind2 = object->indexBuffer.indexData[primitiveId * 3 + 1];
-	ind3 = object->indexBuffer.indexData[primitiveId * 3 + 2];
+	ind1 = object->indexData[primitiveId * 3];
+	ind2 = object->indexData[primitiveId * 3 + 1];
+	ind3 = object->indexData[primitiveId * 3 + 2];
 
 	// get vertex with given index
-	vsInput1 = object->vertexBuffer.vertexData[ind1];
-	vsInput2 = object->vertexBuffer.vertexData[ind2];
-	vsInput3 = object->vertexBuffer.vertexData[ind3];
+	vsInput1 = object->vertexData[ind1];
+	vsInput2 = object->vertexData[ind2];
+	vsInput3 = object->vertexData[ind3];
 
 	// Calculate vertex shader that can stop execution
 	result = VertexShader(&vsInput1, params, &psInput1);
@@ -1200,42 +1317,78 @@ __kernel void shaderKernel(__global ShaderObject* objects, __global ShaderParams
 {
 	int objectId, relativeId;
 	ShaderParams localParams;
-	int i, j;
+	int i, j,  ind;
 	rgb color;
+	VertexInputType vsInput;
+	m3dVector3* position;
 
 	getObjectId(objects, get_global_id(0), objectsCount, &objectId, &relativeId);
 	localParams = params[objectId];
 
 	/*
-	color.r = color.b = color.g = 0;
-	if (objectId % 2)
-	color.b = 255;
-	else
-	color.b = 255;
-
+	rgb color;
 	color.r = localParams.color.x;
 	color.g = localParams.color.y;
 	color.b = localParams.color.z;
-
 	for (i = 0;i < 5 ;i++)
 	{
 	for (j = 0; j < shaderGlobal->screenWidth; j++)
 	{
 	shaderGlobal->outBuffer[(i+get_global_id(0)*10)*shaderGlobal->screenWidth + j] = color;
 	}
-
 	}
 
+
+	rgb color;
+	color.r = params->color.x;
+	color.g = params->color.y;
+	color.b = params->color.z;
+	for (i = 0;i < 5;i++)
+	{
+	for (j = 0; j < sg->screenWidth; j++)
+	{
+	sg->outBuffer[(i + get_global_id(0) * 10)*sg->screenWidth + j] = color;
+	}
+	}
+	
+	// getIndex of current primitive
+	ind = (objects + objectId)->indexData[relativeId];
+	// get vertex with given index
+	vsInput = (objects+ objectId)->vertexData[ind];
+	position = &vsInput;
+	position->x += 50;
+	position->y += 50;
+	ind = (position->y+ objectId)*shaderGlobal->screenWidth + position->x;
+	shaderGlobal->outBuffer[ind] = color;
+	shaderGlobal->outBuffer[ind+1] = color;
+	shaderGlobal->outBuffer[ind+2] = color;
+	shaderGlobal->outBuffer[ind+3] = color;
+
+	
+	
+	for (i = 0;i < 5 ;i++)
+	{
+		for (j = 0; j < shaderGlobal->screenWidth; j++)
+		{
+			shaderGlobal->outBuffer[(i+get_global_id(0)*10)*shaderGlobal->screenWidth + j] = color;
+		}
+	}
+	
+	
+	return;
 	*/
 
-	switch (objects[objectId].vertexBuffer.topology)
+	switch (objects[objectId].topology)
 	{
 	case GR_PRIMITIVE_TOPOLOGY_POINT:
 		primitiveController1(objects + objectId, &localParams, relativeId, shaderGlobal);
+		break;
 	case GR_PRIMITIVE_TOPOLOGY_LINE:
 		primitiveController2(objects + objectId, &localParams, relativeId, shaderGlobal);
+		break;
 	case GR_PRIMITIVE_TOPOLOGY_TRIANGLE:
 		primitiveController3(objects + objectId, &localParams, relativeId, shaderGlobal);
+		break;
 	default:
 		break;
 	}
