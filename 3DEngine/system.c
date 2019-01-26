@@ -26,15 +26,22 @@ int sysInit()
 
 void sysRun()
 {
-	int result;
+	int result, i, k;
 	int runProgram = 1;
 
 	while(runProgram)
 	{
-		result = grFrame();
-		if(!result)
-			runProgram = 0;
+		for(k = 0; k < 1000;k++)
+		{
+			for(i = 0; i < 60;i++)
+			{
+				result = grFrame();
+				if (!result)
+					runProgram = 0;
+			}
+		}
 	}
+	runProgram = k;
 }
 
 void sysShutdown()

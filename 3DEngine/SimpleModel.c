@@ -6,7 +6,7 @@ int mdSimpleCreate(mdSimpleModel* model)
 {
 	int result;
 	m3dMatrix projectionMatrix;
-	mdSimpleModelVertex verticies[4] = { { -100,100,5 },{ 180,170,3 },{ 100,-100,5 },{ -100,-100,5 } };
+	mdSimpleModelVertex verticies[4] = { { -100,100,5 },{ -50,-50,3 },{ 100,-100,5 },{ -100,-100,5 } };
 	//mdSimpleModelVertex verticies[4] = { { 50,0,50 },{ 100,0,100 },{ 150,0,150 },{ 200,0,200 } };
 	int indicies[6] = { 0, 1, 2, 2,3,0 };
 

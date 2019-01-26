@@ -19,11 +19,11 @@ typedef struct grShaderGlobal
 } grShaderGlobal;
 
 // Create shader and initialize it from files with functions for vertex and pixel shaders
-int grCreateShader(grShader* shader, const  char* vsFilename, const  char* psFilename);
+int grCreateShader(grShader* shader, const  char* vsFilename, const  char* psFilename, size_t paramSize);
 // Release shader
 void grShutdownShader(grShader shader);
 // Add model element before execution of shader (with all models in one time)
-int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, void* params, size_t paramsSize);
+int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, void* params);
 // Execute shader and clear shader queue
 int grExecuteShader(grShader shader, void* outBuffer);
 // Work with global shader params

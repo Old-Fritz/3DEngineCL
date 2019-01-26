@@ -102,16 +102,16 @@ static int render()
 	if(!result)
 		return  0;
 
-	//result = renderSSSM(&model2);
-	//if (!result)
-	//	return  0;
+	result = renderSSSM(&model2);
+	if (!result)
+		return  0;
 
 	return 1;
 }
 
 int grFrame()
 {
-	int result;
+	int result = 1;
 	char* outBuffer;
 
 	// prepare old back buffer for render
@@ -151,6 +151,7 @@ int grFrame()
 	if (!result)
 		return 0;
 
+	// finish old execution
 	result = grFinishAllShaders();
 	if (!result)
 		return 0;

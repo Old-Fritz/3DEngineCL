@@ -8,7 +8,7 @@ int grCreateSimpleShader(char* vsShader, char* psShader)
 {
 	int result;
 
-	result = grCreateShader(&shader, vsShader, psShader);
+	result = grCreateShader(&shader, vsShader, psShader, sizeof(grSimpleShaderParams));
 	if(!result)
 	{
 		logs("can't create simple shader");
@@ -25,7 +25,7 @@ int grRenderSimpleShader(grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer,
 {
 	int result;
 
-	result = grAddToShaderQueue(shader,vertexBuffer, indexBuffer, &params, sizeof(grSimpleShaderParams));
+	result = grAddToShaderQueue(shader,vertexBuffer, indexBuffer, &params);
 	if(!result)
 	{
 		logs("can't add element to simple shader");

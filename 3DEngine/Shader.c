@@ -34,7 +34,7 @@ struct _grShader
 };
 
 // Create shader and initialize it from files with functions for vertex and pixel shaders
-int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFilename)
+int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFilename, size_t paramSize)
 {
 	int result;
 	struct _grShader* shaderStruct = malloc(sizeof(struct _grShader));
@@ -69,8 +69,8 @@ int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFile
 
 	// create queue of shader elements
 	shaderStruct->elementsCount = 0;
-	shaderStruct->elementsCapacity = 16;
-	shaderStruct->paramsSize = 1;
+	shaderStruct->elementsCapacity = 1;
+	shaderStruct->paramsSize = paramSize;
 	shaderStruct->shaderElements = malloc(sizeof(ShaderElement) * shaderStruct->elementsCapacity);
 	if(!shaderStruct->shaderElements)
 	{
@@ -128,34 +128,6 @@ void grShutdownShader(grShader shader)
 	clReleaseCommandQueue(shader->queue);
 }
 
-static int changeParamsArray(grShader shader, size_t newSize)
-{
-	int i, result;
-	char* newParams = malloc(sizeof(newSize*shader->elementsCapacity));
-	// change list
-	if (!newParams)
-	{
-		logs("can't change params array");
-		return 0;
-	}
-	for(i = 0; i<shader->elementsCount; i++)
-		memcpy_s(newParams + i*newSize, newSize, shader->params, shader->paramsSize);
-	free(shader->params);
-	shader->paramsSize = newSize;
-	shader->params = newParams;
-
-	// change buffer
-	clReleaseMemObject(shader->paramsBuffer);
-	result = clCreateRWBuffer(&(shader->paramsBuffer), newSize*shader->elementsCapacity);
-	if(!result)
-	{
-		logs("can't change params buffer");
-		return 0;
-	}
-
-	return 1;
-}
-
 static int expandElementsArray(grShader shader)
 {
 	int result;
@@ -169,15 +141,27 @@ static int expandElementsArray(grShader shader)
 	memcpy_s(newElements, sizeof(ShaderElement)*shader->elementsCapacity * 2, shader->shaderElements, sizeof(ShaderElement)*shader->elementsCapacity);
 	free(shader->shaderElements);
 	shader->shaderElements = newElements;
+
+	char* newParams = malloc(shader->paramsSize*shader->elementsCapacity * 2);
+	if (!newParams)
+	{
+		logs("can't expand shader elements array");
+		return 0;
+	}
+	memcpy_s(newParams, shader->paramsSize*shader->elementsCapacity * 2, shader->params, shader->paramsSize*shader->elementsCapacity);
+	free(shader->params);
+	shader->params = newParams;
+
 	shader->elementsCapacity *= 2;
 
-	//expand params list
-	result = changeParamsArray(shader, shader->paramsSize);
-	if (!result)
-		return 0;
 
 	// expand elements buffer
-	clReleaseMemObject(shader->elementsBuffer);
+	result = clReleaseMemObject(shader->elementsBuffer);
+	if(result != CL_SUCCESS)
+	{
+		logs("can't release old elements buffer");
+		return 0;
+	}
 	result = clCreateRWBuffer(&(shader->elementsBuffer), sizeof(struct ShaderElement)*shader->elementsCapacity);
 	if (!result)
 	{
@@ -185,11 +169,24 @@ static int expandElementsArray(grShader shader)
 		return 0;
 	}
 
+	result = clReleaseMemObject(shader->paramsBuffer);
+	if (result != CL_SUCCESS)
+	{
+		logs("can't release old params buffer");
+		return 0;
+	}
+	result = clCreateRWBuffer(&(shader->paramsBuffer), shader->paramsSize*shader->elementsCapacity);
+	if (!result)
+	{
+		logs("can't change params buffer");
+		return 0;
+	}
+
 	return  1;
 }
 
 // Add model element before execution of shader (with all models in one time)
-int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, void* params, size_t paramsSize)
+int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuffer indexBuffer, void* params)
 {
 	int result;
 	ShaderElement* newShaderElement;
@@ -216,14 +213,8 @@ int grAddToShaderQueue(grShader shader, grVertexBuffer vertexBuffer, grIndexBuff
 	newShaderElement->primitiveCountEnd = primitiveEnd;
 
 	// add params
-	if(shader->paramsSize!=paramsSize)
-	{
-		result = changeParamsArray(shader, paramsSize);
-		if (!result)
-			return 0;
-	}
-	newParams = (char*)(shader->params) + paramsSize*shader->elementsCount;
-	memcpy_s(newParams, paramsSize, params, paramsSize);
+	newParams = (char*)(shader->params) + shader->paramsSize*shader->elementsCount;
+	memcpy_s(newParams, shader->paramsSize, params, shader->paramsSize);
 
 	shader->elementsCount++;
 
@@ -259,6 +250,13 @@ int grExecuteShader(grShader shader, void* outBuffer)
 	if(!result)
 	{
 		logs("can't set out buffer to shader");
+		return 0;
+	}
+
+	result = clFinishEx();
+	if(!result)
+	{
+		logs("can't perform pre-executions actions");
 		return 0;
 	}
 

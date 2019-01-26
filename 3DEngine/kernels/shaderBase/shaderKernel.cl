@@ -717,25 +717,32 @@ inline void giveAccess(int ind, __global ShaderGlobal* sg)
 	atomic_xchg(sg->accessBuffer + ind, 0);
 }
 
-inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
-{
-	rgb newColor;
-	newColor.r = color->x;
-	newColor.g = color->y;
-	newColor.b = color->z;
-	//getAccess(ind, sg);
-	// if weren't any changes during computations save
-	if (sg->depthBuffer[ind] == z)
-		sg->outBuffer[ind] = newColor;
-	//giveAccess(ind, sg);
-}
-
 int checkDepth(int ind, float z, __global ShaderGlobal* sg)
 {
 	float newZ = atomicMaxf(sg->depthBuffer + ind, z);
 	if (newZ == z)
 		return 1;
 }
+
+inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
+{
+	rgb newColor;
+	char* value =  sg->outBuffer + ind;
+	newColor.r = color->x;
+	newColor.g = color->y;
+	newColor.b = color->z;
+	barrier(CLK_GLOBAL_MEM_FENCE);
+	if (checkDepth(ind, z, sg))
+	{
+		sg->outBuffer[ind] = newColor;
+		//atomic_xchg(value, newColor.b);
+		//atomic_xchg(value+1, newColor.g);
+		//atomic_xchg(value + 2, newColor.r);
+	}
+	barrier(CLK_GLOBAL_MEM_FENCE);
+}
+
+
 
 
 
