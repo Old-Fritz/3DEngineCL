@@ -213,6 +213,9 @@
     <ClInclude Include="LSLMRenderer.h">
       <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Заголовочные файлы\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -319,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="LSLMRenderer.c">
       <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.c">
+      <Filter>Файлы исходного кода\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

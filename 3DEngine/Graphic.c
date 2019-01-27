@@ -14,9 +14,13 @@
 #include "LightModel.h"
 #include "DiffuseLight.h"
 #include "LSLMRenderer.h"
+#include "Timer.h"
+#include <math.h>
 
 static mdLightModel model1, model2, model3;
 static mdDiffuseLight light;
+static int lightChangeSize = 1;
+static float lightPos = 0;
 
 static int createScene()
 {
@@ -50,7 +54,7 @@ static int createScene()
 	light.color.x = 255;
 	light.intencity = 0.8;
 
-	mdMove(&(light.model), 30, 8, -2);
+	mdMove(&(light.model), 0, 8, -2);
 
 	grCameraMove(0, 2.5, 0);
 	grCameraRotate(0, 0.4, 0);
@@ -61,6 +65,25 @@ static int createScene()
 static int renderScene()
 {
 	int result;
+	m3dVector3 lightPos;
+	
+
+	// move light
+	mdGetPosition(&(light.model), &lightPos);
+	lightPos.x += lightChangeSize*tmFrameTime()*10;
+	if (lightPos.x > 100)
+	{
+		lightPos.x = 100;
+		lightChangeSize = -1;
+	}
+	else if (lightPos.x<-100)
+	{
+		lightPos.x = -100;
+		lightChangeSize = 1;
+	}
+	mdSetPosition(&(light.model), &lightPos);
+
+	// render models
 
 	result = renderLSLM(&model1, &light);
 	if (!result)

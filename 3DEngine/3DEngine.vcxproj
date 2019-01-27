@@ -175,6 +175,7 @@
     <ClInclude Include="SSSMRenderer.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="TestKernel.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="vector2.h" />
     <ClInclude Include="vector3.h" />
     <ClInclude Include="vector4.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="SSSMRenderer.c" />
     <ClCompile Include="system.c" />
     <ClCompile Include="TestKernel.c" />
+    <ClCompile Include="Timer.c" />
     <ClCompile Include="vector2.c" />
     <ClCompile Include="vector3.c" />
     <ClCompile Include="vector4.c" />

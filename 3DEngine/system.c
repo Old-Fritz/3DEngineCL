@@ -1,6 +1,7 @@
 #include "LogManager.h"
 #include "Settings.h"
 #include "Graphic.h"
+#include "Timer.h"
 
 int sysInit()
 {
@@ -21,6 +22,10 @@ int sysInit()
 		return 0;
 	logs("graphic init");
 
+	result = tmInit();
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
@@ -35,6 +40,7 @@ void sysRun()
 		{
 			for(i = 0; i < 60;i++)
 			{
+				tmFrame();
 				result = grFrame();
 				if (!result)
 					runProgram = 0;
