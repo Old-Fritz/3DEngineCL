@@ -24,7 +24,7 @@ int VertexShader(VertexInputType* input, ShaderParams* params, PixelInputType* o
 	// calculate projected position
 	m3dVec3TransformCoord(&(output->position), &(input->position), &(params->worldMatrix));
 	m3dVec3TransformCoord(&(output->position), &(output->position), &(params->viewMatrix));
-	m3dVec3Projection(&(output->position), &(input->position), &(params->projectionMatrix));
+	m3dVec3Projection(&(output->position), &(output->position), &(params->projectionMatrix));
 	output->color = input->color;
 
 	return 1;

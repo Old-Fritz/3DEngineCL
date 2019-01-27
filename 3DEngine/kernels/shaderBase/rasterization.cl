@@ -76,7 +76,7 @@ void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* pa
 
 
 								 // check depth buffer
-	if (!checkDepth(ind, z, sg))
+	if (!checkDepth(ind, 1/z, sg))
 		return;
 
 

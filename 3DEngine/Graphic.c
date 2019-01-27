@@ -105,7 +105,7 @@ static int render()
 		return  0;
 
 	//result = clExecuteTestKernel(&x, &y, &r);
-	result = renderSSSM(&model);
+//	result = renderSSSM(&model);
 	if(!result)
 		return  0;
 

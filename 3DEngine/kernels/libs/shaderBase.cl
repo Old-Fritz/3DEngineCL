@@ -85,24 +85,26 @@ int checkDepth(int ind, float z, __global ShaderGlobal* sg)
 	float newZ = atomicMaxf(sg->depthBuffer + ind, z);
 	if (newZ == z)
 		return 1;
+
+	return 0;
 }
 
 inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
 {
 	rgb newColor;
-	char* value = sg->outBuffer + ind;
+	__global char* value = sg->outBuffer + ind;
 	newColor.r = color->x;
 	newColor.g = color->y;
 	newColor.b = color->z;
-	barrier(CLK_GLOBAL_MEM_FENCE);
-	if (checkDepth(ind, z, sg))
+	//barrier(CLK_GLOBAL_MEM_FENCE);
+	if (checkDepth(ind, 1/z, sg))
 	{
 		sg->outBuffer[ind] = newColor;
-		//atomic_xchg(value, newColor.b);
-		//atomic_xchg(value+1, newColor.g);
-		//atomic_xchg(value + 2, newColor.r);
+		//atomic_xchg((__global int*)(value), (int)newColor.b);
+		//atomic_xchg((__global int*)(value+1), (int)newColor.g);
+		//atomic_xchg((__global int*)(value+2), (int)newColor.r);
 	}
-	barrier(CLK_GLOBAL_MEM_FENCE);
+	//barrier(CLK_GLOBAL_MEM_FENCE);
 }
 
 

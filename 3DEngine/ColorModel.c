@@ -6,7 +6,7 @@ int mdColorCreate(mdColorModel* model)
 {
 	int result;
 	m3dMatrix projectionMatrix;
-	mdColorModelVertex verticies[4] = { { {-100,100,5}, {255,0,0, 0} },{ {100,100,5},{0,255,0, 0} },{ {100,-100,5}, {0,0,255,0} },{ {-100,-100,5}, {0,0,0,255} } };
+	mdColorModelVertex verticies[4] = { { {-0.3,0.3,1}, {255,0,0, 0} },{ { 0.3,0.3,1},{0,255,0, 0} },{ { 0.3,-0.3,1}, {0,0,255,0} },{ {-0.3,-0.3,1}, {0,0,0,255} } };
 	int indicies[6] = { 0, 1, 2, 2,3,0 };
 
 	result = mdBaseModelInit(&(model->model), verticies, indicies, 4, 6, sizeof(mdColorModelVertex), GR_PRIMITIVE_TOPOLOGY_TRIANGLE);

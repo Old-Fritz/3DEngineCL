@@ -6,6 +6,9 @@ void spliter2D1(PixelInputType* psInput, ShaderParams* params, __global ShaderGl
 	// ...
 	// ...
 
+	psInput->position.x *= sg->right;
+	psInput->position.y *= sg->top;
+
 	rasterizer1(psInput, params, sg);
 }
 void spliter2D2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* params, __global ShaderGlobal* sg)
@@ -13,6 +16,12 @@ void spliter2D2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams
 	// There can be 2D splitters
 	// ...
 	// ...
+
+	psInput1->position.x *= sg->right;
+	psInput1->position.y *= sg->top;
+	psInput2->position.x *= sg->right;
+	psInput2->position.y *= sg->top;
+
 	rasterizer2(psInput1, psInput2, params, sg);
 }
 void spliter2D3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType* psInput3, ShaderParams* params, __global ShaderGlobal* sg)
@@ -20,6 +29,14 @@ void spliter2D3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputTy
 	// There can be 2D splitters
 	// ...
 	// ...
+
+	psInput1->position.x *= sg->right;
+	psInput1->position.y *= sg->top;
+	psInput2->position.x *= sg->right;
+	psInput2->position.y *= sg->top;
+	psInput3->position.x *= sg->right;
+	psInput3->position.y *= sg->top;
+
 	rasterizer3(psInput1, psInput2, psInput3, params, sg);
 }
 
