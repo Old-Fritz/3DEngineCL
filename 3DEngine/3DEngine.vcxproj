@@ -153,7 +153,11 @@
     <ClInclude Include="ColorModel.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="CSCMRenderer.h" />
+    <ClInclude Include="DiffuseLight.h" />
     <ClInclude Include="GetGPUPtrKernel.h" />
+    <ClInclude Include="LightModel.h" />
+    <ClInclude Include="LightShader.h" />
+    <ClInclude Include="LSLMRenderer.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="GraphicSystem.h" />
@@ -185,13 +189,17 @@
     <ClCompile Include="ColorModel.c" />
     <ClCompile Include="ColorShader.c" />
     <ClCompile Include="CSCMRenderer.c" />
+    <ClCompile Include="DiffuseLight.c" />
     <ClCompile Include="GetGPUPtrKernel.c" />
     <ClCompile Include="Graphic.c" />
     <ClCompile Include="GraphicSystem.c" />
     <ClCompile Include="IndexBuffer.c" />
     <ClCompile Include="Kernel.c" />
     <ClCompile Include="KernelManager.c" />
+    <ClCompile Include="LightModel.c" />
+    <ClCompile Include="LightShader.c" />
     <ClCompile Include="LogManager.c" />
+    <ClCompile Include="LSLMRenderer.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="MatrixBuilding.c" />
     <ClCompile Include="MatrixOperations.c" />
@@ -234,10 +242,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="kernels\shaders\psColor.cl" />
+    <None Include="kernels\shaders\psLight.cl" />
     <None Include="kernels\shaders\psSimple.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="kernels\shaders\vsColor.cl" />
+    <None Include="kernels\shaders\vsLight.cl" />
     <None Include="kernels\shaders\vsSimple.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

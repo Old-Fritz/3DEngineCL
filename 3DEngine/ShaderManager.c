@@ -14,13 +14,20 @@ int grCreateAllShaders()
 	if (!result)
 		return 0;
 
+	result = grCreateLightShader("kernels/shaders/vsLight.cl", "kernels/shaders/psLight.cl");
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
 // Release all resources connected with shaders
 void grShutdownAllShaders()
 {
+	grShutdownLightShader();
+	grShutdownColorShader();
 	grShutdownSimpleShader();
+	
 }
 
 // Execute all shaders
@@ -37,6 +44,10 @@ int grExecuteAllShaders()
 	if (!result)
 		return 0;
 
+	result = grExecuteLightShader(outBuffer);
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
@@ -44,11 +55,15 @@ int grFinishAllShaders()
 {
 	int result;
 
+	result = grFinishSimpleShader();
+	if (!result)
+		return 0;
+
 	result = grFinishColorShader();
 	if (!result)
 		return 0;
 
-	result = grFinishSimpleShader();
+	result = grFinishLightShader();
 	if (!result)
 		return 0;
 

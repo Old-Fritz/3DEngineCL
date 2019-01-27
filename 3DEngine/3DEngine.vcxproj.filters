@@ -201,6 +201,18 @@
     <ClInclude Include="CSCMRenderer.h">
       <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
     </ClInclude>
+    <ClInclude Include="LightModel.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DiffuseLight.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Graphic\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="LSLMRenderer.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -296,6 +308,18 @@
     <ClCompile Include="CSCMRenderer.c">
       <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="LightModel.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DiffuseLight.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShader.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Graphic\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="LSLMRenderer.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">
@@ -332,6 +356,12 @@
       <Filter>Файлы ресурсов\kernels\shaders</Filter>
     </None>
     <None Include="kernels\shaders\vsColor.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\psLight.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\vsLight.cl">
       <Filter>Файлы ресурсов\kernels\shaders</Filter>
     </None>
   </ItemGroup>

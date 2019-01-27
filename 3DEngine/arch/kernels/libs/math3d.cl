@@ -635,12 +635,3 @@ m3dVector3* m3dVec3Projection(m3dVector3* outVec, const m3dVector3* vec, const m
 	return outVec;
 }
 
-m3dVec3Lerp(m3dVector3* outVec, const m3dVector3* vec1, const m3dVector3* vec2, float perCent)
-{
-	outVec->x = vec1->x*perCent + vec2->x*(1 - perCent);
-	outVec->y = vec1->y*perCent + vec2->y*(1 - perCent);
-	outVec->z = vec1->z*perCent  + vec2-> z*(1 - perCent);
-
-	return outVec;
-}
-
