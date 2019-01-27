@@ -50,8 +50,8 @@ int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFile
 
 	// create kernel
 	// fill filenames with parts of shader kernel
-	filenames[0] = "kernels/shaderBase/shaderKernel.cl";
-	//filenames[0] = "kernels/libs/math3d.cl";
+	//filenames[0] = "kernels/shaderBase/shaderKernel.cl";
+	filenames[0] = "kernels/libs/math3d.cl";
 	filenames[1] = "kernels/libs/shaderBase.cl";
 	filenames[2] = vsFilename;
 	filenames[3] = psFilename;
@@ -60,7 +60,7 @@ int grCreateShader(grShader* shader, const char* vsFilename, const  char* psFile
 	filenames[6] = "kernels/shaderBase/shaderKernel.cl";
 
 	// init kernel
-	result = clCreateKernelFromFiles(&(shaderStruct->kernel), "shaderKernel", filenames, 1);
+	result = clCreateKernelFromFiles(&(shaderStruct->kernel), "shaderKernel", filenames, 7);
 	if(!result)
 	{
 		logs("can't create kernel for shader");
@@ -226,6 +226,10 @@ int grExecuteShader(grShader shader, void* outBuffer)
 {
 	int result;
 	size_t globalWorkSize[1];
+
+	// check if elemetnts are exists
+	if (!shader->elementsCount)
+		return 1;
 
 	// fill buffers
 	result = clWriteRWBuffer(shader->elementsBuffer, sizeof(ShaderElement)*shader->elementsCount, shader->shaderElements);

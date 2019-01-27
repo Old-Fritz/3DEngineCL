@@ -9,12 +9,15 @@
 #include "ShaderManager.h"
 #include "SimpleModel.h"
 #include "SSSMRenderer.h"
+#include "ColorModel.h"
+#include "CSCMRenderer.h"
 
 static int x = 0;
 static int y;
 static int r;
 static mdSimpleModel model;
 static mdSimpleModel model2;
+static mdColorModel model3;
 
 int grInit()
 {
@@ -78,6 +81,10 @@ int grInit()
 	if (!result)
 		return 0;
 
+	result = mdColorCreate(&model3);
+	if (!result)
+		return 0;
+
 	model2.color.x = 255;
 
 	return 1;
@@ -103,6 +110,10 @@ static int render()
 		return  0;
 
 	result = renderSSSM(&model2);
+	if (!result)
+		return  0;
+
+	result = renderCSCM(&model3);
 	if (!result)
 		return  0;
 

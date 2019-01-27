@@ -1,7 +1,7 @@
 #ifndef SHADER_MANAGER_H
 #define SHADER_MANAGER_H
 #include "SimpleShader.h"
-
+#include "ColorShader.h"
 /// United control of creating and releasing all shaders
 
 // Initialize all shaders

@@ -10,6 +10,10 @@ int grCreateAllShaders()
 	if (!result)
 		return 0;
 
+	result = grCreateColorShader("kernels/shaders/vsColor.cl", "kernels/shaders/psColor.cl");
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
@@ -29,12 +33,20 @@ int grExecuteAllShaders()
 	if (!result)
 		return 0;
 
+	result = grExecuteColorShader(outBuffer);
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
 int grFinishAllShaders()
 {
 	int result;
+
+	result = grFinishColorShader();
+	if (!result)
+		return 0;
 
 	result = grFinishSimpleShader();
 	if (!result)

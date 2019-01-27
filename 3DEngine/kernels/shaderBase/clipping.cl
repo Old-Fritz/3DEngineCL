@@ -1,9 +1,11 @@
 
+
 void spliter2D1(PixelInputType* psInput, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	// There can be 2D splitters
 	// ...
 	// ...
+
 	rasterizer1(psInput, params, sg);
 }
 void spliter2D2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* params, __global ShaderGlobal* sg)
@@ -11,14 +13,14 @@ void spliter2D2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams
 	// There can be 2D splitters
 	// ...
 	// ...
-	rasterizer2(psInput1, psInput2, params,sg);
+	rasterizer2(psInput1, psInput2, params, sg);
 }
 void spliter2D3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType* psInput3, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	// There can be 2D splitters
 	// ...
 	// ...
-	rasterizer3(psInput1, psInput2, psInput2, params, sg);
+	rasterizer3(psInput1, psInput2, psInput3, params, sg);
 }
 
 
@@ -33,7 +35,7 @@ void spliter1(PixelInputType* psInput, ShaderParams* params, __global ShaderGlob
 	// split in 2D and go next
 	spliter2D1(psInput, params, sg);
 }
-void spliter2(PixelInputType* psInput1, PixelInputType* psInput2,  ShaderParams* params, __global ShaderGlobal* sg)
+void spliter2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	m3dVector3 *pos1, *pos2;
 	pos1 = psInput1; // first value is position
@@ -67,7 +69,6 @@ void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType
 	pos1 = psInput1; // first value is position
 	pos2 = psInput2;
 	pos3 = psInput3;
-
 
 	// Finish if all points out of near Z
 	if (pos1->z < 0 && pos2->z < 0 && pos3->z < 0)
@@ -123,6 +124,6 @@ void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType
 	}
 
 	// split in 2D and go next
-	spliter2D3(psInput2, psInput3, psInput1, params, sg);
+	spliter2D3(psInput1, psInput2, psInput3, params, sg);
 }
 

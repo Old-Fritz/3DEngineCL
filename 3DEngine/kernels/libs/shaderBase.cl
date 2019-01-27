@@ -1,7 +1,43 @@
 
+inline float atomicMaxf(volatile __global float *source, const float operand) {
+	union {
+		unsigned int intVal;
+		float floatVal;
+	} newVal;
+	union {
+		unsigned int intVal;
+		float floatVal;
+	} prevVal;
+	do {
+		prevVal.floatVal = *source;
+		newVal.floatVal = max(prevVal.floatVal, operand);
+	} while (atomic_cmpxchg((volatile __global unsigned int *)source, prevVal.intVal, newVal.intVal) != prevVal.intVal);
+
+	return newVal.floatVal;
+}
+
+void swap(void** val1, void** val2)
+{
+	void* temp = *val1;
+	*val1 = *val2;
+	*val2 = temp;
+}
+
+
+
+
+
 typedef struct VertexInputType VertexInputType;
 typedef struct PixelInputType PixelInputType;
 typedef struct ShaderParams ShaderParams;
+
+typedef struct rgb
+{
+	uchar b;
+	uchar g;
+	uchar r;
+} rgb;
+
 
 typedef enum grPrimitiveTopology {
 	GR_PRIMITIVE_TOPOLOGY_POINT = 1,
@@ -9,34 +45,21 @@ typedef enum grPrimitiveTopology {
 	GR_PRIMITIVE_TOPOLOGY_TRIANGLE = 3
 } grPrimitiveTopology;
 
-typedef struct VertexBuffer
-{
-	__global VertexInputType* vertexData;
-	int vertexCount;
-	int vertexSize;
-	grPrimitiveTopology topology;
-} VertexBuffer;
-
-typedef struct IndexBuffer
-{
-	__global unsigned int* indexData;
-	int indexCount;
-} IndexBuffer;
-
 
 typedef struct ShaderObject
 {
-	VertexBuffer vertexBuffer;
-	IndexBuffer indexBuffer;
+	__global VertexInputType* vertexData;
+	__global unsigned int* indexData;
+	grPrimitiveTopology topology;
 	int primitiveCountEnd;
 } ShaderObject;
 
 typedef struct ShaderGlobal
 {
-	__global m3dVector3* outBuffer;
+	__global rgb* outBuffer;
 	__global float* depthBuffer;
 	__global int* accessBuffer;
-	int screenWidth, screenHegiht;
+	int screenWidth, screenHeight;
 	float farZ, nearZ;
 	float left, right, top, bottom;
 } ShaderGlobal;
@@ -57,18 +80,31 @@ inline void giveAccess(int ind, __global ShaderGlobal* sg)
 	atomic_xchg(sg->accessBuffer + ind, 0);
 }
 
-inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
-{
-	getAccess(ind, sg);
-	// if weren't any changes during computations save
-	if (sg->depthBuffer[ind] == z)
-		sg->outBuffer[ind] = *((m3dVector3*)color);
-	giveAccess(ind, sg);
-}
-
 int checkDepth(int ind, float z, __global ShaderGlobal* sg)
 {
 	float newZ = atomicMaxf(sg->depthBuffer + ind, z);
 	if (newZ == z)
 		return 1;
 }
+
+inline void draw(int ind, float z, m3dVector4* color, __global ShaderGlobal* sg)
+{
+	rgb newColor;
+	char* value = sg->outBuffer + ind;
+	newColor.r = color->x;
+	newColor.g = color->y;
+	newColor.b = color->z;
+	barrier(CLK_GLOBAL_MEM_FENCE);
+	if (checkDepth(ind, z, sg))
+	{
+		sg->outBuffer[ind] = newColor;
+		//atomic_xchg(value, newColor.b);
+		//atomic_xchg(value+1, newColor.g);
+		//atomic_xchg(value + 2, newColor.r);
+	}
+	barrier(CLK_GLOBAL_MEM_FENCE);
+}
+
+
+
+

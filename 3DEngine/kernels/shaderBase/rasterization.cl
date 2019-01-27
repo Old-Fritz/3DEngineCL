@@ -64,15 +64,21 @@ void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* pa
 {
 	int ind, result;
 	m3dVector4 color;
+	//int ind;
+
+	// check screen
+	if (x < sg->left || x > sg->right || y < sg->bottom || y > sg->top)
+		return;
+
+	x += sg->right;
+	y = sg->top - y;
 	ind = sg->screenWidth*y + x; // ind in buffer
 
-								 // check screen
-	if (x < sg->left || x>  sg->right || y <  sg->bottom || y> sg->top)
-		return;
 
-	// check depth buffer
+								 // check depth buffer
 	if (!checkDepth(ind, z, sg))
 		return;
+
 
 	// proccess shader
 	result = PixelShader(input, params, &color);
@@ -84,11 +90,10 @@ void processPoint(PixelInputType* input, int x, int y, float z, ShaderParams* pa
 }
 void rasterizer1(PixelInputType* input, ShaderParams* params, __global ShaderGlobal* sg)
 {
-	m3dVector3* position = input;
 	// there are only one point so we can only draw it immidietly
-	processPoint(input, position->x, position->y, position->z, params, sg);
+	processPoint(input, input->position.x, input->position.y, input->position.z, params, sg);
 }
-void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* params, __global ShaderGlobal* sg)
+void rasterizer2(PixelInputType* input1, PixelInputType* input2, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	m3dVector3 *pos1, *pos2, *pos;
 	PixelInputType stepInput;
@@ -98,7 +103,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* 
 	int x, y, i;
 	pos1 = input1;
 	pos2 = input2;
-	slope = (pos2->x - pos1->x) / (pos2->y - pos2->y);
+	slope = (pos2->y - pos1->y) / (pos2->x - pos1->x);
 	// if line closer to horizontal
 	if (slope > -1 && slope < 1)
 	{
@@ -108,7 +113,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* 
 			swap(&input2, &input1);
 			swap(&pos2, &pos1);
 		}
-		steps = pos2->x - pos1->x;
+		steps = pos2->x - pos1->x + 1;
 	}
 	// if line closer to vertical
 	else
@@ -119,7 +124,7 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* 
 			swap(&input2, &input1);
 			swap(&pos2, &pos1);
 		}
-		steps = pos2->y - pos1->y;
+		steps = pos2->y - pos1->y + 1;
 	}
 	copyPI(&nextInput, input1);
 	createDeltaPI(&stepInput, input1, input2, steps);
@@ -132,48 +137,50 @@ void rasterizer2(PixelInputType* input1, PixelInputType* input2,  ShaderParams* 
 }
 void rasterizer3(PixelInputType* input1, PixelInputType* input2, PixelInputType* input3, ShaderParams* params, __global ShaderGlobal* sg)
 {
-	m3dVector3 *pos1, *pos2, *pos3;
 	PixelInputType stepInput1, stepInput2, stepInput3;
 	PixelInputType nextInputL, nextInputR;
-	int steps, i;
+	int steps, steps1, steps2, i;
+
+	rgb color;
+	int j;
+
 	// order verticies py1<py2<py3
-	pos1 = input1;
-	pos2 = input2;
-	pos3 = input3;
-	if (pos2->y < pos1->y)
+	if (input2->position.y < input1->position.y)
 	{
 		swap(&input2, &input1);
-		swap(&pos2, &pos1);
 	}
-	if (pos3->y < pos1->y)
+	if (input3->position.y < input1->position.y)
 	{
 		swap(&input3, &input1);
-		swap(&pos3, &pos1);
 	}
-	if (pos3->y < pos2->y)
+	if (input3->position.y < input2->position.y)
 	{
 		swap(&input3, &input2);
-		swap(&pos3, &pos2);
 	}
-	steps = pos3->y - pos1->y;
+
+	steps = input3->position.y - input1->position.y + 1;
 	createDeltaPI(&stepInput1, input1, input3, steps);
-	createDeltaPI(&stepInput2, input1, input2, (pos3->y - pos1->y) / steps*(pos2->y - pos1->y));
-	createDeltaPI(&stepInput3, input2, input3, (pos3->y - pos1->y) / steps*(pos3->y - pos2->y));
-	copyPI(&nextInputL, &input1);
-	copyPI(&nextInputR, &input1);
+	createDeltaPI(&stepInput2, input1, input2, (input3->position.y - input1->position.y) / steps*(input2->position.y - input1->position.y));
+	createDeltaPI(&stepInput3, input2, input3, (input3->position.y - input1->position.y) / steps*(input3->position.y - input2->position.y));
+	copyPI(&nextInputL, input1);
+	copyPI(&nextInputR, input1);
+	stepInput2.position.y = stepInput3.position.y = stepInput1.position.y;
 
 	// bottom side
-	while (((m3dVector3*)&nextInputL)->y <= pos2->y)
+	while (nextInputL.position.y <= input2->position.y)
 	{
+		nextInputR.position.y = nextInputL.position.y;
 		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		addPI(&nextInputL, &nextInputL, &stepInput1);
 		addPI(&nextInputR, &nextInputR, &stepInput2);
 	}
 	// up side
-	copyPI(&nextInputL, &input3);
-	copyPI(&nextInputR, &input3);
-	while (((m3dVector3*)&nextInputL)->y > pos2->y)
+	copyPI(&nextInputL, input3);
+	copyPI(&nextInputR, input3);
+	//return;
+	while (nextInputL.position.y > input2->position.y)
 	{
+		nextInputR.position.y = nextInputL.position.y;
 		rasterizer2(&nextInputL, &nextInputR, params, sg);
 		subPI(&nextInputL, &nextInputL, &stepInput1);
 		subPI(&nextInputR, &nextInputR, &stepInput3);

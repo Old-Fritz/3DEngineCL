@@ -150,6 +150,9 @@
     <ClInclude Include="BaseModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearKernel.h" />
+    <ClInclude Include="ColorModel.h" />
+    <ClInclude Include="ColorShader.h" />
+    <ClInclude Include="CSCMRenderer.h" />
     <ClInclude Include="GetGPUPtrKernel.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="Graphic.h" />
@@ -179,6 +182,9 @@
     <ClCompile Include="BaseModel.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="ClearKernel.c" />
+    <ClCompile Include="ColorModel.c" />
+    <ClCompile Include="ColorShader.c" />
+    <ClCompile Include="CSCMRenderer.c" />
     <ClCompile Include="GetGPUPtrKernel.c" />
     <ClCompile Include="Graphic.c" />
     <ClCompile Include="GraphicSystem.c" />
@@ -227,9 +233,11 @@
     <None Include="kernels\shaderBase\shaderKernel.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="kernels\shaders\psColor.cl" />
     <None Include="kernels\shaders\psSimple.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="kernels\shaders\vsColor.cl" />
     <None Include="kernels\shaders\vsSimple.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

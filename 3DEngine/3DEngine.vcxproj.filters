@@ -192,6 +192,15 @@
     <ClInclude Include="GetGPUPtrKernel.h">
       <Filter>Заголовочные файлы\AdditionalElements\Graphic\Kernels</Filter>
     </ClInclude>
+    <ClInclude Include="ColorModel.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Graphic\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CSCMRenderer.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -278,6 +287,15 @@
     <ClCompile Include="Settings.c">
       <Filter>Файлы исходного кода\System</Filter>
     </ClCompile>
+    <ClCompile Include="ColorModel.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Graphic\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="CSCMRenderer.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">
@@ -309,6 +327,12 @@
     </None>
     <None Include="kernels\getGPUPtr.cl">
       <Filter>Файлы ресурсов\kernels</Filter>
+    </None>
+    <None Include="kernels\shaders\psColor.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\vsColor.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
