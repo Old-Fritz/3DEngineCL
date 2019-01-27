@@ -14,7 +14,7 @@ typedef struct mdLightModel
 	m3dVector4 color;
 } mdLightModel;
 
-int mdLightCreate(mdLightModel* model);
+int mdLightCreate(mdLightModel* model, const char* filename);
 void mdLightShutdown(mdLightModel* model);
 
 #endif

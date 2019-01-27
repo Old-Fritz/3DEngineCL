@@ -2,6 +2,7 @@
 #include "LightShader.h"
 #include "LogManager.h"
 #include "GraphicSystem.h"
+#include "Camera.h"
 
 int renderLSLM(mdLightModel* lightModel, mdDiffuseLight* light)
 {
@@ -15,8 +16,8 @@ int renderLSLM(mdLightModel* lightModel, mdDiffuseLight* light)
 	m3dMatrix translateMatrix;
 
 	// fill params
-	m3dMatrixIdentity(&(params.worldMatrix));
-	m3dMatrixIdentity(&(params.viewMatrix));
+	grGetWorldMatrix(&(params.worldMatrix));
+	grGetViewMatrix(&(params.viewMatrix));
 	grGetProjectionMatrix(&(params.projectionMatrix));
 	params.modelColor = lightModel->color;
 	mdGetPosition(&(light->model), &(params.lightPos));
@@ -29,9 +30,9 @@ int renderLSLM(mdLightModel* lightModel, mdDiffuseLight* light)
 
 	// change world matrix
 	m3dMatrixRotationYawPitchRoll(&rotateMatrix, rotation.y, rotation.x, rotation.z);
-	//m3dMatrixMultiply(&(params.worldMatrix), &(params.worldMatrix), &rotateMatrix);
+	m3dMatrixMultiply(&(params.worldMatrix), &(params.worldMatrix), &rotateMatrix);
 	m3dMatrixTranslation(&translateMatrix, position.x, position.y, position.z);
-	//m3dMatrixMultiply(&(params.worldMatrix), &(params.worldMatrix), &translateMatrix);
+	m3dMatrixMultiply(&(params.worldMatrix), &(params.worldMatrix), &translateMatrix);
 
 	// get buffers and render
 	mdGetBuffers(&(lightModel->model), &vertexBuffer, &indexBuffer);

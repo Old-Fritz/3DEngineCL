@@ -15,14 +15,67 @@
 #include "DiffuseLight.h"
 #include "LSLMRenderer.h"
 
-static int x = 0;
-static int y;
-static int r;
-static mdSimpleModel model;
-static mdSimpleModel model2;
-static mdColorModel model3;
-static mdLightModel model4;
+static mdLightModel model1, model2, model3;
 static mdDiffuseLight light;
+
+static int createScene()
+{
+	int result;
+
+	result = mdLightCreate(&model1, "models/cube.txt");
+	if (!result)
+		return 0;
+	model1.color.x = 255;
+	mdMove(&(model1.model), -0.5, 0.5, 5);
+	mdRotate(&(model1.model), 1.3, 1.3, -0.5);
+
+	result = mdLightCreate(&model2, "models/cube.txt");
+	if (!result)
+		return 0;
+	model2.color.y = 255;
+	mdMove(&(model2.model), 0.5, -0.5, 5);
+	mdRotate(&(model2.model), 0, 1.3, -0.5);
+
+	result = mdLightCreate(&model3, "models/cube.txt");
+	if (!result)
+		return 0;
+	model3.color.z = 255;
+	mdMove(&(model3.model), 1, 0.5, 6);
+	mdRotate(&(model3.model),0.7, 0, -1.5);
+
+	result = mdDiffuseLightCreate(&light);
+	if (!result)
+		return 0;
+
+	light.color.x = 255;
+	light.intencity = 0.8;
+
+	mdMove(&(light.model), 30, 8, -2);
+
+	grCameraMove(0, 2.5, 0);
+	grCameraRotate(0, 0.4, 0);
+
+	return 1;
+}
+
+static int renderScene()
+{
+	int result;
+
+	result = renderLSLM(&model1, &light);
+	if (!result)
+		return 0;
+
+	result = renderLSLM(&model2, &light);
+	if (!result)
+		return 0;
+
+	result = renderLSLM(&model3, &light);
+	if (!result)
+		return 0;
+
+	return 1;
+}
 
 int grInit()
 {
@@ -73,41 +126,12 @@ int grInit()
 		return 0;
 	}
 
-	y = setsGetScreenHeight() / 2;
-	r = setsGetScreenHeight() / 4;
-
-	result = mdSimpleCreate(&model);
-	if (!result)
+	result = createScene();
+	if(!result)
+	{
+		logs("can't create scene");
 		return 0;
-
-	model.color.y = 255;
-
-	result = mdSimpleCreate(&model2);
-	if (!result)
-		return 0;
-
-	result = mdColorCreate(&model3);
-	if (!result)
-		return 0;
-
-	result = mdLightCreate(&model4);
-	if (!result)
-		return 0;
-
-	model4.color.y = 255;
-
-	mdMove(&(model4.model), 0, 0, 0);
-
-	result = mdDiffuseLightCreate(&light);
-	if (!result)
-		return 0;
-
-	light.color.x = 255;
-	light.intencity = 1;
-
-	mdMove(&(light.model), 0, 10, -1);
-
-	model2.color.x = 255;
+	}
 
 	return 1;
 }
@@ -117,29 +141,12 @@ static int render()
 	int result;
 	m3dVector4 color = { 30,30,30,0 };
 
-	x++;
-	if (x > setsGetScreenWidth())
-		x = 0;
-
 	
 	result = grClearBuffers(color);
 	if(!result)
 		return  0;
 
-	//result = clExecuteTestKernel(&x, &y, &r);
-//	result = renderSSSM(&model);
-	if(!result)
-		return  0;
-
-	//result = renderSSSM(&model2);
-	if (!result)
-		return  0;
-
-	//result = renderCSCM(&model3);
-	if (!result)
-		return  0;
-
-	result = renderLSLM(&model4, &light);
+	result = renderScene();
 	if (!result)
 		return  0;
 

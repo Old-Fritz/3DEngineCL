@@ -21,9 +21,9 @@ static void calculateViewMatrix()
 	lookAt.z = 1;
 
 	// Set yaw pitch roll in radians and create rotation matrix
-	pitch = camRotation.x * 0.0174532925f;
-	yaw = camRotation.y * 0.0174532925f;
-	roll = camRotation.z * 0.0174532925f;
+	pitch = camRotation.x;
+	yaw = camRotation.y;
+	roll = camRotation.z;
 	m3dMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, roll);
 
 	// Rotate up and lookAt

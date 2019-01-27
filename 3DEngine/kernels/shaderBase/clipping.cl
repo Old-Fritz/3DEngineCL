@@ -58,6 +58,7 @@ void spliter2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* 
 	pos1 = psInput1; // first value is position
 	pos2 = psInput2;
 
+	/*
 	// Finish if both points out of near Z
 	if (pos1->z <  0 && pos2->z < 0)
 		return;
@@ -75,13 +76,15 @@ void spliter2(PixelInputType* psInput1, PixelInputType* psInput2, ShaderParams* 
 		cutPercent = -pos1->z / (pos2->z - pos1->z);
 		interpolatePI(psInput1, psInput1, psInput2, cutPercent);
 	}
-
+	*/
 	// split in 2D and go next
 	spliter2D2(psInput1, psInput2, params, sg);
 }
 void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType* psInput3, ShaderParams* params, __global ShaderGlobal* sg)
 {
 	int result;
+
+	/*
 	m3dVector3 *pos1, *pos2, *pos3;
 	pos1 = psInput1; // first value is position
 	pos2 = psInput2;
@@ -139,7 +142,7 @@ void spliter3(PixelInputType* psInput1, PixelInputType* psInput2, PixelInputType
 		interpolatePI(psInput1, psInput1, psInput2, cutPercent1);
 		spliter2D3(psInput2, psInput3, &psInput4, params, sg);
 	}
-
+	*/
 	// split in 2D and go next
 	spliter2D3(psInput1, psInput2, psInput3, params, sg);
 }
