@@ -5,7 +5,7 @@
 
 static float randFloat()
 {
-	return (float)(rand()*2 - RAND_MAX)/RAND_MAX;
+	return (float)(rand()*2 - RAND_MAX)/RAND_MAX*2;
 }
 
 static int generateParticles(mdParticleVertex** verticies, int** indicies, int count)

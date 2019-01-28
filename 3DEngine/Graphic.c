@@ -45,10 +45,10 @@ static int createScene()
 	mdMove(&(model3.model), 1, 0.5, 6);
 	mdRotate(&(model3.model),0.7, 0, -1.5);
 
-	result = mdParticlesSystemCreate(&particles, 10000);
+	result = mdParticlesSystemCreate(&particles, 100000);
 	if (!result)
 		return 0;
-	mdMove(&(particles.model), 1, 0.5, 6);
+	mdMove(&(particles.model), 1, 0.5, 5);
 
 	result = mdDiffuseLightCreate(&light);
 	if (!result)
@@ -103,7 +103,7 @@ static int renderScene()
 	if (!result)
 		return 0;
 
-	result = renderPSPS(&particles, tmFrameTime()*0.3);
+	result = renderPSPS(&particles, tmFrameTime()*0.1);
 	if (!result)
 		return 0;
 
