@@ -141,7 +141,7 @@ int clCreateKernelFromFiles(cl_kernel* kernel, const char* kernelName, const cha
 		return 0;
 	}
 
-	result = clBuildProgram(program, 0, NULL,  NULL , NULL, NULL);
+	result = clBuildProgram(program, 0, NULL, NULL , NULL, NULL);
 	if (result != CL_SUCCESS)
 	{
 		// Print the log

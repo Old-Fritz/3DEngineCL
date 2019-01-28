@@ -11,5 +11,20 @@ __kernel void clearKernel(
 		+ bufferElementSize*count*get_global_id(0)
 		+ bufferElementSize*currentValueId;
 
-	Buffer[bufferIndex] = values[currentValueId];
+	switch (currentValueId)
+	{
+	case 0:
+		Buffer[bufferIndex] = values.x;
+		break;
+	case 1:
+		Buffer[bufferIndex] = values.y;
+		break;
+	case 2:
+		Buffer[bufferIndex] = values.z;
+		break;
+	case 3:
+		Buffer[bufferIndex] = values.w;
+		break;
+	}
+	
 }

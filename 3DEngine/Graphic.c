@@ -70,18 +70,21 @@ static int renderScene()
 
 	// move light
 	mdGetPosition(&(light.model), &lightPos);
-	lightPos.x += lightChangeSize*tmFrameTime()*10;
-	if (lightPos.x > 100)
+	lightPos.x += lightChangeSize*tmFrameTime()*20;
+	if (lightPos.x > 60)
 	{
-		lightPos.x = 100;
-		lightChangeSize = -1;
+		lightPos.x = 60;
+		lightChangeSize = -1; 
 	}
-	else if (lightPos.x<-100)
+	else if (lightPos.x < -60)
 	{
-		lightPos.x = -100;
+		lightPos.x = -60;
 		lightChangeSize = 1;
 	}
 	mdSetPosition(&(light.model), &lightPos);
+	mdRotate(&(model1.model), tmFrameTime()*0.3, 0,0);
+	mdRotate(&(model2.model), 0, tmFrameTime()*0.3, 0);
+	mdRotate(&(model3.model), 0,0,tmFrameTime()*0.3);
 
 	// render models
 

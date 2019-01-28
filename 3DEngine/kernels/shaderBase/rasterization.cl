@@ -1,10 +1,10 @@
 
-float interpolateF(float value1, float value2, float perCent)
+inline float interpolateF(float value1, float value2, float perCent)
 {
 	return value1 + (value2 - value1)*perCent;
 }
 
-void interpolatePI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue, float perCent)
+inline void interpolatePI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue, float perCent)
 {
 	int i;
 	int size = sizeof(PixelInputType) / sizeof(float);
@@ -15,7 +15,7 @@ void interpolatePI(PixelInputType* output, PixelInputType* lValue, PixelInputTyp
 	for (i = 0;i < size;i++)
 		outputArray[i] = interpolateF(lValueArray[i], rValueArray[i], perCent);
 }
-void createDeltaPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue, float steps)
+inline void createDeltaPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue, float steps)
 {
 	int i;
 	int size = sizeof(PixelInputType) / sizeof(float);
@@ -26,7 +26,7 @@ void createDeltaPI(PixelInputType* output, PixelInputType* lValue, PixelInputTyp
 	for (i = 0;i < size;i++)
 		outputArray[i] = (rValueArray[i] - lValueArray[i]) / steps;
 }
-void addPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue)
+inline void addPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue)
 {
 	int i;
 	int size = sizeof(PixelInputType) / sizeof(float);
@@ -37,7 +37,7 @@ void addPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValu
 	for (i = 0;i < size;i++)
 		outputArray[i] = lValueArray[i] + rValueArray[i];
 }
-void subPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue)
+inline void subPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValue)
 {
 	int i;
 	int size = sizeof(PixelInputType) / sizeof(float);
@@ -48,7 +48,7 @@ void subPI(PixelInputType* output, PixelInputType* lValue, PixelInputType* rValu
 	for (i = 0;i < size;i++)
 		outputArray[i] = lValueArray[i] - rValueArray[i];
 }
-void copyPI(PixelInputType* output, PixelInputType* value)
+inline void copyPI(PixelInputType* output, PixelInputType* value)
 {
 	int i;
 	int size = sizeof(PixelInputType) / sizeof(float);
