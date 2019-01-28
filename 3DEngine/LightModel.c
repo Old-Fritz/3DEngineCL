@@ -7,7 +7,7 @@
 static int loadFromFile(const char* filename, mdLightModelVertex** verticies, int** indicies, int* indexCount, int* vertexCount)
 {
 	FILE* file;
-	int result;
+	int result, i;
 	//int vertexCount;
 
 	result = fopen_s(&file, filename, "r");
@@ -23,7 +23,7 @@ static int loadFromFile(const char* filename, mdLightModelVertex** verticies, in
 	*verticies = malloc(sizeof(mdLightModelVertex)*(*vertexCount));
 	*indicies = malloc(sizeof(int)*(*vertexCount));
 
-	for(int i = 0; i<(*vertexCount);i++)
+	for(i = 0; i<(*vertexCount);i++)
 	{
 		fscanf_s(file, "%f %f %f %f %f %f\n", &((*verticies)[i].position.x), &((*verticies)[i].position.y), &((*verticies)[i].position.z),
 			&((*verticies)[i].normal.x), &((*verticies)[i].normal.y), &((*verticies)[i].normal.z));
@@ -47,7 +47,7 @@ int mdLightCreate(mdLightModel* model, const char* filename)
 	result = mdBaseModelInit(&(model->model), verticies, indicies, vertexCount, indexCount, sizeof(mdLightModelVertex), GR_PRIMITIVE_TOPOLOGY_TRIANGLE);
 	if (!result)
 	{
-		logs("can't create color model");
+		logs("can't create light model");
 		return 0;
 	}
 

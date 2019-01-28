@@ -167,6 +167,9 @@
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="OpenCL.h" />
+    <ClInclude Include="ParticlesShader.h" />
+    <ClInclude Include="ParticlesSystem.h" />
+    <ClInclude Include="PSPSRenderer.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
@@ -205,6 +208,9 @@
     <ClCompile Include="MatrixBuilding.c" />
     <ClCompile Include="MatrixOperations.c" />
     <ClCompile Include="OpenCL.c" />
+    <ClCompile Include="ParticlesShader.c" />
+    <ClCompile Include="ParticleSystem.c" />
+    <ClCompile Include="PSPSRenderer.c" />
     <ClCompile Include="Settings.c" />
     <ClCompile Include="Shader.c" />
     <ClCompile Include="ShaderManager.c" />
@@ -243,8 +249,10 @@
     <None Include="kernels\shaderBase\shaderKernel.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="kernels\shaders\vsParticles.cl" />
     <None Include="kernels\shaders\psColor.cl" />
     <None Include="kernels\shaders\psLight.cl" />
+    <None Include="kernels\shaders\psParticles.cl" />
     <None Include="kernels\shaders\psSimple.cl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

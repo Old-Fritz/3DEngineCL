@@ -3,6 +3,7 @@
 #include "SimpleShader.h"
 #include "ColorShader.h"
 #include "LightShader.h"
+#include "ParticlesShader.h"
 /// United control of creating and releasing all shaders
 
 // Initialize all shaders

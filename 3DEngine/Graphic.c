@@ -7,17 +7,15 @@
 #include "GraphicSystem.h"
 #include "Camera.h"
 #include "ShaderManager.h"
-#include "SimpleModel.h"
-#include "SSSMRenderer.h"
-#include "ColorModel.h"
-#include "CSCMRenderer.h"
 #include "LightModel.h"
 #include "DiffuseLight.h"
 #include "LSLMRenderer.h"
+#include "PSPSRenderer.h"
 #include "Timer.h"
-#include <math.h>
+#include "ParticlesSystem.h"
 
 static mdLightModel model1, model2, model3;
+static mdParticlesSystem particles;
 static mdDiffuseLight light;
 static int lightChangeSize = 1;
 static float lightPos = 0;
@@ -46,6 +44,11 @@ static int createScene()
 	model3.color.z = 255;
 	mdMove(&(model3.model), 1, 0.5, 6);
 	mdRotate(&(model3.model),0.7, 0, -1.5);
+
+	result = mdParticlesSystemCreate(&particles, 10000);
+	if (!result)
+		return 0;
+	mdMove(&(particles.model), 1, 0.5, 6);
 
 	result = mdDiffuseLightCreate(&light);
 	if (!result)
@@ -97,6 +100,10 @@ static int renderScene()
 		return 0;
 
 	result = renderLSLM(&model3, &light);
+	if (!result)
+		return 0;
+
+	result = renderPSPS(&particles, tmFrameTime()*0.3);
 	if (!result)
 		return 0;
 

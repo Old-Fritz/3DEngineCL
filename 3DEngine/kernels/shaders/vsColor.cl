@@ -18,14 +18,15 @@ typedef struct ShaderParams
 	m3dMatrix viewMatrix;
 } ShaderParams;
 
-int VertexShader(VertexInputType* input, ShaderParams* params, PixelInputType* output)
+int VertexShader(__global VertexInputType* input, ShaderParams* params, PixelInputType* output)
 {
+	VertexInputType lInput = *input;
 
 	// calculate projected position
-	m3dVec3TransformCoord(&(output->position), &(input->position), &(params->worldMatrix));
+	m3dVec3TransformCoord(&(output->position), &(lInput.position), &(params->worldMatrix));
 	m3dVec3TransformCoord(&(output->position), &(output->position), &(params->viewMatrix));
 	m3dVec3Projection(&(output->position), &(output->position), &(params->projectionMatrix));
-	output->color = input->color;
+	output->color = lInput.color;
 
 	return 1;
 }

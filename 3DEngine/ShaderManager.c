@@ -18,12 +18,17 @@ int grCreateAllShaders()
 	if (!result)
 		return 0;
 
+	result = grCreateParticlesShader("kernels/shaders/vsParticles.cl", "kernels/shaders/psParticles.cl");
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
 // Release all resources connected with shaders
 void grShutdownAllShaders()
 {
+	grShutdownParticlesShader();
 	grShutdownLightShader();
 	grShutdownColorShader();
 	grShutdownSimpleShader();
@@ -48,6 +53,10 @@ int grExecuteAllShaders()
 	if (!result)
 		return 0;
 
+	result = grExecuteParticlesShader(outBuffer);
+	if (!result)
+		return 0;
+
 	return 1;
 }
 
@@ -64,6 +73,10 @@ int grFinishAllShaders()
 		return 0;
 
 	result = grFinishLightShader();
+	if (!result)
+		return 0;
+
+	result = grFinishParticlesShader();
 	if (!result)
 		return 0;
 

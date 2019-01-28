@@ -4,15 +4,15 @@ void primitiveController1(__global ShaderObject* object, ShaderParams* params, i
 {
 	int result, ind;
 	PixelInputType psInput;
-	VertexInputType vsInput;
+	__global VertexInputType* vsInput;
 
 	// getIndex of current primitive
 	ind = object->indexData[primitiveId];
 	// get vertex with given index
-	vsInput = object->vertexData[ind];
+	vsInput = object->vertexData + ind;
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(&vsInput, params, &psInput);
+	result = VertexShader(vsInput, params, &psInput);
 	if (!result)
 		return;
 	
@@ -23,22 +23,22 @@ void primitiveController2(__global ShaderObject* object, ShaderParams* params, i
 {
 	int result, ind1, ind2;
 	PixelInputType psInput1, psInput2;
-	VertexInputType vsInput1, vsInput2;
+	__global VertexInputType *vsInput1, *vsInput2;
 
 	// getIndex of current primitive
 	ind1 = object->indexData[primitiveId * 2];
 	ind2 = object->indexData[primitiveId * 2 + 1];
 
 	// get vertex with given index
-	vsInput1 = object->vertexData[ind1];
-	vsInput2 = object->vertexData[ind2];
+	vsInput1 = object->vertexData + ind1;
+	vsInput2 = object->vertexData + ind2;
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(&vsInput1, params, &psInput1);
+	result = VertexShader(vsInput1, params, &psInput1);
 	if (!result)
 		return;
 
-	result = VertexShader(&vsInput2, params, &psInput2);
+	result = VertexShader(vsInput2, params, &psInput2);
 	if (!result)
 		return;
 
@@ -49,7 +49,7 @@ void primitiveController3(__global ShaderObject* object, ShaderParams* params, i
 {
 	int result, ind1, ind2, ind3;
 	PixelInputType psInput1, psInput2, psInput3;
-	VertexInputType vsInput1, vsInput2, vsInput3;
+	__global VertexInputType *vsInput1, *vsInput2, *vsInput3;
 
 	// getIndex of current primitive
 	ind1 = object->indexData[primitiveId * 3];
@@ -57,20 +57,20 @@ void primitiveController3(__global ShaderObject* object, ShaderParams* params, i
 	ind3 = object->indexData[primitiveId * 3 + 2];
 
 	// get vertex with given index
-	vsInput1 = object->vertexData[ind1];
-	vsInput2 = object->vertexData[ind2];
-	vsInput3 = object->vertexData[ind3];
+	vsInput1 = object->vertexData + ind1;
+	vsInput2 = object->vertexData + ind2;
+	vsInput3 = object->vertexData + ind3;
 
 	// Calculate vertex shader that can stop execution
-	result = VertexShader(&vsInput1, params, &psInput1);
+	result = VertexShader(vsInput1, params, &psInput1);
 	if (!result)
 		return;
 
-	result = VertexShader(&vsInput2, params, &psInput2);
+	result = VertexShader(vsInput2, params, &psInput2);
 	if (!result)
 		return;
 
-	result = VertexShader(&vsInput3, params, &psInput3);
+	result = VertexShader(vsInput3, params, &psInput3);
 	if (!result)
 		return;
 

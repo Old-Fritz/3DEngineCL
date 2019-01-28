@@ -64,7 +64,7 @@ typedef struct ShaderGlobal
 	float left, right, top, bottom;
 } ShaderGlobal;
 
-int VertexShader(VertexInputType* input, ShaderParams* params, PixelInputType* output);
+int VertexShader(__global VertexInputType* input, ShaderParams* params, PixelInputType* output);
 int PixelShader(PixelInputType* input, ShaderParams* params, m3dVector4* outputColor);
 
 

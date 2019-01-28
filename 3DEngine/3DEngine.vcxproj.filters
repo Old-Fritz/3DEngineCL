@@ -216,6 +216,15 @@
     <ClInclude Include="Timer.h">
       <Filter>Заголовочные файлы\System</Filter>
     </ClInclude>
+    <ClInclude Include="ParticlesSystem.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticlesShader.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Graphic\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="PSPSRenderer.h">
+      <Filter>Заголовочные файлы\AdditionalElements\Renderers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -326,6 +335,15 @@
     <ClCompile Include="Timer.c">
       <Filter>Файлы исходного кода\System</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSystem.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlesShader.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Graphic\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="PSPSRenderer.c">
+      <Filter>Файлы исходного кода\AdditionalElements\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="kernels\clearKernel.cl">
@@ -368,6 +386,12 @@
       <Filter>Файлы ресурсов\kernels\shaders</Filter>
     </None>
     <None Include="kernels\shaders\vsLight.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\vsParticles.cl">
+      <Filter>Файлы ресурсов\kernels\shaders</Filter>
+    </None>
+    <None Include="kernels\shaders\psParticles.cl">
       <Filter>Файлы ресурсов\kernels\shaders</Filter>
     </None>
   </ItemGroup>

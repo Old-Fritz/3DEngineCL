@@ -23,22 +23,23 @@ typedef struct ShaderParams
 	float lightIntensity;
 } ShaderParams;
 
-int VertexShader(VertexInputType* input, ShaderParams* params, PixelInputType* output)
+int VertexShader(__global VertexInputType* input, ShaderParams* params, PixelInputType* output)
 {
+	VertexInputType lInput = *input;
 	m3dVector3 worldPosition;
 
 
 	// calculate projected position
-	m3dVec3TransformCoord(&(output->position), &(input->position), &(params->worldMatrix));
+	m3dVec3TransformCoord(&(output->position), &(lInput.position), &(params->worldMatrix));
 	m3dVec3TransformCoord(&(output->position), &(output->position), &(params->viewMatrix));
 	m3dVec3Projection(&(output->position), &(output->position), &(params->projectionMatrix));
 
 	// calculate normal
-	m3dVec3TransformCoord(&(output->normal), &(input->normal), &(params->worldMatrix));
+	m3dVec3TransformCoord(&(output->normal), &(lInput.normal), &(params->worldMatrix));
 	m3dVec3Normalize(&(output->normal), &(output->normal));
 
 	// calculate light position
-	m3dVec3TransformCoord(&(worldPosition), &(input->position), &(params->worldMatrix));
+	m3dVec3TransformCoord(&(worldPosition), &(lInput.position), &(params->worldMatrix));
 	m3dVec3Sub(&(output->lightPos), &(params->lightPos), &worldPosition);
 	m3dVec3Normalize(&(output->lightPos), &(output->lightPos));
 
